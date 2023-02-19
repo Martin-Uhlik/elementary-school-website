@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Základní škola a Mateřská škola, Moravský písek</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet">
   </head>
   <body>
@@ -18,6 +19,7 @@
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
         </div>
 
+        <!--        TODO alternative teexts-->
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="10000">
             <img src="images/school.png" class="d-block w-100" alt="...">
@@ -44,29 +46,116 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      <div class="main-section">
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
-        lorem impsum <br/>
+      <img id="main-down" class="main-down" src="images/icons/chevron-double-down.svg" alt=""/>
+      <div class="text-section">
+        <img class="background-elem" src="images/background_elements/squares.svg" alt=""/>
+        <div class="text-subsection">
+          <div class="d-flex flex-row">
+            <hr class="small_line"/>
+            <div class="d-flex flex-column gap-3">
+              <h1>Základní informace</h1>
+              <div class="d-flex flex-column">
+                <span>Ředitelka: Mgr. Ivana Uhlíková</span>
+                <span>tel.: 518698574</span>
+                <span>email: uhlikova@zsmp.cz</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span>Zástupkyně ředitelky: Mgr. Jaroslava Studničková</span>
+                <span>tel.: 518698576</span>
+                <span>email: studnickova@zsmp.cz</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span>Mateřská škola - zástupkyně ředitelky pro MŠ: Mgr. Jana Zezulová</span>
+                <span>tel.: 739357820</span>
+                <span>email: zezulova@zsmp.cz</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span>Hospodářka, vedoucí školní jídelny: Jana Petruchová</span>
+                <span>tel.: 518698571, 739357890</span>
+                <span>email: petruchova@zsmp.cz</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span>Školník: Jaroslav Lovecký</span>
+                <span>tel.: 602723104</span>
+                <span>email: lovecky.4@seznam.cz</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span>Správce haly: Pavlína Šantavá</span>
+                <span>tel.: 732553064</span>
+                <span>email: santava@zsmp.cz</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-section">
+        <div class="text-subsection">
+          <div class="d-flex flex-row">
+            <hr class="small_line"/>
+            <div>
+              <h1>Aktuální informace</h1>
+              <div>
+                <h2><a href="">Pronájem jazykové učebny</a></h2>
+                <h2>24. 2. BRUSLENÍ UHERSKÝ OSTROH</h2>
+                <h2>25. 2. PLES ŠKOLY</h2>
+                <h2>19. 3. - 24. 3. LYŽAŘSKÝ KURZ</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="background-elem"></div>
+      </div>
+
+      <div class="text-section">
+        <div class="background-elem"></div>
+        <div class="text-subsection">
+          <div class="d-flex flex-row">
+            <hr class="small_line"/>
+            <div>
+              <h1>Oznámení</h1>
+              <div>
+                <h2><a href="">Prohlášení o přístupnosti</a></h2>
+                <h2><a href="">Doučování žáků</a></h2>
+                <h2><a href="">Zapojení do projektu “Desatero pro primární prevenci”</a></h2><h2><a href="">Rozvrh a suplování</a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <img class="background-elem background-elem--right" src="images/background_elements/line.svg" alt=""/>
+
+      <div class="main-tour">
+        <div class="main-tour_inner">
+          <H1>Videoprohlídka školy</H1>
+          <hr class="small_line"/>
+          <video
+                  id="video-tour"
+                  class="video-js vjs-big-play-centered"
+                  controls
+                  preload="none"
+                  poster="./images/school.png"
+                  data-setup='{}'>
+            <source src="./documents/videos/zsmp_compressed.mp4" type="video/mp4"/>
+
+            <p class="vjs-no-js">
+              Pro přehrání videa je potřeba povolit JavaScript.
+            </p>
+          </video>
+        </div>
+      </div>
+
+      <div class="sponsors">
+        <!--        TODO alternative teexts-->
+        <img src="images/sponsors/fruit.png" alt="Ovoce do škol"/>
+        <img src="images/sponsors/presafe.png" alt="Presafe"/>
+        <img src="images/sponsors/eu.png" alt="eu"/>
+        <img src="images/sponsors/msmt.png" alt="msmt"/>
       </div>
     </main>
     <div id="footer"></div>
 
+    <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
     <script src=" https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

@@ -3,11 +3,7 @@ $(function(){
     $("#footer").load("footer.html");
 });
 
-
-
-window.onscroll = floatingHeader;
-
-function floatingHeader() {
+const floatingHeader = () => {
     const header = $("#myHeader")
     const padding = 3 * parseFloat(getComputedStyle(document.documentElement).fontSize)
     if (document.documentElement.scrollTop > padding) {
@@ -15,4 +11,18 @@ function floatingHeader() {
     } else {
         header.removeClass("sticky");
     }
+}
+
+const hideArrow = () => {
+    const arrow = $("#main-down")
+    if (document.documentElement.scrollTop > 0) {
+        arrow.addClass("main-down--hidden");
+    } else {
+        arrow.removeClass("main-down--hidden");
+    }
+}
+
+window.onscroll = () => {
+    floatingHeader()
+    hideArrow()
 }
