@@ -127,6 +127,7 @@ h2 {
   background-color: var(--bg-secondary);
   opacity: .5;
   margin: 1.5rem;
+  flex-shrink: 0;
 }
 
 .video-js {
@@ -256,7 +257,7 @@ h2 {
   }
 
   .text-subsection--wide {
-    width: 60rem;
+    width: 60vw;
   }
 }
 
