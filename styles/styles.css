@@ -16,6 +16,15 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 10rem);
 }
 
 h2 {
@@ -174,6 +183,11 @@ h2 {
   font-size: smaller;
 }
 
+.spacer {
+  padding: 10rem 0 5rem;
+  flex: 1;
+}
+
 .background-elem {
   display: flex;
   width: 30vw;
@@ -227,6 +241,7 @@ h2 {
     width: 60vw;
   }
 
+
   .background-elem-lg {
     display: block;
   }
@@ -238,6 +253,10 @@ h2 {
     padding: 3rem;
     width: 40vw;
     /*margin-left: 20vw;*/
+  }
+
+  .text-subsection--wide {
+    width: 60rem;
   }
 }
 
