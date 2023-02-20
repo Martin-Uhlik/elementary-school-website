@@ -10,13 +10,13 @@
   <body>
     <div id="header"></div>
     <main>
-      <div id="carouselExampleInterval" class="carousel slide main-carousel" data-bs-ride="carousel">
+      <div id="mainCarousel" class="carousel slide main-carousel" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
         </div>
 
         <!--        TODO alternative teexts-->
@@ -37,14 +37,18 @@
             <img src="images/dining.png" class="d-block w-100" alt="...">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
+        <div class="main-name">
+          <span>Základní škola a Mateřská škola,<br/>Moravský Písek, příspěkvková organizace</span>
+          <img src="images/logo.png" alt="logo"/>
+        </div>
       </div>
       <img id="main-down" class="main-down" src="images/icons/chevron-double-down.svg" alt=""/>
       <div class="text-section">
@@ -52,37 +56,37 @@
         <div class="text-subsection">
           <div class="d-flex flex-row">
             <hr class="small_line"/>
-            <div class="d-flex flex-column gap-3">
+            <div class="main-persons">
               <h1>Základní informace</h1>
-              <div class="d-flex flex-column">
-                <span>Ředitelka: Mgr. Ivana Uhlíková</span>
-                <span>tel.: 518698574</span>
-                <span>email: uhlikova@zsmp.cz</span>
+              <div>
+                <h2>Ředitelka: Mgr.&nbspIvana&nbspUhlíková</h2>
+                <span>tel.: 518 698 574</span>
+                <span>email: <a href="mailto:uhlikova@zsmp.cz">uhlikova@zsmp.cz</a></span>
               </div>
-              <div class="d-flex flex-column">
-                <span>Zástupkyně ředitelky: Mgr. Jaroslava Studničková</span>
-                <span>tel.: 518698576</span>
-                <span>email: studnickova@zsmp.cz</span>
+              <div>
+                <h2>Zástupkyně ředitelky: Mgr.&nbspJaroslava&nbspStudničková</h2>
+                <span>tel.: 518 698 576</span>
+                <span>email: <a href="mailto:studnickova@zsmp.cz">studnickova@zsmp.cz</a></span>
               </div>
-              <div class="d-flex flex-column">
-                <span>Mateřská škola - zástupkyně ředitelky pro MŠ: Mgr. Jana Zezulová</span>
-                <span>tel.: 739357820</span>
-                <span>email: zezulova@zsmp.cz</span>
+              <div>
+                <h2>Mateřská škola - zástupkyně ředitelky pro MŠ: Mgr.&nbspJana&nbspZezulová</h2>
+                <span>tel.: 739 357 820</span>
+                <span>email: <a href="mailto:zezulova@zsmp.cz">zezulova@zsmp.cz</a></span>
               </div>
-              <div class="d-flex flex-column">
-                <span>Hospodářka, vedoucí školní jídelny: Jana Petruchová</span>
-                <span>tel.: 518698571, 739357890</span>
-                <span>email: petruchova@zsmp.cz</span>
+              <div>
+                <h2>Hospodářka, vedoucí školní jídelny:&nbspJana&nbspPetruchová</h2>
+                <span>tel.: 518 698 571, 739 357 890</span>
+                <span>email: <a href="mailto:petruchova@zsmp.cz">petruchova@zsmp.cz</a></span>
               </div>
-              <div class="d-flex flex-column">
-                <span>Školník: Jaroslav Lovecký</span>
-                <span>tel.: 602723104</span>
-                <span>email: lovecky.4@seznam.cz</span>
+              <div>
+                <h2>Školník: Jaroslav&nbspLovecký</h2>
+                <span>tel.: 602 723 104</span>
+                <span>email: <a href="mailto:lovecky.4@seznam.cz">lovecky.4@seznam.cz</a></span>
               </div>
-              <div class="d-flex flex-column">
-                <span>Správce haly: Pavlína Šantavá</span>
-                <span>tel.: 732553064</span>
-                <span>email: santava@zsmp.cz</span>
+              <div>
+                <h2>Správce haly: Pavlína&nbspŠantavá</h2>
+                <span>tel.: 732 553 064</span>
+                <span>email: <a href="mailto:santava@zsmp.cz">santava@zsmp.cz</a></span>
               </div>
             </div>
           </div>
@@ -103,11 +107,13 @@
             </div>
           </div>
         </div>
-        <div class="background-elem"></div>
+        <div class="background-elem background-elem-lg"></div>
       </div>
 
       <div class="text-section">
-        <div class="background-elem"></div>
+        <div class="background-elem background-elem-lg">
+<!--          <img class="background-elem-circle-inner" src="images/background_elements/circle.svg" alt="circle"/>-->
+        </div>
         <div class="text-subsection">
           <div class="d-flex flex-row">
             <hr class="small_line"/>

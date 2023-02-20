@@ -34,6 +34,27 @@ h2 {
   padding-top: 1.75rem;
 }
 
+.main-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 3rem;
+  color: white;
+  font-size: 2vw;
+  text-shadow: 0 0 1rem black;
+  /*background-color: var(--bg-primary);*/
+  /*opacity: 25%;*/
+}
+
+.main-name img {
+  width: 10vw;
+}
+
 .main-down {
   display: flex;
   height: 10vh;
@@ -57,9 +78,25 @@ h2 {
 }
 
 .text-subsection {
+  display: flex;
   margin: auto;
-  padding: 3rem;
-  width: 40vw;
+  padding: 3rem 0;
+  width: 95vw;
+}
+
+.main-persons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main-persons div {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-persons div h2 {
+  font-weight: bold;
 }
 
 .main-tour {
@@ -149,6 +186,10 @@ h2 {
   margin-left: auto;
 }
 
+.background-elem-lg {
+  display: none;
+}
+
 
 
 @media only screen and (min-width: 992px) {
@@ -181,7 +222,23 @@ h2 {
     flex-direction: row;
   }
 
+  .text-subsection {
+    padding: 3rem;
+    width: 60vw;
+  }
 
+  .background-elem-lg {
+    display: block;
+  }
+
+}
+
+@media only screen and (min-width: 1400px) {
+  .text-subsection {
+    padding: 3rem;
+    width: 40vw;
+    /*margin-left: 20vw;*/
+  }
 }
 
 /* Animations */
