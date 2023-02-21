@@ -123,10 +123,10 @@ h2 {
 .small_line {
   height: .25rem;
   border: none;
-  width: 4rem;
+  width: 1rem;
   background-color: var(--bg-secondary);
   opacity: .5;
-  margin: 1.5rem;
+  margin: calc((1.375rem + 1.5vw) / 2);
   flex-shrink: 0;
 }
 
@@ -164,7 +164,7 @@ h2 {
   /*right: 0;*/
   bottom: 0;
   width: 100%;
-  height: 10rem;
+  /*height: 10rem;*/
   background-color: var(--bg-primary);
   color: var(--text-secondary);
   padding: 1rem;
@@ -191,9 +191,7 @@ h2 {
 
 .background-elem {
   display: flex;
-  width: 30vw;
-
-  /*margin-right: -1rem;*/
+  width: 50vw;
   padding: 3rem 0;
 }
 
@@ -242,6 +240,13 @@ h2 {
     width: 60vw;
   }
 
+  .small_line {
+    width: 4rem;
+  }
+
+  .background-elem {
+    width: 30vw;
+  }
 
   .background-elem-lg {
     display: block;

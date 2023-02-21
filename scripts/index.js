@@ -1,6 +1,6 @@
 $(function(){
-    $("#header").load("header.html");
-    $("#footer").load("footer.html");
+    $("#header").load("./header.html", () => {$(selectedTab).addClass('active')});
+    $("#footer").load("./footer.html");
 });
 
 const floatingHeader = () => {
