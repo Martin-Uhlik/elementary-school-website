@@ -19,6 +19,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 main {
@@ -89,8 +90,7 @@ h2 {
 .text-subsection {
   display: flex;
   margin: auto;
-  padding: 3rem 0;
-  width: 95vw;
+  padding: 3rem calc(1.375rem + 1.5vw + 1rem) 3rem 0;
 }
 
 .main-persons {
@@ -178,6 +178,12 @@ h2 {
   padding: 3rem 0;
   /*animation: cycle 10s linear infinite;*/
   flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 95vw;
+}
+
+.sponsors img {
+  max-width: 80vw;
 }
 
 .footer-text {
@@ -185,7 +191,7 @@ h2 {
 }
 
 .spacer {
-  padding: 10rem 0 5rem;
+  padding: 5rem 0 5rem;
   flex: 1;
 }
 
@@ -203,9 +209,26 @@ h2 {
   display: none;
 }
 
+.background-elem-wide {
+  position: absolute;
+  top: 1.75rem;
+  left: 0;
+  width: 100vw;
+  transform: rotate(180deg);
+  z-index: -100;
+}
+
+.text-subsection--wide {
+  width: min(100%, 80rem) !important;
+}
+
 
 
 @media only screen and (min-width: 992px) {
+  .spacer {
+    padding: 10rem 0 5rem;
+  }
+
   .header {
     position: absolute;
     padding: 3rem;
@@ -252,6 +275,10 @@ h2 {
     display: block;
   }
 
+  .background-elem-wide {
+    top: 0;
+  }
+
 }
 
 @media only screen and (min-width: 1400px) {
@@ -261,9 +288,9 @@ h2 {
     /*margin-left: 20vw;*/
   }
 
-  .text-subsection--wide {
-    width: 60vw;
-  }
+  /*.text-subsection--wide {*/
+  /*  width: 60vw;*/
+  /*}*/
 }
 
 /* Animations */
