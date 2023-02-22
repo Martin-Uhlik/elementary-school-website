@@ -234,6 +234,10 @@ main {
   grid-column-end: 3;
 }
 
+.dropdown-menu {
+  box-shadow: var(--shadow-small);
+}
+
 
 @media only screen and (min-width: 992px) {
   .spacer {
