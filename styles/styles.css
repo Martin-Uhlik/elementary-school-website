@@ -28,7 +28,7 @@ main {
   min-height: calc(100vh - 10rem);
 }
 
-h2 {
+.h2 {
   font-size: large;
 }
 
