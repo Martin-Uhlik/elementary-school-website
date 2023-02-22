@@ -222,6 +222,17 @@ h2 {
   width: min(100%, 80rem) !important;
 }
 
+.semi_table {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 3rem;
+}
+
+.semi_table hr {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
 
 
 @media only screen and (min-width: 992px) {
