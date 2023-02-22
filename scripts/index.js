@@ -1,6 +1,14 @@
+
+directory_root = "http://localhost:9000/"
 $(function(){
-    $("#header").load("./header.html", () => {$(selectedTab).addClass('active')});
-    $("#footer").load("./footer.html");
+    $("#header").load(directory_root + "header.html", () => {
+        $(selectedTab).addClass("active");
+        $("a").each(function(){
+            var currentHref = $(this).attr("href");
+            $(this).attr("href", directory_root + currentHref);
+        });
+    });
+    $("#footer").load(directory_root + "footer.html");
 });
 
 const floatingHeader = () => {
