@@ -253,6 +253,16 @@ main {
   height: 4rem;
 }
 
+.citation {
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  width: 100%;
+  justify-content: space-around;
+  padding: 3rem 0;
+}
+
 
 @media only screen and (min-width: 992px) {
   .spacer {
