@@ -238,6 +238,21 @@ main {
   box-shadow: var(--shadow-small);
 }
 
+.link_huge {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: auto;
+  align-items: center;
+  gap: 1rem;
+  font-size: x-large;
+  padding: 1.5rem 0;
+}
+
+.link_huge img {
+  height: 4rem;
+}
+
 
 @media only screen and (min-width: 992px) {
   .spacer {
