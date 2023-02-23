@@ -220,6 +220,7 @@ main {
 
 .text-subsection--wide {
   width: min(100%, 80rem) !important;
+  flex-direction: column;
 }
 
 .semi_table {
@@ -261,6 +262,31 @@ main {
   width: 100%;
   justify-content: space-around;
   padding: 3rem 0;
+}
+
+
+.zig_zag_article {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin: auto;
+  width: fit-content;
+}
+
+.zig_zag_article-line {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+}
+
+.img_circle {
+  border-radius: 50%;
+  box-shadow: var(--shadow-small);
+  width: 20rem;
+  height: 20rem;
+  object-fit: cover;
 }
 
 
@@ -317,6 +343,10 @@ main {
 
   .background-elem-wide {
     top: 0;
+  }
+
+  .zig_zag_article-line {
+    flex-direction: row;
   }
 
 }
