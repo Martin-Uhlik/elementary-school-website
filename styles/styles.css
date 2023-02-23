@@ -289,6 +289,29 @@ main {
   object-fit: cover;
 }
 
+.table {
+  width: 100%;
+}
+
+.table>thead>tr>th {
+  background-color: var(--bg-primary);
+  color: white;
+  padding: 0.5rem;
+}
+
+.table>tbody>tr {
+  height: 3rem;
+}
+
+.table>tbody>tr:nth-child(2n) {
+  background-color: #E7E9EB;
+}
+
+.table>tbody>tr>td {
+  padding: 0 1rem;
+  width: 50%;
+}
+
 
 @media only screen and (min-width: 992px) {
   .spacer {
