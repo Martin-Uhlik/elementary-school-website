@@ -1,14 +1,16 @@
 
-directory_root = "http://localhost:9000/"
-$(function(){
-    $("#header").load(directory_root + "header.html", () => {
+// directory_root = "http://localhost:9000/"
+$(() => {
+    $("#header").load("/header.html", () => {
         $(selectedTab).addClass("active");
-        $("a").each(function(){
-            var currentHref = $(this).attr("href");
-            $(this).attr("href", directory_root + currentHref);
-        });
+        // $("a").each(function(){
+        //     var currentHref = $(this).attr("href");
+        //     $(this).attr("href", directory_root + currentHref);
+        // });
+        floatingHeader();
+        hideArrow();
     });
-    $("#footer").load(directory_root + "footer.html");
+    $("#footer").load("/footer.html");
 });
 
 const floatingHeader = () => {
@@ -31,6 +33,6 @@ const hideArrow = () => {
 }
 
 window.onscroll = () => {
-    floatingHeader()
-    hideArrow()
+    floatingHeader();
+    hideArrow();
 }
