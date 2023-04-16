@@ -304,6 +304,18 @@ a {
   gap: 1rem;
 }
 
+.icon {
+  height: 2.5rem;
+}
+
+.large-hidden {
+  display: block;
+}
+
+.small-hidden {
+  display: none;
+}
+
 .icon--blue {
   filter: invert(25%) sepia(82%) saturate(2536%) hue-rotate(211deg) brightness(105%) contrast(98%);
 }
@@ -331,7 +343,11 @@ a {
 .table td {
   padding: 1rem 1rem;
   width: 50%;
-  vertical-align: center;
+  vertical-align: middle;
+}
+
+.table td:nth-child(2n) {
+  width: 0;
 }
 
 
@@ -473,6 +489,19 @@ a {
 
   .signatures {
     flex-direction: row;
+  }
+
+  .large-hidden {
+    display: none;
+  }
+
+  .small-hidden {
+    display: block;
+  }
+
+  .table td:nth-child(2n) {
+    text-align: left;
+    width: 50%;
   }
 
 
