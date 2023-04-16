@@ -148,7 +148,8 @@ a {
   /*background: none;*/
   background-color: rgba(43,51,63,.125);
   border-radius: 1em;
-  /*width: 2em;*/
+  margin-left: -0.7em;
+  width: 1.6em;
   /*height: 2em;*/
   line-height: 1.6em;
   /*border: none;*/
