@@ -347,7 +347,7 @@ a {
 }
 
 .table td:nth-child(2n) {
-  width: 0;
+  width: 1%;
 }
 
 
