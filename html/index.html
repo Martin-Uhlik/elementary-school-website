@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Základní škola a Mateřská škola, Moravský písek</title>
+    <link rel="icon" type="image/x-icon" href="/data/images/icons/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/videojs-resolution-switcher-vjs7@1.0.0/videojs-resolution-switcher.css">
+    <link href="/data/styles/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="header"></div>
+    <main>
+      <div id="mainCarousel" class="carousel slide main-carousel" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="6" aria-label="Slide 7"></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_1.jpg" class="carousel__image" alt="Fotografie školy">
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_2.jpg" class="carousel__image" alt="Chemická učebna">
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_3.jpg" class="carousel__image" alt="Jazyková učebna">
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_4.jpg" class="carousel__image" alt="Školní jídelna">
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_5.jpg" class="carousel__image" alt="Školní jídelna">
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_6.jpg" class="carousel__image" alt="Tělocvična">
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/data/images/carousel_7.jpg" class="carousel__image" alt="Šatny">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <div class="main-name">
+          <span class="desktop-only">Základní škola a Mateřská škola,<br/>Moravský Písek, příspěvková organizace</span>
+          <span class="mobile-only main-name--mobile">Základní škola a Mateřská škola,<br/>Moravský Písek,<br/>příspěvková organizace</span>
+          <img class="aspect-ratio-1-1 main-name__logo" src="/data/images/logo.png" alt="logo školy"/>
+        </div>
+      </div>
+
+      <img id="main-down" class="main-down desktop-only" src="/data/images/icons/chevron-double-down.svg" alt="šipka dolů" onclick="handleArrowScroll()"/>
+
+
+      <div class="text-section">
+        <img class="background-elem" src="/data/images/background_elements/squares.svg" alt=""/>
+        <div class="text-subsection">
+          <div class="d-flex flex-row">
+            <hr class="article__line"/>
+            <div class="persons">
+              <h1>Základní informace</h1>
+              <div class="person">
+                <h2 class="h2">Ředitelka: Mgr. Ivana Uhlíková</h2>
+                <div class="phone">
+                  <span class="phone__label">tel.:</span>
+                  <div class="phone__numbers">
+                    <span class="phone__number">518 698 574</span>
+                  </div>
+                </div>
+                <div class="email">
+                  <span class="email__label">
+                      e-mail:
+                  </span>
+                  <div class="email__links">
+                    <a href="mailto:uhlikova@zsmp.cz">uhlikova@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+              <div class="person">
+                <h2 class="h2">Zástupkyně ředitelky: Mgr. Kateřina Vařechová</h2>
+                <div class="phone">
+                  <span class="phone__label">tel.:</span>
+                  <div class="phone__numbers">
+                    <span class="phone__number">518 698 576</span>
+                  </div>
+                </div>
+                <div class="email">
+                  <span class="email__label">
+                      e-mail:
+                  </span>
+                  <div class="email__links">
+                    <a href="mailto:varechova@zsmp.cz">varechova@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+              <div class="person">
+                <h2 class="h2">Mateřská škola - zástupkyně ředitelky pro MŠ: Mgr. Jana Zezulová</h2>
+                <div class="phone">
+                  <span class="phone__label">tel.:</span>
+                  <div class="phone__numbers">
+                    <span class="phone__number">739 357 820</span>
+                  </div>
+                </div>
+                <div class="email">
+                  <span class="email__label">
+                      e-mail:
+                  </span>
+                  <div class="email__links">
+                    <a href="mailto:zezulova@zsmp.cz">zezulova@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+              <div class="person">
+                <h2 class="h2">Hospodářka, vedoucí školní jídelny: Jana Petruchová</h2>
+                <div class="phone">
+                  <span class="phone__label">tel.:</span>
+                  <div class="phone__numbers">
+                    <span class="phone__number">518 698 571</span>
+                    <span class="phone__number">739 357 890</span>
+                  </div>
+                </div>
+                <div class="email">
+                  <span class="email__label">
+                      e-mail:
+                  </span>
+                  <div class="email__links">
+                    <a href="mailto:petruchova@zsmp.cz">petruchova@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+              <div class="person">
+                <h2 class="h2">Školník: Jaroslav Lovecký</h2>
+                <div class="phone">
+                  <span class="phone__label">tel.:</span>
+                  <div class="phone__numbers">
+                    <span class="phone__number">602 723 104</span>
+                  </div>
+                </div>
+                <div class="email">
+                  <span class="email__label">
+                      e-mail:
+                  </span>
+                  <div class="email__links">
+                    <a href="mailto:lovecky.4@seznam.cz">lovecky.4@seznam.cz</a>
+                  </div>
+                </div>
+              </div>
+              <div class="person">
+                <h2 class="h2">Správce haly: Pavlína Šantavá</h2>
+                <div class="phone">
+                  <span class="phone__label">tel.:</span>
+                  <div class="phone__numbers">
+                    <span class="phone__number">734 141 727</span>
+                  </div>
+                </div>
+                <div class="email">
+                  <span class="email__label">
+                      e-mail:
+                  </span>
+                  <div class="email__links">
+                    <a href="mailto:santava@zsmp.cz">santava@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="text-section">
+        <div class="text-subsection">
+          <div class="d-flex flex-row">
+            <hr class="article__line"/>
+            <div>
+              <h1>Aktuální informace</h1>
+              <ul class="documents" id="main-page__news">
+<!--                <li></li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="background-elem background-elem-lg"></div>
+      </div>
+
+
+      <div class="text-section">
+        <div class="background-elem background-elem-lg">
+          <img class="background-elem" src="/data/images/background_elements/lines.svg" alt=""/>
+        </div>
+        <div class="text-subsection">
+          <div class="d-flex flex-row">
+            <hr class="article__line"/>
+            <div>
+              <h1>Oznámení</h1>
+              <ul class="documents">
+                <li><a href="/dokument/pristupnost.doc" target="_blank">Prohlášení o přístupnosti</a></li>
+                <li><a href="/dokument/2021_dou%C4%8Dov%C3%A1n%C3%AD.doc" target="_blank">Doučování žáků</a></li>
+                <li><a href="/dokument/2021_Desatero%20pro%20prim%C3%A1rn%C3%AD%20prevenci.doc" target="_blank">Zapojení do projektu “Desatero pro primární prevenci”</a></li>
+                <li><a href="/dokument/2023_pronajem.doc" target="_blank">Pronájem jazykové učebny </a></li>
+                <li><a href="/dokument/20230308_digitalizaceskoly.doc" target="_blank">Digitalizujeme školu</a></li>
+                <li><a href="https://zsmp.edupage.org/" target="_blank">Rozvrh a suplování</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <img class="background-elem background-elem--right" src="/data/images/background_elements/line.svg" alt=""/>
+
+      <div class="main-tour">
+        <div class="main-tour_inner">
+          <H1>Videoprohlídka školy</H1>
+          <hr class="article__line"/>
+          <video id="video-tour"
+                 class="video-js vjs-big-play-centered"
+                 controls
+                 preload="none"
+                 poster="/data/images/carousel_1.jpg"
+                 data-setup='{}'>
+            <source src="/data/videos/zsmp_compressed_1080.mp4" type='video/mp4' label='1080' res='1080'/>
+            <source src="/data/videos/zsmp_compressed_720.mp4" type='video/mp4' label='720' res='720' />
+            <source src="/data/videos/zsmp_compressed_420.mp4" type='video/mp4' label='480' res='480'/>
+
+            <p class="vjs-no-js">
+              Pro přehrání videa je potřeba povolit JavaScript.
+            </p>
+          </video>
+        </div>
+      </div>
+
+      <div class="sponsors">
+        <img src="/data/images/sponsors/fruit.png" alt="Logo Ovoce do škol"/>
+        <img src="/data/images/sponsors/presafe.png" alt="Logo Presafe"/>
+        <img src="/data/images/sponsors/eu.png" alt="Logo EU"/>
+        <img src="/data/images/sponsors/msmt.png" alt="Logo MŠMT"/>
+      </div>
+    </main>
+    <div id="footer"></div>
+
+    <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/videojs-resolution-switcher-vjs7@1.0.0/videojs-resolution-switcher.js"></script>
+    <script>videojs('video-tour').videoJsResolutionSwitcher()</script>
+    <script src=" https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script>const selectedTab = "#hlavniStrana"</script>
+    <script src="/data/scripts/index.js"></script>
+  </body>
+</html>
