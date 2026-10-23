@@ -1,4 +1,5 @@
 import { galleries } from "@/data/galleries";
+import { gallerySections } from "@/data/gallerySections";
 import type { Gallery, Unit } from "@/data/types";
 
 export const galleryHref = (gallery: Gallery) => gallery.url ?? `/galerie/${gallery.folder ?? gallery.id}`;
@@ -6,9 +7,24 @@ export const galleryHref = (gallery: Gallery) => gallery.url ?? `/galerie/${gall
 export const galleryLabel = (gallery: Gallery) =>
   gallery.dateText ? `${gallery.title} ${gallery.dateText}` : gallery.title;
 
-// Newest galleries of one unit, for the Foto a video page
-export const getLatestGalleries = async (unit: Unit, count: number) =>
-  galleries.filter((g) => g.unit === unit && !g.url).slice(0, count);
+// id of a year's section on an archive page, the target of the year bar
+export const yearAnchor = (year: number) => `rok-${year}`;
+
+// Day and month for the card placeholder: from dateText ("5.12.2023"), else from a YYYYMMDD id
+export const galleryDay = (gallery: Gallery) => {
+  const text = gallery.dateText?.match(/^(\d{1,2})\.\s?(\d{1,2})\./);
+  if (text) return `${text[1]}. ${text[2]}.`;
+  const id = (gallery.folder ?? gallery.id).match(/^\d{4}(\d{2})(\d{2})/);
+  return id ? `${Number(id[2])}. ${Number(id[1])}.` : undefined;
+};
+
+// The section tiles with how many galleries each has and which years they span
+export const getGallerySections = async () =>
+  gallerySections.map((section) => {
+    const items = galleries.filter((g) => g.unit === section.unit);
+    const years = items.map((g) => g.year);
+    return { ...section, count: items.length, from: Math.min(...years), to: Math.max(...years) };
+  });
 
 // The whole archive of one unit grouped by year, newest year first
 export const getGalleryArchive = async (unit: Unit) => {

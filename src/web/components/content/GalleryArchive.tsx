@@ -1,35 +1,45 @@
-import Link from "next/link";
-import GalleryList from "./GalleryList";
+import GalleryCard from "./GalleryCard";
+import YearNav from "./YearNav";
 import type { Unit } from "@/data/types";
-import { getGalleryArchive } from "@/lib/content/galleries";
+import { galleryDay, galleryHref, getGalleryArchive, yearAnchor } from "@/lib/content/galleries";
+import { getGalleryPreviews } from "@/lib/galleries";
 
-// The archive page of one unit: galleries grouped by year
+// The archive page of one unit: a sticky year bar and the galleries of each year as cards
 const GalleryArchive = async ({ unit, title }: { unit: Unit; title: string }) => {
   const years = await getGalleryArchive(unit);
+  const previews = await getGalleryPreviews(years.flatMap((y) => y.galleries.map((g) => g.folder ?? g.id)));
   return (
-    <>
-      <div className="gallery-navigation">
-        <Link href="/foto-video" className="gallery-navigation__back-arrow">
-          <img src="/data/images/icons/arrow-left.svg" alt="šipka zpět" className="gallery-navigation__icon" />
-        </Link>
-      </div>
-      <div className="body gallery-body">
-        <div className="article">
-          <hr className="article__line" />
-          <div className="article__section">
-            <h1>{title}</h1>
-            <div className="gallery-list">
-              {years.map(({ year, galleries }) => (
-                <div className="article__body" key={year}>
-                  <h2>{year}</h2>
-                  <GalleryList galleries={galleries} />
-                </div>
-              ))}
-            </div>
-          </div>
+    <div className="body gallery-archive">
+      <div className="article">
+        <hr className="article__line" />
+        <div className="article__section">
+          <h1>{title}</h1>
+          <YearNav years={years.map((y) => y.year)} />
+          {years.map(({ year, galleries }) => (
+            <section
+              key={year}
+              id={yearAnchor(year)}
+              className="gallery-year"
+              aria-labelledby={`${yearAnchor(year)}-h`}
+            >
+              <h2 id={`${yearAnchor(year)}-h`}>{year}</h2>
+              <ul className="gallery-cards">
+                {galleries.map((gallery) => (
+                  <li key={gallery.id}>
+                    <GalleryCard
+                      gallery={gallery}
+                      href={galleryHref(gallery)}
+                      day={galleryDay(gallery)}
+                      previews={gallery.url ? [] : (previews[gallery.folder ?? gallery.id] ?? [])}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

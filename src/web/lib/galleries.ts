@@ -39,3 +39,19 @@ export const getGallery = async (id: string): Promise<Gallery | null> => {
   );
   return { id, title, images };
 };
+
+// A few photos per folder for the hover preview on the archive cards; thumbnails (thn*) when the folder has them
+export const getGalleryPreviews = async (folders: string[], count = 4): Promise<Record<string, string[]>> => {
+  const present = new Set(await listGalleryIds());
+  const entries = await Promise.all(
+    folders
+      .filter((folder) => present.has(folder))
+      .map(async (folder) => {
+        const files = (await fs.readdir(path.join(GALLERY_ROOT, folder))).filter((f) => IMAGE_EXT.test(f)).sort();
+        const thumbs = files.filter((f) => f.startsWith("thn"));
+        const picked = (thumbs.length > 0 ? thumbs : files).slice(0, count);
+        return [folder, picked.map((f) => `/galerie/${encodeURIComponent(folder)}/${encodeURIComponent(f)}`)] as const;
+      }),
+  );
+  return Object.fromEntries(entries);
+};
