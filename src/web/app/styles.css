@@ -254,14 +254,6 @@ a {
   text-transform: uppercase;
 }
 
-.person-card__note {
-  margin: 0;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  background: var(--surface);
-  font-size: 0.9rem;
-}
-
 .person-card__contacts {
   display: flex;
   flex-direction: column;
@@ -428,14 +420,6 @@ a {
   padding: 3rem 0;
 }
 
-.img_circle {
-  border-radius: 50%;
-  box-shadow: var(--shadow-small);
-  width: min(50vh, 50vw);
-  height: min(50vh, 50vw);
-  object-fit: cover;
-}
-
 .signatures {
   display: flex;
   flex-direction: column;
@@ -509,26 +493,50 @@ a {
 }
 
 /* zig zag */
+/* text and a photo side by side, the photo switching sides on every row; photo on top on phones */
 .zig_zag {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  margin: auto;
-  width: fit-content;
-  padding: 3rem 0;
+  gap: 2.5rem;
+  width: 100%;
 }
 
 .zig_zag__line-left,
 .zig_zag__line-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
   align-items: center;
-  gap: 3rem;
+  gap: 1.5rem;
 }
 
-.zig_zag__line-right {
-  flex-direction: column-reverse;
+.zig_zag__line-left > .zig_zag__photo {
+  order: -1;
+}
+
+/* the photos are 500×500, so they stay at most 24rem wide to stay sharp */
+.zig_zag__photo {
+  justify-self: center;
+  width: 100%;
+  max-width: 24rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+
+@media (min-width: 768px) {
+  .zig_zag__line-left,
+  .zig_zag__line-right {
+    grid-template-columns: 1fr minmax(0, 24rem);
+    gap: 3rem;
+  }
+
+  .zig_zag__line-right {
+    grid-template-columns: minmax(0, 24rem) 1fr;
+  }
+
+  .zig_zag__line-left > .zig_zag__photo {
+    order: 0;
+  }
 }
 
 /* settings */
@@ -686,11 +694,6 @@ a {
     flex-direction: row;
   }
 
-  .img_circle {
-    max-width: 20rem;
-    max-height: 20rem;
-  }
-
   /* article */
   .article {
     padding-right: calc((1.375rem + 1.5vw) + 4rem);
@@ -720,11 +723,6 @@ a {
   }
 
   /* zig zag */
-  .zig_zag__line-left,
-  .zig_zag__line-right {
-    flex-direction: row;
-  }
-
   /* settings */
   .settings {
     gap: 0;
@@ -1278,7 +1276,7 @@ img.background-elem-wide {
   padding: 0.4rem 1rem;
   border-radius: 0.5rem;
   background: var(--mysak-surface);
-  color: var(--text-secondary);
+  color: var(--mysak-text);
   text-align: center;
 }
 
@@ -1421,12 +1419,13 @@ img.background-elem-wide {
 }
 
 .mysak-board {
+  width: 100%;
   max-width: 40rem;
   margin: 1rem 0;
   padding: 1.5rem;
   border-radius: 0.5rem;
   background: var(--mysak-surface);
-  color: var(--text-secondary);
+  color: var(--mysak-text);
 }
 
 .mysak-board__label {
@@ -1474,15 +1473,15 @@ img.background-elem-wide {
 }
 
 .klik__cell--0 {
-  background: #6c757d;
+  background: var(--klik-off-0);
 }
 
 .klik__cell--1 {
-  background: #4b2a63;
+  background: var(--klik-off-1);
 }
 
 .klik__cell--2 {
-  background: #5c5320;
+  background: var(--klik-off-2);
 }
 
 .klik__cell--1.is-lit {
@@ -1496,7 +1495,7 @@ img.background-elem-wide {
 }
 
 .klik__cell:focus-visible {
-  outline: 3px solid #fff;
+  outline: 3px solid var(--bs-emphasis-color);
   outline-offset: -3px;
 }
 
@@ -1504,6 +1503,7 @@ img.background-elem-wide {
 .barvy__board {
   display: grid;
   gap: 2px;
+  width: 100%;
   max-width: 960px;
   margin: 1rem 0;
 }
@@ -1541,7 +1541,7 @@ img.background-elem-wide {
   border: 0;
   border-radius: 0.5rem;
   background: var(--mysak-surface);
-  color: var(--text-secondary);
+  color: var(--mysak-text);
   font-size: 1.75rem;
   font-weight: 600;
   box-shadow: var(--shadow-normal);
@@ -1581,6 +1581,7 @@ img.background-elem-wide {
 
 .rychlost__board {
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
   max-width: 30rem;
@@ -1594,17 +1595,19 @@ img.background-elem-wide {
   aspect-ratio: 1;
   border-radius: 0.5rem;
   background: var(--mysak-surface);
-  color: var(--text-secondary);
+  color: var(--mysak-text);
   font-family: var(--bs-font-monospace);
   font-size: clamp(4rem, 18vw, 8rem);
   line-height: 1;
 }
 
 .rychlost__cell.is-right {
+  color: #fff;
   background: var(--bs-success);
 }
 
 .rychlost__cell.is-wrong {
+  color: #fff;
   background: var(--bs-danger);
 }
 
@@ -1653,13 +1656,21 @@ img.background-elem-wide {
   margin-right: 0.25rem;
 }
 
-/* Myšák panels: the page background in dark mode is the same as --bg-primary, so lift them a little */
+/* Myšák panels: light grey like the tiles in the light theme, lifted grey in the dark theme */
 :root {
-  --mysak-surface: var(--bg-primary);
+  --mysak-surface: var(--surface-muted);
+  --mysak-text: var(--bs-body-color);
+  --klik-off-0: #ced4da;
+  --klik-off-1: #ddd0ea;
+  --klik-off-2: #ece3b4;
 }
 
 [data-bs-theme="dark"] {
   --mysak-surface: #343a40;
+  --mysak-text: #fff;
+  --klik-off-0: #6c757d;
+  --klik-off-1: #4b2a63;
+  --klik-off-2: #5c5320;
 }
 
 /* Card design (site-wide) */

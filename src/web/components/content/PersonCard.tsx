@@ -8,7 +8,7 @@ type Props = {
   variant?: "full" | "short";
   // heading level of the name, 3 where the card sits under a section heading
   level?: 2 | 3;
-  // a line shown under the name, e.g. how to reach the person
+  // a line shown like the description, e.g. how to reach the person
   note?: string;
 };
 
@@ -65,7 +65,6 @@ const PersonCard = ({ person, variant = "full", level = 2, note }: Props) => {
           {person.position && <p className="person-card__position">{person.position}</p>}
         </div>
       </header>
-      {note && <p className="person-card__note">{note}</p>}
       <ul className="person-card__contacts">
         {person.email && (
           <li>
@@ -78,11 +77,10 @@ const PersonCard = ({ person, variant = "full", level = 2, note }: Props) => {
         )}
         <PersonPhones person={person} withInternal={full} />
       </ul>
-      {full && person.description && (
+      {((full && person.description) || note) && (
         <div className="person-card__description">
-          {person.description.map((line) => (
-            <p key={line}>{line}</p>
-          ))}
+          {full && person.description?.map((line) => <p key={line}>{line}</p>)}
+          {note && <p>{note}</p>}
         </div>
       )}
     </article>

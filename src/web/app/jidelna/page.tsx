@@ -22,11 +22,11 @@ const JidelnaPage = async () => {
                     Icon={LuUtensils}
                   />
                 </div>
-                <img className="img_circle" src="/data/images/jidelna/jidelna_1.jpg" alt="Fotografie jídelny" />
+                <img className="zig_zag__photo" src="/data/images/jidelna/jidelna_1.jpg" alt="Fotografie jídelny" />
               </div>
 
               <div className="zig_zag__line-right">
-                <img className="img_circle" src="/data/images/jidelna/jidelna_2.jpg" alt="Fotografie jídelny" />{" "}
+                <img className="zig_zag__photo" src="/data/images/jidelna/jidelna_2.jpg" alt="Fotografie jídelny" />{" "}
                 <div className="article__body">
                   <FeatureLink
                     href="https://www.strava.cz/strava5/Jidelnicky?zarizeni=2176"
@@ -41,7 +41,7 @@ const JidelnaPage = async () => {
                   <h2>Dokumenty</h2>
                   <LinkList links={dokumenty.links} />
                 </div>
-                <img className="img_circle" src="/data/images/jidelna/jidelna_3.jpg" alt="Fotografie jídelny" />
+                <img className="zig_zag__photo" src="/data/images/jidelna/jidelna_3.jpg" alt="Fotografie jídelny" />
               </div>
             </div>
           </div>

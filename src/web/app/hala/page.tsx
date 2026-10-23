@@ -25,10 +25,10 @@ const HalaPage = async () => {
                     />
                   ))}
                 </div>
-                <img className="img_circle" src="/data/images/hala/hala_1.jpg" alt="Fotografie venkovního hřiště" />
+                <img className="zig_zag__photo" src="/data/images/hala/hala_1.jpg" alt="Fotografie venkovního hřiště" />
               </div>
               <div className="zig_zag__line-right">
-                <img className="img_circle" src="/data/images/hala/hala_2.jpg" alt="Fotografie tělocvičny" />
+                <img className="zig_zag__photo" src="/data/images/hala/hala_2.jpg" alt="Fotografie tělocvičny" />
                 <div className="article__body">
                   <LinkList links={hala.links} />
                 </div>
