@@ -24,6 +24,7 @@
   --card-shadow: 0 0.5rem 1.5rem rgba(16, 24, 40, 0.08), 0 0.125rem 0.375rem rgba(16, 24, 40, 0.08);
   --card-shadow-hover: 0 0.75rem 2rem rgba(16, 24, 40, 0.14), 0 0.25rem 0.5rem rgba(16, 24, 40, 0.1);
   --card-radius: 1rem;
+  --home-deco: #d3dae3;
 }
 
 body {
@@ -160,6 +161,7 @@ a {
 .main-name {
   display: flex;
   flex-direction: column-reverse;
+  padding-bottom: 2.5rem;
   align-items: center;
   justify-content: space-between;
   height: 100%;
@@ -191,17 +193,6 @@ a {
   text-align: center;
   backdrop-filter: blur(2px);
   width: 100vw;
-}
-
-.main-down {
-  visibility: hidden;
-  display: flex;
-  height: 10vh;
-  width: 100%;
-  justify-content: space-around;
-  filter: invert(78%) sepia(5%) saturate(0%) hue-rotate(93deg) brightness(91%) contrast(92%) opacity(50%);
-  opacity: 1;
-  transition: opacity 1s linear;
 }
 
 .persons {
@@ -649,26 +640,27 @@ a {
   .main-carousel,
   .carousel-inner {
     margin-top: 0;
-    max-height: 90vh;
-    min-height: 90vh;
-    height: 90vh;
+    max-height: 62vh;
+    min-height: 62vh;
+    height: 62vh;
     display: flex;
     align-items: center;
   }
 
   .carousel-indicators {
     display: flex;
+    bottom: 3.5rem;
   }
 
   .carousel-item {
-    min-height: 90vh;
-    max-height: 90vh;
+    min-height: 62vh;
+    max-height: 62vh;
     overflow: hidden;
   }
 
   .carousel__image {
     min-width: 100vw;
-    min-height: 90vh;
+    min-height: 62vh;
     position: absolute;
     height: unset;
     left: 50%;
@@ -684,37 +676,16 @@ a {
 
   .main-name {
     flex-direction: row;
-    padding: 3rem;
-    font-size: 2vw;
+    padding: 3rem 3rem 5.5rem;
+    font-size: min(2vw, 1.75rem);
     height: unset;
     top: unset;
     bottom: 0;
   }
 
   .main-name__logo {
-    width: 10vw;
+    width: min(8vw, 8rem);
     margin: unset;
-  }
-
-  .main-down {
-    display: flex;
-    height: 10vh;
-    width: min-content;
-    margin: auto;
-    cursor: pointer;
-    justify-content: space-around;
-    filter: invert(78%) sepia(5%) saturate(0%) hue-rotate(93deg) brightness(91%) contrast(92%) opacity(50%);
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 1s linear;
-  }
-
-  .main-down--hidden {
-    visibility: hidden;
-    opacity: 0;
-    transition:
-      visibility 0s 1s,
-      opacity 1s linear;
   }
 
   .background-elem {
@@ -1218,15 +1189,10 @@ a {
 }
 
 /* icon buttons: look like the plain icons they replaced */
-.main-down,
 .gallery-navigation__button {
   background: none;
   border: 0;
   padding: 0;
-}
-
-.main-down img {
-  height: 100%;
 }
 
 /* link colour with at least 4.5:1 contrast on the dark footer */
@@ -1249,6 +1215,7 @@ a {
   --page-bg: #2b3035;
   --surface: #1a1d21;
   --surface-muted: #23272c;
+  --home-deco: #3a4047;
   --card-shadow: 0 0.125rem 0.375rem rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.06);
   --card-shadow-hover: 0 0.25rem 0.625rem rgba(255, 255, 255, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
@@ -1991,12 +1958,82 @@ a.link-tile:focus-visible {
 
 /* home page */
 .body.body--home {
-  padding-top: 3rem;
+  padding-top: 0;
 }
 
-.home-grid {
+/* white bar of shortcuts that overlaps the bottom edge of the photos */
+.quick-bar {
+  position: relative;
+  z-index: 2;
+  margin-top: -2rem;
+  padding: 1rem;
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+}
+
+.quick-bar__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quick-bar__link {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--bs-body-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.quick-bar__link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.quick-bar__icon {
   display: grid;
-  gap: 2rem;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--bs-primary);
+  color: #fff;
+}
+
+/* sections alternate right and left like the original landing page, a light shape fills the empty side */
+.home-row {
+  display: grid;
+  align-items: center;
+}
+
+.home-deco {
+  display: none;
+  width: min(100%, 16rem);
+  justify-self: center;
+  fill: var(--home-deco);
+  stroke: var(--home-deco);
+}
+
+.home-deco--squares,
+.home-deco--bars {
+  stroke: none;
+}
+
+.home-deco--zigzag {
+  fill: none;
+  stroke-width: 10;
 }
 
 .main-tour {
@@ -2008,8 +2045,14 @@ a.link-tile:focus-visible {
 }
 
 .main-tour .video-player {
+  width: min(100%, 64rem);
   margin: 0;
-  max-width: 100%;
+}
+
+.main-tour .video-player video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
 
 /* sponsor logos sit right on the page background (transparent PNGs) */
@@ -2066,9 +2109,28 @@ a.link-tile:focus-visible {
     padding: 2rem 2.5rem;
   }
 
-  .home-grid {
-    grid-template-columns: minmax(18rem, 1fr) 2fr;
-    align-items: start;
+  .home-row {
+    gap: 3rem;
+  }
+
+  .home-row--right {
+    grid-template-columns: 1fr 2.5fr;
+  }
+
+  .home-row--left {
+    grid-template-columns: 2.5fr 1fr;
+  }
+
+  .home-row--left > .home-deco {
+    order: 1;
+  }
+
+  .home-deco {
+    display: block;
+  }
+
+  .quick-bar {
+    margin-top: -3.5rem;
   }
 }
 

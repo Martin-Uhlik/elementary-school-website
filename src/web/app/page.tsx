@@ -1,11 +1,22 @@
+import Link from "next/link";
+import { LuCalendarDays, LuImages, LuPhone, LuScrollText, LuUtensils } from "react-icons/lu";
 import HomeCarousel from "@/components/HomeCarousel";
-import ScrollArrow from "@/components/ScrollArrow";
 import VideoTour from "@/components/VideoTour";
+import HomeDecoration from "@/components/content/HomeDecoration";
 import LinkList from "@/components/content/LinkList";
 import PersonCard from "@/components/content/PersonCard";
 import { getLinkGroup } from "@/lib/content/links";
 import { getPhotos, getSponsors } from "@/lib/content/misc";
 import { getPeople } from "@/lib/content/people";
+
+// shortcuts in the white bar under the photos
+const quickLinks = [
+  { href: "/uredni-deska", label: "Úřední deska", Icon: LuScrollText },
+  { href: "/jidelna", label: "Jídelna", Icon: LuUtensils },
+  { href: "/organizace/prubeh-skolniho-roku", label: "Školní rok", Icon: LuCalendarDays },
+  { href: "/foto-video", label: "Foto a video", Icon: LuImages },
+  { href: "/kontakty", label: "Kontakty", Icon: LuPhone },
+];
 
 const HomePage = async () => {
   const people = await getPeople("Základní informace");
@@ -16,10 +27,37 @@ const HomePage = async () => {
   return (
     <>
       <HomeCarousel photos={photos} />
-      <ScrollArrow />
 
       <div className="body body--home">
-        <div className="home-grid">
+        <nav className="quick-bar" aria-label="Rychlé odkazy">
+          <ul className="quick-bar__list">
+            {quickLinks.map(({ href, label, Icon }) => (
+              <li key={href}>
+                <Link href={href} className="quick-bar__link">
+                  <span className="quick-bar__icon" aria-hidden="true">
+                    <Icon focusable="false" />
+                  </span>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="home-row home-row--right">
+          <HomeDecoration shape="squares" />
+          <section className="article__section">
+            <h1>Základní informace</h1>
+            <div className="persons">
+              {people.map((person) => (
+                <PersonCard key={person.id} person={person} variant="short" />
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <div className="home-row home-row--left">
+          <HomeDecoration shape="bars" />
           <section className="article__section">
             <h1>Aktuální informace</h1>
             {news.links.length === 0 ? (
@@ -28,21 +66,15 @@ const HomePage = async () => {
               <LinkList links={news.links} columns={1} />
             )}
           </section>
+        </div>
 
+        <div className="home-row home-row--right">
+          <HomeDecoration shape="zigzag" />
           <section className="article__section">
             <h1>Oznámení</h1>
             <LinkList links={announcements.links} />
           </section>
         </div>
-
-        <section className="article__section">
-          <h1>Základní informace</h1>
-          <div className="persons">
-            {people.map((person) => (
-              <PersonCard key={person.id} person={person} variant="short" />
-            ))}
-          </div>
-        </section>
 
         <section className="article__section main-tour">
           <h1>Videoprohlídka školy</h1>
