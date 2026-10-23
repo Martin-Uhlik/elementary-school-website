@@ -1,0 +1,6 @@
+# legacy static files copied from html/
+public/
+.next/
+node_modules/
+package-lock.json
+next-env.d.ts

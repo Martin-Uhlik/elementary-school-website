@@ -9,6 +9,7 @@ npm install
 npm run dev      # http://localhost:3000
 npm run build && npm start   # production
 npm run lint
+npm run format         # Prettier; format:check only checks
 ```
 
 ## Layout
