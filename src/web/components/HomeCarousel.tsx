@@ -1,16 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { schoolPhotos } from "@/lib/photos";
 
-const slides = [
-  { src: "/data/images/carousel_1.jpg", alt: "Fotografie školy" },
-  { src: "/data/images/carousel_2.jpg", alt: "Chemická učebna" },
-  { src: "/data/images/carousel_3.jpg", alt: "Jazyková učebna" },
-  { src: "/data/images/carousel_4.jpg", alt: "Školní jídelna" },
-  { src: "/data/images/carousel_5.jpg", alt: "Školní jídelna" },
-  { src: "/data/images/carousel_6.jpg", alt: "Tělocvična" },
-  { src: "/data/images/carousel_7.jpg", alt: "Šatny" },
-];
+const slides = schoolPhotos;
 
 const HomeCarousel = () => {
   const ref = useRef<HTMLDivElement>(null);

@@ -1021,3 +1021,416 @@ img.background-elem-wide {
   display: flex;
   align-items: center;
 }
+
+/* Myšák exercises (informatika/mysak) */
+.mysak {
+  min-width: 0;
+}
+
+.mysak .breadcrumb {
+  margin-bottom: 0.5rem;
+}
+
+.mysak__task {
+  font-size: 1.15rem;
+}
+
+.mysak__hint {
+  color: var(--text-placeholder);
+}
+
+.mysak-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.mysak-stats__item {
+  min-width: 6.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--mysak-surface);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.mysak-stats dt {
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mysak-stats dd {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.mysak-result {
+  margin-bottom: 1rem;
+}
+
+.mysak__info {
+  margin-top: 2rem;
+}
+
+.mysak__info summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mysak__pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.skladanka__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0 2rem;
+  max-width: 40rem;
+}
+
+.skladanka__board {
+  display: grid;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 960px;
+  margin: 1rem 0;
+  background: var(--mysak-surface);
+  border: 4px solid var(--mysak-surface);
+  box-shadow: var(--shadow-normal);
+  user-select: none;
+}
+
+.skladanka__board.is-done,
+[data-bs-theme="dark"] .skladanka__board.is-done {
+  border-color: var(--bs-success);
+}
+
+.skladanka__piece {
+  padding: 0;
+  border: 0;
+  outline: 1px solid #ffffff40;
+  outline-offset: -1px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.skladanka__board.is-done .skladanka__piece {
+  outline: 0;
+  cursor: default;
+}
+
+.skladanka__piece:focus-visible,
+.skladanka__piece.is-selected {
+  outline: 3px solid var(--bs-warning);
+  outline-offset: -3px;
+}
+
+.skladanka__piece.is-dragging {
+  position: relative;
+  z-index: 10;
+  cursor: grabbing;
+  box-shadow: 0 0.5rem 1.5rem #000000a0;
+}
+
+.skladanka__photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skladanka__photos legend {
+  width: 100%;
+}
+
+.skladanka__photos button {
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: 0.25rem;
+  background: none;
+  line-height: 0;
+}
+
+.skladanka__photos button.is-selected {
+  border-color: var(--bs-primary);
+}
+
+.skladanka__photos img {
+  width: 120px;
+  height: auto;
+  border-radius: 0.125rem;
+}
+
+@media (max-width: 575.98px) {
+  .skladanka__photos img {
+    width: 72px;
+  }
+}
+
+/* shared Myšák controls */
+.mysak-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.mysak-toolbar__size {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.mysak-range {
+  max-width: 30rem;
+}
+
+.mysak-board {
+  max-width: 40rem;
+  margin: 1rem 0;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--mysak-surface);
+  color: var(--text-secondary);
+}
+
+.mysak-board__label {
+  margin: 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mysak-board__word {
+  margin: 0.5rem 0 1rem;
+  font-family: var(--bs-font-monospace);
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mysak-board__input,
+.mysak-textarea--mono {
+  font-family: var(--bs-font-monospace);
+}
+
+.mysak-textarea {
+  max-width: 50rem;
+}
+
+/* 2. Klik a dvojklik */
+.klik__board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  width: min(100%, 32rem);
+  margin: 1rem 0;
+  padding: 4px;
+  background: var(--mysak-surface);
+  box-shadow: var(--shadow-normal);
+  user-select: none;
+}
+
+.klik__cell {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+}
+
+.klik__cell--0 {
+  background: #6c757d;
+}
+
+.klik__cell--1 {
+  background: #4b2a63;
+}
+
+.klik__cell--2 {
+  background: #5c5320;
+}
+
+.klik__cell--1.is-lit {
+  background: #b25dff;
+  box-shadow: 0 0 0.5rem #b25dff;
+}
+
+.klik__cell--2.is-lit {
+  background: #ffe135;
+  box-shadow: 0 0 0.5rem #ffe135;
+}
+
+.klik__cell:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
+
+/* 3. Rozházené barvy */
+.barvy__board {
+  display: grid;
+  gap: 2px;
+  max-width: 960px;
+  margin: 1rem 0;
+}
+
+.barvy__tile {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+}
+
+.barvy__tile.is-selected,
+.barvy__tile:focus-visible {
+  outline: 3px solid var(--bs-body-color);
+  outline-offset: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 4. Skládání slov */
+.slova__letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slova__letter {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--mysak-surface);
+  color: var(--text-secondary);
+  font-size: 1.75rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-normal);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.slova__letter.is-hinted {
+  background: var(--bs-primary);
+}
+
+.slova__letter.is-selected,
+.slova__letter:focus-visible {
+  outline: 3px solid var(--bs-warning);
+  outline-offset: 2px;
+}
+
+.slova__letter.is-dragging {
+  position: relative;
+  z-index: 10;
+  cursor: grabbing;
+}
+
+.slova__letters.is-solved .slova__letter {
+  background: var(--bs-success);
+  cursor: default;
+}
+
+/* 12. Jak rychle píšeš */
+.rychlost__settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0 2rem;
+  max-width: 50rem;
+}
+
+.rychlost__board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  max-width: 30rem;
+  margin: 1rem 0;
+}
+
+.rychlost__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  background: var(--mysak-surface);
+  color: var(--text-secondary);
+  font-family: var(--bs-font-monospace);
+  font-size: clamp(4rem, 18vw, 8rem);
+  line-height: 1;
+}
+
+.rychlost__cell.is-right {
+  background: var(--bs-success);
+}
+
+.rychlost__cell.is-wrong {
+  background: var(--bs-danger);
+}
+
+.rychlost__char {
+  animation: rychlost-in 0.2s ease-out;
+}
+
+@keyframes rychlost-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rychlost__char {
+    animation: none;
+  }
+}
+
+.rychlost__input {
+  max-width: 30rem;
+}
+
+/* Bootstrap's blue and grey outline buttons are too dark on the dark page background */
+[data-bs-theme="dark"] .mysak .btn-outline-primary {
+  --bs-btn-color: #6ea8fe;
+  --bs-btn-border-color: #6ea8fe;
+  --bs-btn-disabled-color: #6ea8fe;
+  --bs-btn-disabled-border-color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .mysak .btn-outline-secondary {
+  --bs-btn-color: #ced4da;
+  --bs-btn-border-color: #adb5bd;
+  --bs-btn-disabled-color: #ced4da;
+}
+
+.mysak-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mysak-toolbar__label {
+  margin-right: 0.25rem;
+}
+
+/* Myšák panels: the page background in dark mode is the same as --bg-primary, so lift them a little */
+:root {
+  --mysak-surface: var(--bg-primary);
+}
+
+[data-bs-theme="dark"] {
+  --mysak-surface: #343a40;
+}

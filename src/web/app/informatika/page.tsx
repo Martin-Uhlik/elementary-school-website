@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // Ported from html/informatika.html
 const InformatikaPage = () => {
   return (
@@ -13,50 +15,34 @@ const InformatikaPage = () => {
               <tbody>
                 <tr>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/1.html" target="_blank">
-                      Skládanka
-                    </a>
+                    <Link href="/informatika/mysak/skladanka">Skládanka</Link>
                   </td>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/2.html" target="_blank">
-                      Klik a dvojklik
-                    </a>
+                    <Link href="/informatika/mysak/klik-a-dvojklik">Klik a dvojklik</Link>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/3.html" target="_blank">
-                      Rozházené barvy
-                    </a>
+                    <Link href="/informatika/mysak/rozhazene-barvy">Rozházené barvy</Link>
                   </td>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/4.html" target="_blank">
-                      Skládání slov
-                    </a>
+                    <Link href="/informatika/mysak/skladani-slov">Skládání slov</Link>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/6.html" target="_blank">
-                      Znaky klávesnice
-                    </a>
+                    <Link href="/informatika/mysak/znaky-klavesnice">Znaky klávesnice</Link>
                   </td>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/10.html" target="_blank">
-                      Přeházené letopočty
-                    </a>
+                    <Link href="/informatika/mysak/prehazene-letopocty">Přeházené letopočty</Link>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/11.html" target="_blank">
-                      Rozházený text
-                    </a>
+                    <Link href="/informatika/mysak/rozhazeny-text">Rozházený text</Link>
                   </td>
                   <td>
-                    <a href="https://www.zsvltava.cz/mysak/cviceni/12.html" target="_blank">
-                      Jak rychle píšeš
-                    </a>
+                    <Link href="/informatika/mysak/jak-rychle-pises">Jak rychle píšeš</Link>
                   </td>
                 </tr>
               </tbody>
