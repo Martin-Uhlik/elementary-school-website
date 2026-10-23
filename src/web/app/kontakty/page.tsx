@@ -1,5 +1,5 @@
-import PersonCard, { ContactCard } from "@/components/content/PersonCard";
-import { getPeople, isContact } from "@/lib/content/people";
+import ContactDirectory from "@/components/content/ContactDirectory";
+import { getPeople } from "@/lib/content/people";
 
 // the page's sections, each one a label in data/people.ts
 const SECTIONS = [
@@ -17,29 +17,9 @@ const SECTIONS = [
 const KontaktyPage = async () => {
   const sections = await Promise.all(SECTIONS.map(async (label) => ({ label, people: await getPeople(label) })));
   return (
-    <>
-      <div className="body">
-        {sections.map(({ label, people }) => (
-          <div className="article" key={label}>
-            <hr className="article__line" />
-            <div className="article__section">
-              <h1>{label}</h1>
-              <div className="persons">
-                {/* the section's own phone number comes first, then the people */}
-                {people.filter(isContact).map((contact) => (
-                  <ContactCard key={contact.id} contact={contact} />
-                ))}
-                {people
-                  .filter((person) => !isContact(person))
-                  .map((person) => (
-                    <PersonCard key={person.id} person={person} />
-                  ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="body">
+      <ContactDirectory sections={sections} />
+    </div>
   );
 };
 

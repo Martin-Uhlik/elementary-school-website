@@ -8,10 +8,9 @@ const RodiceOznameniFromularePage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Pro rodiče</h1>
-            <LinkList links={oznameniFromulare.links} className="article__list documents" />
+            <LinkList links={oznameniFromulare.links} />
           </div>
         </div>
       </div>

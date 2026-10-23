@@ -13,7 +13,6 @@ const OrganizaceRadaSkolyPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Rada školy</h1>
             <span>

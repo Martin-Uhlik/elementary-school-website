@@ -5,6 +5,8 @@ type Props = {
   person: Person;
   // full: everything, as on /kontakty; short: outside phone numbers, e-mail and job title
   variant?: "full" | "short";
+  // heading level of the name, 3 where the card sits under a section heading
+  level?: 2 | 3;
 };
 
 const ICONS = {
@@ -55,7 +57,8 @@ export const PersonPhones = ({ person, withInternal }: { person: Person; withInt
   );
 };
 
-const PersonCard = ({ person, variant = "full" }: Props) => {
+const PersonCard = ({ person, variant = "full", level = 2 }: Props) => {
+  const Heading = level === 3 ? "h3" : "h2";
   const full = variant === "full";
   const { initials, tone } = avatar(person);
   return (
@@ -65,7 +68,7 @@ const PersonCard = ({ person, variant = "full" }: Props) => {
           {initials}
         </span>
         <div>
-          <h2 className="person-card__name">{personName(person)}</h2>
+          <Heading className="person-card__name">{personName(person)}</Heading>
           {person.position && <p className="person-card__position">{person.position}</p>}
         </div>
       </header>

@@ -4,7 +4,6 @@ const OrganizaceHistoriePage = () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Historie školy a obce</h1>
             <span className="citation">

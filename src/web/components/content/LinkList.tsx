@@ -1,16 +1,13 @@
 import LinkItem from "./LinkItem";
 import type { Link } from "@/data/types";
 
-// The site's usual list of documents: one link per line, with optional notes under it
-const LinkList = ({ links, className = "documents" }: { links: Link[]; className?: string }) => {
+// Links as a grid of tiles, one column on phones
+const LinkList = ({ links, columns }: { links: Link[]; columns?: 1 }) => {
   return (
-    <ul className={className}>
+    <ul className={`link-tiles${columns === 1 ? " link-tiles--single" : ""}`}>
       {links.map((link) => (
         <li key={link.id}>
           <LinkItem link={link} />
-          {link.description?.map((text) => (
-            <p key={text}>{text}</p>
-          ))}
         </li>
       ))}
     </ul>

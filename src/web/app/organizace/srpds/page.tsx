@@ -7,7 +7,6 @@ const OrganizaceSrpdsPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Spolek rodičů a přátel dětí školy</h1>
             <span>

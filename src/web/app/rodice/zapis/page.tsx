@@ -8,7 +8,6 @@ const RodiceZapisPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Zápis žáků 1. třídy do školního roku 2023/2024</h1>
             <LinkList links={zapis.links} />

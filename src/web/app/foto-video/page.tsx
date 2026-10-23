@@ -9,8 +9,7 @@ const FotoVideoPage = async () => {
   return (
     <div className="body">
       <div className="article">
-        <hr className="article__line" />
-        <div className="article__section">
+        <div className="article__section article__section--plain">
           <h1>Foto a video</h1>
           <ul className="gallery-sections">
             {sections.map((section) => (

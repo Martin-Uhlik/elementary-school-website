@@ -11,7 +11,6 @@ const OrganizaceMaterskaSkolaPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Mateřská škola</h1>
             <div className="link_huge">
@@ -36,15 +35,13 @@ const OrganizaceMaterskaSkolaPage = async () => {
           </div>
         </div>
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Dokumenty</h1>
             <LinkList links={materskaSkolaDokumenty.links} />
           </div>
         </div>
         <div className="article">
-          <hr className="article__line" />
-          <div className="article__section">
+          <div className="article__section article__section--plain">
             <h1>Kontakty</h1>
             <div className="persons">
               {staff.map((person) => (

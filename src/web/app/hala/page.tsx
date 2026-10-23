@@ -11,7 +11,6 @@ const HalaPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Pronájem tělocvičny a venkovního víceúčelového hřiště</h1>
             <div className="zig_zag">
@@ -38,7 +37,6 @@ const HalaPage = async () => {
           </div>
         </div>
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>
               Provozní řád sportovní haly - tělocvičny a venkovního víceúčelového hřiště při ZŠ a MŠ Moravský Písek

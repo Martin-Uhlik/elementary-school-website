@@ -7,7 +7,6 @@ const DokumentyPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Dokumenty základní školy</h1>
             {groups.map((group) => (

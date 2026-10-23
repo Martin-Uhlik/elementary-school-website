@@ -21,13 +21,13 @@ const BY_EXTENSION: Record<string, LinkType> = {
 export const LINK_TYPE_LABELS: Record<LinkType, string> = {
   page: "",
   external: "externí odkaz",
-  video: "video",
-  pdf: "PDF",
-  word: "Word",
-  excel: "Excel",
-  powerpoint: "PowerPoint",
-  scratch: "Scratch",
-  file: "soubor",
+  video: "Video",
+  pdf: "Dokument PDF",
+  word: "Dokument Word",
+  excel: "Tabulka Excel",
+  powerpoint: "Prezentace PowerPoint",
+  scratch: "Projekt Scratch",
+  file: "Soubor ke stažení",
 };
 
 // The type is not stored, it is read from the address: a file extension wins, then http(s) means another site

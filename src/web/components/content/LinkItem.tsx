@@ -1,39 +1,65 @@
 import NextLink from "next/link";
 import type { Link } from "@/data/types";
-import { getLinkType, LINK_TYPE_LABELS } from "@/lib/content/linkType";
+import { getLinkType, LINK_TYPE_LABELS, type LinkType } from "@/lib/content/linkType";
 
-type Props = {
-  link: Link;
-  // replaces the title as the link's content
-  children?: React.ReactNode;
-  // off where the content already shows the address, e.g. "www.msmt.cz"
-  showType?: boolean;
+// what the coloured square shows for each type
+const BADGES: Record<LinkType, string> = {
+  page: "→",
+  external: "↗",
+  video: "▶",
+  pdf: "PDF",
+  word: "DOC",
+  excel: "XLS",
+  powerpoint: "PPT",
+  scratch: "SB3",
+  file: "ZIP",
 };
 
-// A link with a badge for its type (PDF, Word, ...) or an arrow for another website
-const LinkItem = ({ link, children, showType = true }: Props) => {
-  const label = children ?? link.title;
-  if (!link.href) return <span>{label}</span>;
+const domain = (href: string) => href.replace(/^https?:\/\/(www\.)?/, "www.").replace(/\/.*$/, "");
 
-  const type = getLinkType(link.href);
-  if (type === "page") return <NextLink href={link.href}>{label}</NextLink>;
+// the line under the title: the type, or the address for another website
+const meta = (type: LinkType, href: string) => {
+  if (type === "external") return domain(href);
+  if (type === "page") return "Stránka webu";
+  return LINK_TYPE_LABELS[type];
+};
 
-  const href = type === "external" || /^https?:/.test(link.href) ? link.href : encodeURI(link.href);
+// A link as a tile: a coloured square with its type (PDF, DOC, ↗ ...), the title and the type or address under it
+const LinkItem = ({ link }: { link: Link }) => {
+  const type = link.href ? getLinkType(link.href) : undefined;
+  const content = (
+    <>
+      <span className={`link-tile__badge link-tile__badge--${type ?? "none"}`} aria-hidden="true">
+        {type ? BADGES[type] : "–"}
+      </span>
+      <span className="link-tile__text">
+        <span className="link-tile__title">{link.title}</span>
+        {link.href && type && (
+          <span className="link-tile__meta">
+            {meta(type, link.href)}
+            {type === "external" && <span className="visually-hidden"> ({LINK_TYPE_LABELS.external})</span>}
+          </span>
+        )}
+        {link.description?.map((text) => (
+          <span className="link-tile__description" key={text}>
+            {text}
+          </span>
+        ))}
+      </span>
+    </>
+  );
+
+  if (!link.href || !type) return <span className="link-tile link-tile--disabled">{content}</span>;
+  if (type === "page")
+    return (
+      <NextLink href={link.href} className="link-tile">
+        {content}
+      </NextLink>
+    );
+  const href = /^https?:/.test(link.href) ? link.href : encodeURI(link.href);
   return (
-    <a href={href} target="_blank">
-      {label}
-      {!showType ? null : type === "external" ? (
-        <span className="link-type link-type--external">
-          <span aria-hidden="true">↗</span>
-          <span className="visually-hidden"> ({LINK_TYPE_LABELS.external})</span>
-        </span>
-      ) : (
-        <span className={`link-type link-type--${type}`}>
-          <span className="visually-hidden"> (</span>
-          {LINK_TYPE_LABELS[type]}
-          <span className="visually-hidden">)</span>
-        </span>
-      )}
+    <a href={href} target="_blank" className="link-tile">
+      {content}
     </a>
   );
 };

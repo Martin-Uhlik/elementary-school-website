@@ -4,7 +4,6 @@ const OrganizaceEduroamPage = () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Eduroam</h1>
             <div className="article__body">

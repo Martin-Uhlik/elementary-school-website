@@ -11,7 +11,6 @@ const OrganizaceDruzinaPage = async () => {
     <>
       <div className="body">
         <div className="article">
-          <hr className="article__line" />
           <div className="article__section">
             <h1>Družina</h1>
             <div className="article__body">
@@ -62,7 +61,11 @@ const OrganizaceDruzinaPage = async () => {
               </p>
               <p>Ukončení docházky žáků musí být písemně oznámeno vychovatelce školní družiny.</p>
             </div>
-
+          </div>
+        </div>
+        <div className="article">
+          <div className="article__section article__section--plain">
+            <h1>Kontakty</h1>
             <div className="persons">
               {educators.map((person) => (
                 <PersonCard key={person.id} person={person} variant="short" />
