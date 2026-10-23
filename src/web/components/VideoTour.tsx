@@ -9,7 +9,7 @@ const sources = [
 ];
 
 // native replacement for the video.js player with the resolution switcher
-export default function VideoTour() {
+const VideoTour = () => {
   const ref = useRef<HTMLVideoElement>(null);
   const [quality, setQuality] = useState(sources[0]);
 
@@ -50,4 +50,6 @@ export default function VideoTour() {
       </label>
     </>
   );
-}
+};
+
+export default VideoTour;

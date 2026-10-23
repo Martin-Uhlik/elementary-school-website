@@ -43,7 +43,7 @@ const sponsors = [
   { src: "/data/images/sponsors/msmt.png", alt: "Logo MŠMT" },
 ];
 
-export default function HomePage() {
+const HomePage = () => {
   return (
     <>
       <HomeCarousel />
@@ -146,4 +146,6 @@ export default function HomePage() {
       </div>
     </>
   );
-}
+};
+
+export default HomePage;

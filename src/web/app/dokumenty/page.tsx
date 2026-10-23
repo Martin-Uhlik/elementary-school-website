@@ -1,5 +1,5 @@
 // Ported from html/dokumenty.html
-export default function DokumentyPage() {
+const DokumentyPage = () => {
   return (
     <>
       <div className="body">
@@ -149,4 +149,6 @@ export default function DokumentyPage() {
       </div>
     </>
   );
-}
+};
+
+export default DokumentyPage;

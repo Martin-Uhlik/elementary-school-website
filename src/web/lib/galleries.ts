@@ -10,16 +10,16 @@ const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
 export type GalleryImage = { src: string; width: number; height: number };
 export type Gallery = { id: string; title: string; images: GalleryImage[] };
 
-export async function listGalleryIds(): Promise<string[]> {
+export const listGalleryIds = async (): Promise<string[]> => {
   try {
     const entries = await fs.readdir(GALLERY_ROOT, { withFileTypes: true });
     return entries.filter((e) => e.isDirectory()).map((e) => e.name);
   } catch {
     return [];
   }
-}
+};
 
-export async function getGallery(id: string): Promise<Gallery | null> {
+export const getGallery = async (id: string): Promise<Gallery | null> => {
   if (!(await listGalleryIds()).includes(id)) return null;
   const dir = path.join(GALLERY_ROOT, id);
 
@@ -36,4 +36,4 @@ export async function getGallery(id: string): Promise<Gallery | null> {
     }),
   );
   return { id, title, images };
-}
+};

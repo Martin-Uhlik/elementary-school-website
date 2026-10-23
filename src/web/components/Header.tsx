@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { isActive, navigation } from "@/lib/navigation";
 
-export default function Header() {
+const Header = () => {
   const pathname = usePathname();
   const [sticky, setSticky] = useState(false);
   const collapseRef = useRef<HTMLDivElement>(null);
@@ -85,4 +85,6 @@ export default function Header() {
       </nav>
     </header>
   );
-}
+};
+
+export default Header;

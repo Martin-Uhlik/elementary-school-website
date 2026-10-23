@@ -1,5 +1,5 @@
 // Ported from html/kontakty.html
-export default function KontaktyPage() {
+const KontaktyPage = () => {
   return (
     <>
       <div className="body">
@@ -597,4 +597,6 @@ export default function KontaktyPage() {
       </div>
     </>
   );
-}
+};
+
+export default KontaktyPage;

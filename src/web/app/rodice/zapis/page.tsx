@@ -1,5 +1,5 @@
 // Ported from html/rodice/zapis.html
-export default function RodiceZapisPage() {
+const RodiceZapisPage = () => {
   return (
     <>
       <div className="body">
@@ -27,4 +27,6 @@ export default function RodiceZapisPage() {
       </div>
     </>
   );
-}
+};
+
+export default RodiceZapisPage;

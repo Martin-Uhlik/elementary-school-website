@@ -1,5 +1,5 @@
 // Ported from html/hala.html
-export default function HalaPage() {
+const HalaPage = () => {
   return (
     <>
       <div className="body">
@@ -204,4 +204,6 @@ export default function HalaPage() {
       </div>
     </>
   );
-}
+};
+
+export default HalaPage;

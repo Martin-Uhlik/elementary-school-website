@@ -1,5 +1,5 @@
 // Ported from html/uredni-deska.html
-export default function UredniDeskaPage() {
+const UredniDeskaPage = () => {
   return (
     <>
       <div className="body">
@@ -72,4 +72,6 @@ export default function UredniDeskaPage() {
       </div>
     </>
   );
-}
+};
+
+export default UredniDeskaPage;

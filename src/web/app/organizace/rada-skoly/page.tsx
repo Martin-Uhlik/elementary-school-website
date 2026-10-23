@@ -1,5 +1,5 @@
 // Ported from html/organizace/rada-skoly.html
-export default function OrganizaceRadaSkolyPage() {
+const OrganizaceRadaSkolyPage = () => {
   return (
     <>
       <div className="body">
@@ -65,4 +65,6 @@ export default function OrganizaceRadaSkolyPage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizaceRadaSkolyPage;

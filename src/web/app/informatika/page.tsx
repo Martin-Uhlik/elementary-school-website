@@ -1,5 +1,5 @@
 // Ported from html/informatika.html
-export default function InformatikaPage() {
+const InformatikaPage = () => {
   return (
     <>
       <div className="body">
@@ -684,4 +684,6 @@ export default function InformatikaPage() {
       </div>
     </>
   );
-}
+};
+
+export default InformatikaPage;

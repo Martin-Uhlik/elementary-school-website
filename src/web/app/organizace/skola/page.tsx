@@ -1,5 +1,5 @@
 // Ported from html/organizace/skola.html
-export default function OrganizaceSkolaPage() {
+const OrganizaceSkolaPage = () => {
   return (
     <>
       <div className="body">
@@ -73,4 +73,6 @@ export default function OrganizaceSkolaPage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizaceSkolaPage;

@@ -1,5 +1,5 @@
 // Ported from html/organizace/srpds.html
-export default function OrganizaceSrpdsPage() {
+const OrganizaceSrpdsPage = () => {
   return (
     <>
       <div className="body">
@@ -114,4 +114,6 @@ export default function OrganizaceSrpdsPage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizaceSrpdsPage;

@@ -12,7 +12,7 @@ const slides = [
   { src: "/data/images/carousel_7.jpg", alt: "Šatny" },
 ];
 
-export default function HomeCarousel() {
+const HomeCarousel = () => {
   const ref = useRef<HTMLDivElement>(null);
   // first slide is picked at random on every visit
   const [start, setStart] = useState<number | null>(null);
@@ -79,4 +79,6 @@ export default function HomeCarousel() {
       </div>
     </div>
   );
-}
+};
+
+export default HomeCarousel;

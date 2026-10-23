@@ -1,5 +1,5 @@
 // Ported from html/organizace/druzina.html
-export default function OrganizaceDruzinaPage() {
+const OrganizaceDruzinaPage = () => {
   return (
     <>
       <div className="body">
@@ -115,4 +115,6 @@ export default function OrganizaceDruzinaPage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizaceDruzinaPage;

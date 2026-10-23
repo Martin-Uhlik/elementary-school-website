@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "cookiesConfirm";
 
 // informs users that the site uses no cookies
-export default function CookieBar() {
+const CookieBar = () => {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
@@ -34,4 +34,6 @@ export default function CookieBar() {
       </div>
     </div>
   );
-}
+};
+
+export default CookieBar;

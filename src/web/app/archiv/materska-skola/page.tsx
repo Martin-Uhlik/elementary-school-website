@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // Ported from html/archiv/materska-skola.html
-export default function ArchivMaterskaSkolaPage() {
+const ArchivMaterskaSkolaPage = () => {
   return (
     <>
       <div className="gallery-navigation">
@@ -515,4 +515,6 @@ export default function ArchivMaterskaSkolaPage() {
       </div>
     </>
   );
-}
+};
+
+export default ArchivMaterskaSkolaPage;

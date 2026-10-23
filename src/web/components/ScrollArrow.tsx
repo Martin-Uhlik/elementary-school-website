@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 // arrow on the home page that scrolls half a screen down and hides once the page is scrolled
-export default function ScrollArrow() {
+const ScrollArrow = () => {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -22,4 +22,6 @@ export default function ScrollArrow() {
       onClick={() => window.scrollBy(0, window.innerHeight / 2)}
     />
   );
-}
+};
+
+export default ScrollArrow;

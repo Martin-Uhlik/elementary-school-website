@@ -1,5 +1,5 @@
 // Ported from html/organizace/historie.html
-export default function OrganizaceHistoriePage() {
+const OrganizaceHistoriePage = () => {
   return (
     <>
       <div className="body">
@@ -254,4 +254,6 @@ export default function OrganizaceHistoriePage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizaceHistoriePage;

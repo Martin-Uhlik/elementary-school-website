@@ -1,5 +1,5 @@
 // Ported from html/rodice/oznameni-fromulare.html
-export default function RodiceOznameniFromularePage() {
+const RodiceOznameniFromularePage = () => {
   return (
     <>
       <div className="body">
@@ -111,4 +111,6 @@ export default function RodiceOznameniFromularePage() {
       </div>
     </>
   );
-}
+};
+
+export default RodiceOznameniFromularePage;

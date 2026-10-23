@@ -42,8 +42,8 @@ const aliases: Record<string, string> = {
   "/galerie": "/foto-video",
 };
 
-export function isActive(pathname: string, item: NavItem): boolean {
+export const isActive = (pathname: string, item: NavItem): boolean => {
   const path = Object.entries(aliases).find(([from]) => pathname.startsWith(from))?.[1] ?? pathname;
   if ("children" in item) return path.startsWith(item.prefix);
   return item.href === "/" ? path === "/" : path === item.href || path.startsWith(item.href + "/");
-}
+};

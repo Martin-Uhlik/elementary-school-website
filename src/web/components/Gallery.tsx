@@ -9,7 +9,7 @@ import type { GalleryImage } from "@/lib/galleries";
 
 const LAYOUT_KEY = "galleryLayout";
 
-export default function Gallery({ title, images }: { title: string; images: GalleryImage[] }) {
+const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) => {
   const router = useRouter();
   const [dense, setDense] = useState(false);
 
@@ -113,4 +113,6 @@ export default function Gallery({ title, images }: { title: string; images: Gall
       </div>
     </>
   );
-}
+};
+
+export default Gallery;

@@ -4,13 +4,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // seasonal background: winter in December and January, Easter in March, boxes otherwise
-function backgroundForMonth(month: number) {
+const backgroundForMonth = (month: number) => {
   if (month === 11 || month === 0) return "winter.svg";
   if (month === 2) return "easter.svg";
   return "boxes.svg";
-}
+};
 
-export default function PageBackground() {
+const PageBackground = () => {
   const pathname = usePathname();
   const [image, setImage] = useState<string | null>(null);
 
@@ -27,4 +27,6 @@ export default function PageBackground() {
       {image && <img className="background-elem-wide" src={`/data/images/background_elements/${image}`} alt="" />}
     </div>
   );
-}
+};
+
+export default PageBackground;

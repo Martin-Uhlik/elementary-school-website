@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // Ported from html/archiv/druzina.html
-export default function ArchivDruzinaPage() {
+const ArchivDruzinaPage = () => {
   return (
     <>
       <div className="gallery-navigation">
@@ -535,4 +535,6 @@ export default function ArchivDruzinaPage() {
       </div>
     </>
   );
-}
+};
+
+export default ArchivDruzinaPage;

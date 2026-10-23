@@ -1,4 +1,4 @@
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
       <span className="centered">Základní škola a Mateřská škola, Moravský Písek, příspěvková organizace</span>
@@ -10,4 +10,6 @@ export default function Footer() {
       <span className="footer-text">IČO: 75021161</span>
     </footer>
   );
-}
+};
+
+export default Footer;

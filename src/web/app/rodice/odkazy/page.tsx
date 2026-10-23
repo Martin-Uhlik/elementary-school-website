@@ -1,5 +1,5 @@
 // Ported from html/rodice/odkazy.html
-export default function RodiceOdkazyPage() {
+const RodiceOdkazyPage = () => {
   return (
     <>
       <div className="body">
@@ -193,4 +193,6 @@ export default function RodiceOdkazyPage() {
       </div>
     </>
   );
-}
+};
+
+export default RodiceOdkazyPage;

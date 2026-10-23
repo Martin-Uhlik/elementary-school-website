@@ -1,5 +1,5 @@
 // Ported from html/organizace/eduroam.html
-export default function OrganizaceEduroamPage() {
+const OrganizaceEduroamPage = () => {
   return (
     <>
       <div className="body">
@@ -102,4 +102,6 @@ export default function OrganizaceEduroamPage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizaceEduroamPage;

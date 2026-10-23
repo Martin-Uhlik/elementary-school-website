@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "Základní škola a Mateřská škola, Moravský písek",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="cs" className={montserrat.variable}>
       <body>
@@ -31,4 +31,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

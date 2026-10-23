@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // Ported from html/archiv/zakladni-skola.html
-export default function ArchivZakladniSkolaPage() {
+const ArchivZakladniSkolaPage = () => {
   return (
     <>
       <div className="gallery-navigation">
@@ -1000,4 +1000,6 @@ export default function ArchivZakladniSkolaPage() {
       </div>
     </>
   );
-}
+};
+
+export default ArchivZakladniSkolaPage;

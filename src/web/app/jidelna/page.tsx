@@ -1,5 +1,5 @@
 // Ported from html/jidelna.html
-export default function JidelnaPage() {
+const JidelnaPage = () => {
   return (
     <>
       <div className="body">
@@ -70,4 +70,6 @@ export default function JidelnaPage() {
       </div>
     </>
   );
-}
+};
+
+export default JidelnaPage;

@@ -1,5 +1,5 @@
 // Ported from html/organizace/prubeh-skolniho-roku.html
-export default function OrganizacePrubehSkolnihoRokuPage() {
+const OrganizacePrubehSkolnihoRokuPage = () => {
   return (
     <>
       <div className="body">
@@ -47,4 +47,6 @@ export default function OrganizacePrubehSkolnihoRokuPage() {
       </div>
     </>
   );
-}
+};
+
+export default OrganizacePrubehSkolnihoRokuPage;

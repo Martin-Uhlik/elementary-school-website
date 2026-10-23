@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // Ported from html/foto-video.html
-export default function FotoVideoPage() {
+const FotoVideoPage = () => {
   return (
     <>
       <div className="body">
@@ -114,4 +114,6 @@ export default function FotoVideoPage() {
       </div>
     </>
   );
-}
+};
+
+export default FotoVideoPage;
