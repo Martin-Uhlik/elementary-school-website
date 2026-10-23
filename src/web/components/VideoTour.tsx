@@ -36,6 +36,8 @@ const VideoTour = () => {
         poster="/data/images/carousel_1.jpg"
         src={quality.src}
       >
+        {/* no speech in the video; the captions carry its on-screen labels */}
+        <track kind="captions" src="/data/videos/zsmp.cs.vtt" srcLang="cs" label="Čeština" />
         Pro přehrání videa je potřeba prohlížeč s podporou HTML5 videa.
       </video>
       <label className="video-quality">

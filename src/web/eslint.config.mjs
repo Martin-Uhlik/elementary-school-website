@@ -1,11 +1,14 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import prettier from "eslint-config-prettier/flat";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // full accessibility rule set (next only enables a few jsx-a11y rules; the plugin itself is registered by next)
+  { rules: jsxA11y.flatConfigs.strict.rules },
   // turns off ESLint rules that would fight with Prettier
   prettier,
   {

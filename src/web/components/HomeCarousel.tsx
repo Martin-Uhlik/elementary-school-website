@@ -42,7 +42,7 @@ const HomeCarousel = () => {
             data-bs-slide-to={i}
             className={i === start ? "active" : undefined}
             aria-current={i === start ? "true" : undefined}
-            aria-label={`Slide ${i + 1}`}
+            aria-label={`Snímek ${i + 1}`}
           ></button>
         ))}
       </div>
@@ -56,11 +56,11 @@ const HomeCarousel = () => {
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
+        <span className="visually-hidden">Předchozí snímek</span>
       </button>
       <button className="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
+        <span className="visually-hidden">Další snímek</span>
       </button>
       <div className="main-name">
         <span className="desktop-only">

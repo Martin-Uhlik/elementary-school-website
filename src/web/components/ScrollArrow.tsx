@@ -14,13 +14,15 @@ const ScrollArrow = () => {
   }, []);
 
   return (
-    <img
+    <button
+      type="button"
       id="main-down"
       className={`main-down desktop-only${hidden ? " main-down--hidden" : ""}`}
-      src="/data/images/icons/chevron-double-down.svg"
-      alt="šipka dolů"
+      aria-label="Posunout dolů"
       onClick={() => window.scrollBy(0, window.innerHeight / 2)}
-    />
+    >
+      <img src="/data/images/icons/chevron-double-down.svg" alt="" />
+    </button>
   );
 };
 

@@ -64,22 +64,33 @@ const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) =
   return (
     <>
       <div className="gallery-navigation">
-        <div className="gallery-navigation__back-arrow" onClick={() => router.back()}>
-          <img src="/data/images/icons/arrow-left.svg" alt="šipka zpět" className="gallery-navigation__icon" />
-        </div>
-        <div className="gallery-navigation__layout-switch">
-          <img
-            src="/data/images/icons/view-grid-4.svg"
-            alt="změna rozložení"
-            className="gallery-navigation__icon"
+        <button
+          type="button"
+          className="gallery-navigation__back-arrow gallery-navigation__button"
+          aria-label="Zpět"
+          onClick={() => router.back()}
+        >
+          <img src="/data/images/icons/arrow-left.svg" alt="" className="gallery-navigation__icon" />
+        </button>
+        <div className="gallery-navigation__layout-switch" role="group" aria-label="Rozložení galerie">
+          <button
+            type="button"
+            className="gallery-navigation__button"
+            aria-label="Velké náhledy"
+            aria-pressed={!dense}
             onClick={() => setLayout("4")}
-          />
-          <img
-            src="/data/images/icons/view-grid-9.svg"
-            alt="změna rozložení"
-            className="gallery-navigation__icon"
+          >
+            <img src="/data/images/icons/view-grid-4.svg" alt="" className="gallery-navigation__icon" />
+          </button>
+          <button
+            type="button"
+            className="gallery-navigation__button"
+            aria-label="Malé náhledy"
+            aria-pressed={dense}
             onClick={() => setLayout("9")}
-          />
+          >
+            <img src="/data/images/icons/view-grid-9.svg" alt="" className="gallery-navigation__icon" />
+          </button>
         </div>
       </div>
       <div className="body gallery-body">
@@ -88,7 +99,7 @@ const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) =
           <div className="article__section">
             <h1>{title}</h1>
             <div className={`article__body gallery${dense ? " gallery--dense" : ""}`} id="gallery">
-              {images.map((image) => (
+              {images.map((image, i) => (
                 <a
                   key={image.src}
                   className="gallery__image-wrapper"
@@ -103,7 +114,7 @@ const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) =
                     width={image.width}
                     height={image.height}
                     sizes="(min-width: 992px) 33vw, 100vw"
-                    alt=""
+                    alt={`Fotografie ${i + 1} z ${images.length}`}
                   />
                 </a>
               ))}
