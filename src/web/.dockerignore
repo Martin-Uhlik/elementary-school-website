@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.git
+.env*
+npm-debug.log*
+*.tsbuildinfo
+next-env.d.ts
+Dockerfile
+.dockerignore
+# mounted from the host by docker-compose.yml, not baked into the image
+public/galerie
+public/dokument
+public/data/videos

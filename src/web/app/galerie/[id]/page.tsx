@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Gallery from "@/components/Gallery";
-import { getGallery, listGalleryIds } from "@/lib/galleries";
-
-export const dynamicParams = false;
-
-export const generateStaticParams = async () => {
-  return (await listGalleryIds()).map((id) => ({ id }));
-};
+import { getGallery } from "@/lib/galleries";
 
 export const generateMetadata = async ({ params }: PageProps<"/galerie/[id]">): Promise<Metadata> => {
   const gallery = await getGallery((await params).id);

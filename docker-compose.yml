@@ -1,0 +1,44 @@
+# The whole site: docker compose up -d --build
+# Settings come from .env next to this file (copy .env.example).
+services:
+  web:
+    build: ./src/web
+    restart: unless-stopped
+    ports:
+      # IIS forwards the public traffic here; WEB_BIND is 127.0.0.1 when IIS runs on the same machine
+      - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-3000}:3000"
+    volumes:
+      # photos, documents and videos stay on the host (MEDIA_DIR), so they survive rebuilds;
+      # after adding files run: docker compose restart web
+      - ${MEDIA_DIR:-./media}/galerie:/app/public/galerie:ro
+      - ${MEDIA_DIR:-./media}/dokument:/app/public/dokument:ro
+      - ${MEDIA_DIR:-./media}/videos:/app/public/data/videos:ro
+    environment:
+      # not used yet; the web app reads src/web/data until the backend step
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    build: ./src/db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # for a database tool on this machine (pgAdmin, DBeaver); never open it to the network
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    volumes:
+      # Postgres 18 keeps its data under /var/lib/postgresql/18/docker; the named volume survives
+      # restarts and rebuilds, only "docker compose down -v" deletes it
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:

@@ -2,3 +2,9 @@ node_modules/
 .idea
 
 documents/
+
+# secrets for docker compose; .env.example is the template
+.env
+
+# photos, documents and videos for docker compose; they live only on the server
+media/

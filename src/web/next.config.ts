@@ -13,6 +13,8 @@ const mysak: Record<string, string> = {
 };
 
 const nextConfig: NextConfig = {
+  // a self-contained server in .next/standalone, used by the Docker image
+  output: "standalone",
   // keep old links (bookmarks, search engines) working after dropping the .html suffix
   async redirects() {
     return [
