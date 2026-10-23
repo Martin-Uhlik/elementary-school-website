@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ExerciseStatus from "./ExerciseStatus";
-import { schoolPhotos } from "@/lib/photos";
+import type { ExerciseProps } from "./exerciseComponents";
 import { shuffleChanged } from "@/lib/mysak/random";
 import { usePointerDrag } from "@/lib/mysak/usePointerDrag";
 import { formatTime, useStopwatch } from "@/lib/mysak/useStopwatch";
@@ -15,7 +15,8 @@ const isSolved = (order: number[]) => order.every((piece, slot) => piece === slo
 // order[slot] = piece that currently sits in that slot
 const createOrder = (count: number) => shuffleChanged(Array.from({ length: count }, (_, i) => i));
 
-const Skladanka = () => {
+// the puzzle pictures are the school photos from data/photos.ts
+const Skladanka = ({ photos }: ExerciseProps) => {
   const [cols, setCols] = useState(3);
   const [rows, setRows] = useState(3);
   const [photo, setPhoto] = useState(0);
@@ -64,7 +65,7 @@ const Skladanka = () => {
     restart(nextCols, nextRows);
   };
 
-  const image = schoolPhotos[photo];
+  const image = photos[photo];
 
   return (
     <div className="skladanka">
@@ -140,7 +141,7 @@ const Skladanka = () => {
 
       <fieldset className="skladanka__photos">
         <legend className="form-label fs-6">Obrázek</legend>
-        {schoolPhotos.map((p, i) => (
+        {photos.map((p, i) => (
           <button
             key={p.src}
             type="button"

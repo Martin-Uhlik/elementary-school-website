@@ -1,5 +1,8 @@
+import { getPeople, personName } from "@/lib/content/people";
+
 // Ported from html/organizace/srpds.html
-const OrganizaceSrpdsPage = () => {
+const OrganizaceSrpdsPage = async () => {
+  const board = await getPeople("SRPDŠ");
   return (
     <>
       <div className="body">
@@ -14,7 +17,11 @@ const OrganizaceSrpdsPage = () => {
             <div className="article__body">
               <h2>Rada:</h2>
               <div className="d-flex flex-column gap-1">
-                <span>předsedkyně: Jitka Huvarová</span> <span>pokladník: Mgr. Dagmar Lovecká</span>{" "}
+                {board.map((person) => (
+                  <span key={person.id}>
+                    {person.position}: {personName(person)}
+                  </span>
+                ))}
                 <span>+ zástupci jednotlivých tříd</span>
               </div>
             </div>

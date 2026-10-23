@@ -1,5 +1,12 @@
+import LinkList from "@/components/content/LinkList";
+import { getLinkGroup } from "@/lib/content/links";
+import PersonCard from "@/components/content/PersonCard";
+import { getPeople } from "@/lib/content/people";
+
 // Ported from html/organizace/materska-skola.html
-const OrganizaceMaterskaSkolaPage = () => {
+const OrganizaceMaterskaSkolaPage = async () => {
+  const staff = await getPeople("Mateřská škola");
+  const materskaSkolaDokumenty = await getLinkGroup("organizace-materska-skola-dokumenty");
   return (
     <>
       <div className="body">
@@ -32,43 +39,7 @@ const OrganizaceMaterskaSkolaPage = () => {
           <hr className="article__line" />
           <div className="article__section">
             <h1>Dokumenty</h1>
-            <ul className="documents">
-              <li>
-                <a href="/dokument/skolka-rad.doc" target="_blank">
-                  Školní řád
-                </a>
-              </li>
-              <li>
-                <a href="/dokument/skolka-SVP.doc" target="_blank">
-                  Školní vzdělávací program
-                </a>
-              </li>
-              <li>
-                <a href="/dokument/skolka-uplata-ustanoveni.doc" target="_blank">
-                  Úplata za předškolní vzdělávání - ustanovení
-                </a>
-              </li>
-              <li>
-                <a href="/dokument/skolka-uplata.doc" target="_blank">
-                  Úplata za předškolní vzdělávání
-                </a>
-              </li>
-              <li>
-                <a href="/dokument/skolka-kriteria.doc" target="_blank">
-                  Kritéria pro přijímání dětí
-                </a>
-              </li>
-              <li>
-                <a href="/dokument/skolka-registr.doc" target="_blank">
-                  Přidělení registračního čísla
-                </a>
-              </li>
-              <li>
-                <a href="/dokument/skolka-dohoda.doc" target="_blank">
-                  Dohoda rodičů - vyřizování záležitostí
-                </a>
-              </li>
-            </ul>
+            <LinkList links={materskaSkolaDokumenty.links} />
           </div>
         </div>
         <div className="article">
@@ -76,70 +47,9 @@ const OrganizaceMaterskaSkolaPage = () => {
           <div className="article__section">
             <h1>Kontakty</h1>
             <div className="persons">
-              <div>
-                <h2 className="h2">Mgr. Jana Zezulová</h2>
-                <span>tel.: 739 357 820</span>{" "}
-                <span>
-                  e-mail: <a href="mailto:zezulova@zsmp.cz">zezulova@zsmp.cz</a>
-                </span>{" "}
-                <span>zástupkyně ředitelky pro MŠ</span>
-              </div>
-              <div>
-                <h2 className="h2">Bronislava Lidmanová</h2>
-                <span>
-                  email: <a href="mailto:lidmanova@zsmp.cz">lidmanova@zsmp.cz</a>
-                </span>{" "}
-                <span>učitelka</span>
-              </div>
-              <div>
-                <h2 className="h2">Bc. Veronika Slavíková</h2>
-                <span>
-                  email: <a href="mailto:slavikova@zsmp.cz">slavikova@zsmp.cz</a>
-                </span>{" "}
-                <span>RD</span>
-              </div>
-              <div>
-                <h2 className="h2">Šárka Vavrincová</h2>
-                <span>
-                  email: <a href="mailto:vavrincova@zsmp.cz">vavrincova@zsmp.cz</a>
-                </span>{" "}
-                <span>učitelka</span>
-              </div>
-              <div>
-                <h2 className="h2">Marcela Zábelková</h2>
-                <span>
-                  email: <a href="mailto:zabelkova@zsmp.cz">zabelkova@zsmp.cz</a>
-                </span>{" "}
-                <span>učitelka</span>
-              </div>
-              <div>
-                <h2 className="h2">Miroslava Plachá</h2>
-                <span>provozní pracovnice</span>
-              </div>
-              <div>
-                <h2 className="h2">Alžběta Podráská</h2>
-                <span>učitelka</span>
-              </div>
-              <div>
-                <h2 className="h2">Anna Matoušková</h2>
-                <span>učitelka</span>
-              </div>
-              <div>
-                <h2 className="h2">Veronika Sládková</h2>
-                <span>asistentka pedagoga</span>
-              </div>
-              <div>
-                <h2 className="h2">Lucie Kolajová</h2>
-                <span>asistentka pedagoga</span>
-              </div>
-              <div>
-                <h2 className="h2">Jana Kolúchová</h2>
-                <span>asistentka pedagoga</span>
-              </div>
-              <div>
-                <h2 className="h2">Marie Jochová</h2>
-                <span>provozní pracovnice</span>
-              </div>
+              {staff.map((person) => (
+                <PersonCard key={person.id} person={person} variant="short" />
+              ))}
             </div>
           </div>
         </div>

@@ -1,5 +1,12 @@
+import LinkList from "@/components/content/LinkList";
+import { getLinkGroup } from "@/lib/content/links";
+import PersonCard from "@/components/content/PersonCard";
+import { getPeople } from "@/lib/content/people";
+
 // Ported from html/organizace/druzina.html
-const OrganizaceDruzinaPage = () => {
+const OrganizaceDruzinaPage = async () => {
+  const educators = await getPeople("Družina");
+  const druzinaDokumenty = await getLinkGroup("organizace-druzina-dokumenty");
   return (
     <>
       <div className="body">
@@ -9,43 +16,7 @@ const OrganizaceDruzinaPage = () => {
             <h1>Družina</h1>
             <div className="article__body">
               <h2>Dokumenty</h2>
-              <ul className="documents">
-                <li>
-                  <a href="/dokument/druzina-prihlaska.doc" target="_blank">
-                    Přihláška do školní družiny
-                  </a>
-                </li>
-                <li>
-                  <a href="/dokument/druzina-kriteria.doc" target="_blank">
-                    Kritéria přijetí žáka do školní družiny
-                  </a>
-                </li>
-                <li>
-                  <a href="/dokument/druzina-zapis.doc" target="_blank">
-                    Zápis do školní družiny pro školní rok
-                  </a>
-                </li>
-                <li>
-                  <a href="/dokument/druzina-listek.doc" target="_blank">
-                    Zápisní lístek do školní družiny
-                  </a>
-                </li>
-                <li>
-                  <a href="/dokument/druzina-odhlaseni.doc" target="_blank">
-                    Odhlášení ze školní družiny
-                  </a>
-                </li>
-                <li>
-                  <a href="/dokument/druzina-uvolneni.doc" target="_blank">
-                    Žádost o uvolnění žáka na mimoškolní aktivity
-                  </a>
-                </li>
-                <li>
-                  <a href="/dokument/druzina-rad.doc" target="_blank">
-                    Vnitřní řád školní družiny
-                  </a>
-                </li>
-              </ul>
+              <LinkList links={druzinaDokumenty.links} />
             </div>
 
             <div className="article__body">
@@ -93,22 +64,9 @@ const OrganizaceDruzinaPage = () => {
             </div>
 
             <div className="persons">
-              <div className="person">
-                <h2 className="h2">Šmahajová Miroslava</h2>
-                <span>tel.: 518 698 579</span>{" "}
-                <span>
-                  e-mail: <a href="mailto:smahajova@zsmp.cz">smahajova@zsmp.cz</a>
-                </span>{" "}
-                <span>vychovatelka školní družiny</span>
-              </div>
-              <div className="person">
-                <h2 className="h2">Zapletalová Barbora</h2>
-                <span>tel.: 518 698 579</span>{" "}
-                <span>
-                  email: <a href="mailto:zapletalova@zsmp.cz">zapletalova@zsmp.cz</a>
-                </span>{" "}
-                <span>vychovatelka školní družiny</span>
-              </div>
+              {educators.map((person) => (
+                <PersonCard key={person.id} person={person} variant="short" />
+              ))}
             </div>
           </div>
         </div>

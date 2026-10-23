@@ -1434,3 +1434,24 @@ img.background-elem-wide {
 [data-bs-theme="dark"] {
   --mysak-surface: #343a40;
 }
+
+/* type of a link (PDF, Word, ...) read from its address, see lib/content/linkType.ts */
+.link-type {
+  display: inline-block;
+  margin-left: 0.4em;
+  padding: 0 0.35em;
+  border: 1px solid currentColor;
+  border-radius: 0.25em;
+  font-size: 0.7em;
+  font-weight: 600;
+  line-height: 1.5;
+  vertical-align: 0.15em;
+  text-decoration: none;
+}
+
+.link-type--external {
+  padding: 0;
+  border: 0;
+  font-size: 0.9em;
+  vertical-align: baseline;
+}

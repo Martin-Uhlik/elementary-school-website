@@ -1,5 +1,14 @@
+import { Fragment } from "react";
+import { getPeople, personName } from "@/lib/content/people";
+
 // Ported from html/organizace/rada-skoly.html
-const OrganizaceRadaSkolyPage = () => {
+const OrganizaceRadaSkolyPage = async () => {
+  const groups = await Promise.all(
+    ["školy", "rodičů", "zřizovatele"].map(async (group) => ({
+      group,
+      members: await getPeople(`Rada školy: zástupci ${group}`),
+    })),
+  );
   return (
     <>
       <div className="body">
@@ -39,26 +48,19 @@ const OrganizaceRadaSkolyPage = () => {
               volí pedagogičtí pracovníci školy. Členem školské rady nemůže být ředitel školy.
             </span>
             <div className="semi_table">
-              <div className="semi_table__cell">
-                <span>Zástupci školy:</span>
-              </div>
-              <div className="semi_table__cell">
-                <span>Mgr. Jitka Domanská</span> <span>Barbora Zapletalová</span> <span>Mgr. Ivana Klobásková</span>
-              </div>
-              <hr className="semi_table__line" />
-              <div className="semi_table__cell">
-                <span>Zástupci rodičů:</span>
-              </div>
-              <div className="semi_table__cell">
-                <span>Pavlína Cahová</span> <span>Michaela Frelichová</span> <span>Michaela Půčková</span>
-              </div>
-              <hr className="semi_table__line" />
-              <div className="semi_table__cell">
-                <span>Zástupci zřizovatele:</span>
-              </div>
-              <div className="semi_table__cell">
-                <span>Mgr. Petra Horká</span> <span>Mgr. Jolana Mertová</span> <span>Hana Součková</span>
-              </div>
+              {groups.map(({ group, members }, i) => (
+                <Fragment key={group}>
+                  {i > 0 && <hr className="semi_table__line" />}
+                  <div className="semi_table__cell">
+                    <span>Zástupci {group}:</span>
+                  </div>
+                  <div className="semi_table__cell">
+                    {members.map((person) => (
+                      <span key={person.id}>{personName(person)} </span>
+                    ))}
+                  </div>
+                </Fragment>
+              ))}
             </div>
           </div>
         </div>

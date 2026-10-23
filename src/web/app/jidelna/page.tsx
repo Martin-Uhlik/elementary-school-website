@@ -1,5 +1,9 @@
+import LinkList from "@/components/content/LinkList";
+import { getLinkGroup } from "@/lib/content/links";
+
 // Ported from html/jidelna.html
-const JidelnaPage = () => {
+const JidelnaPage = async () => {
+  const dokumenty = await getLinkGroup("jidelna-dokumenty");
   return (
     <>
       <div className="body">
@@ -34,33 +38,7 @@ const JidelnaPage = () => {
               <div className="zig_zag__line-left">
                 <div className="article__body">
                   <h2>Dokumenty</h2>
-                  <ul className="documents">
-                    <li>
-                      <a href="/dokument/jídelna_přihláška_ZŠ.doc" target="_blank">
-                        Přihláška ke stravování pro základní školu
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/dokument/jídelna_přihláška_MŠ.doc" target="_blank">
-                        Přihláška ke stravování pro mateřskou školu
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/dokument/jidelna-smernice_zs.doc" target="_blank">
-                        Směrnice o stravování žáků v ZŠ
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/dokument/jidelna-smernice_ms.doc" target="_blank">
-                        Směrnice o stravování dětí v MŠ
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/dokument/20230901_stravne.doc" target="_blank">
-                        Ceník stravného od 1. 9. 2023
-                      </a>
-                    </li>
-                  </ul>
+                  <LinkList links={dokumenty.links} />
                 </div>
                 <img className="img_circle" src="/data/images/jidelna/jidelna_3.jpg" alt="Fotografie jídelny" />
               </div>

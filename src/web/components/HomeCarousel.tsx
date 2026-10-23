@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { schoolPhotos } from "@/lib/photos";
+import type { Photo } from "@/data/types";
 
-const slides = schoolPhotos;
-
-const HomeCarousel = () => {
+const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
   const ref = useRef<HTMLDivElement>(null);
   // first slide is picked at random on every visit
   const [start, setStart] = useState<number | null>(null);
@@ -13,7 +11,7 @@ const HomeCarousel = () => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- random pick must not run during SSR
     setStart(Math.floor(Math.random() * slides.length));
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     if (start === null || !ref.current) return;

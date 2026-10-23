@@ -1,5 +1,12 @@
+import LinkList from "@/components/content/LinkList";
+import { getLinkGroup } from "@/lib/content/links";
+import PersonCard from "@/components/content/PersonCard";
+import { getPeople } from "@/lib/content/people";
+
 // Ported from html/hala.html
-const HalaPage = () => {
+const HalaPage = async () => {
+  const manager = await getPeople("Hala");
+  const hala = await getLinkGroup("hala");
   return (
     <>
       <div className="body">
@@ -15,39 +22,16 @@ const HalaPage = () => {
                     <br />
                   </div>
 
-                  <div className="person">
-                    <h2 className="h2">Pavlína Šantavá</h2>
-                    <div className="email">
-                      <span className="email__label">e-mail:</span>
-                      <div className="email__links">
-                        <a href="mailto:santava@zsmp.cz">santava@zsmp.cz</a>
-                      </div>
-                    </div>
-                    <div className="phone">
-                      <span className="phone__label">tel.:</span>
-                      <div className="phone__numbers">
-                        <span className="phone__number">734 141 727</span>
-                      </div>
-                    </div>
-                  </div>
+                  {manager.map((person) => (
+                    <PersonCard key={person.id} person={person} variant="short" />
+                  ))}
                 </div>
                 <img className="img_circle" src="/data/images/hala/hala_1.jpg" alt="Fotografie venkovního hřiště" />
               </div>
               <div className="zig_zag__line-right">
                 <img className="img_circle" src="/data/images/hala/hala_2.jpg" alt="Fotografie tělocvičny" />
                 <div className="article__body">
-                  <ul className="documents">
-                    <li>
-                      <a href="/dokument/zadost_o_pronajem_telocvicny.doc" target="_blank">
-                        Žádost o pronájem tělocvičny
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/dokument/20221001_cena_pronajmu_haly.doc" target="_blank">
-                        Ceník pronájmu od 1. 10. 2022
-                      </a>
-                    </li>
-                  </ul>
+                  <LinkList links={hala.links} />
                 </div>
               </div>
             </div>

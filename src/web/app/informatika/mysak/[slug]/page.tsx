@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { exerciseComponents } from "@/components/mysak/exerciseComponents";
+import { getPhotos } from "@/lib/content/misc";
 import { exercises, getExercise } from "@/lib/mysak/exercises";
 
 export const dynamicParams = false;
@@ -49,7 +50,7 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
             {exercise.hint && <span className="mysak__hint"> {exercise.hint}</span>}
           </p>
 
-          <Exercise />
+          <Exercise photos={await getPhotos()} />
 
           <details className="mysak__info">
             <summary>Informace o cvičení</summary>

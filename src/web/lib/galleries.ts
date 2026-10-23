@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { imageSizeFromFile } from "image-size/fromFile";
+import { getGalleryTitle } from "@/lib/content/galleries";
 
 // Galleries live in public/galerie/<id>/: the photos plus an optional meta.json { "title": "..." }.
 // Only folders present at build time are served; this moves to the backend with uploads later.
@@ -23,9 +24,10 @@ export const getGallery = async (id: string): Promise<Gallery | null> => {
   if (!(await listGalleryIds()).includes(id)) return null;
   const dir = path.join(GALLERY_ROOT, id);
 
-  let title = id;
+  // meta.json wins, then the title from the gallery list in data/, then the folder name
+  let title = (await getGalleryTitle(id)) ?? id;
   try {
-    title = JSON.parse(await fs.readFile(path.join(dir, "meta.json"), "utf-8")).title ?? id;
+    title = JSON.parse(await fs.readFile(path.join(dir, "meta.json"), "utf-8")).title ?? title;
   } catch {}
 
   const files = (await fs.readdir(dir)).filter((f) => IMAGE_EXT.test(f) && !f.startsWith("thn")).sort();
