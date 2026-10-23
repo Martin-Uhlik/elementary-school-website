@@ -1,6 +1,7 @@
 "use client";
 
 import { useDeferredValue, useState } from "react";
+import { LuSearch } from "react-icons/lu";
 import PersonCard, { ContactCard } from "./PersonCard";
 import type { Person } from "@/data/types";
 import { isContact, personName } from "@/lib/content/people";
@@ -43,9 +44,7 @@ const ContactDirectory = ({ sections }: { sections: Section[] }) => {
         <div className="article__section contact-search">
           <h1>Kontakty</h1>
           <div className="contact-search__field">
-            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
+            <LuSearch aria-hidden="true" focusable="false" />
             <input
               type="search"
               className="form-control"
@@ -62,7 +61,7 @@ const ContactDirectory = ({ sections }: { sections: Section[] }) => {
       </div>
       {visible.map(({ label, people }) => (
         <div className="article" key={label}>
-          <section className="article__section article__section--plain" aria-label={label}>
+          <section className="article__section" aria-label={label}>
             <h2 className="contact-section__title">{label}</h2>
             <div className="persons">
               {/* the section's own phone number comes first, then the people */}

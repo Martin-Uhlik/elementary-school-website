@@ -7,6 +7,7 @@ import CookieBar from "@/components/CookieBar";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import PageBackground from "@/components/PageBackground";
+import { layoutScript } from "@/lib/layout";
 import { themeScript } from "@/lib/theme";
 
 const montserrat = Montserrat({
@@ -21,10 +22,10 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
-    <html lang="cs" className={montserrat.variable} data-bs-theme="light" suppressHydrationWarning>
+    <html lang="cs" className={montserrat.variable} data-bs-theme="light" data-layout="grid" suppressHydrationWarning>
       <head>
-        {/* sets data-bs-theme before the first paint so the page never flashes the wrong theme */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* set data-bs-theme and data-layout before the first paint so the page never flashes */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript + layoutScript }} />
       </head>
       <body>
         <a className="visually-hidden-focusable skip-link" href="#obsah">

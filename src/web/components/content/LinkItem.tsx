@@ -1,18 +1,21 @@
 import NextLink from "next/link";
+import type { IconType } from "react-icons";
+import { BsFiletypeDoc, BsFiletypePdf, BsFiletypePpt, BsFiletypeXls } from "react-icons/bs";
+import { LuArrowRight, LuBlocks, LuCirclePlay, LuExternalLink, LuFileArchive, LuMinus } from "react-icons/lu";
 import type { Link } from "@/data/types";
 import { getLinkType, LINK_TYPE_LABELS, type LinkType } from "@/lib/content/linkType";
 
-// what the coloured square shows for each type
-const BADGES: Record<LinkType, string> = {
-  page: "→",
-  external: "↗",
-  video: "▶",
-  pdf: "PDF",
-  word: "DOC",
-  excel: "XLS",
-  powerpoint: "PPT",
-  scratch: "SB3",
-  file: "ZIP",
+// the icon in the coloured square for each type
+const BADGES: Record<LinkType, IconType> = {
+  page: LuArrowRight,
+  external: LuExternalLink,
+  video: LuCirclePlay,
+  pdf: BsFiletypePdf,
+  word: BsFiletypeDoc,
+  excel: BsFiletypeXls,
+  powerpoint: BsFiletypePpt,
+  scratch: LuBlocks,
+  file: LuFileArchive,
 };
 
 const domain = (href: string) => href.replace(/^https?:\/\/(www\.)?/, "www.").replace(/\/.*$/, "");
@@ -27,10 +30,11 @@ const meta = (type: LinkType, href: string) => {
 // A link as a tile: a coloured square with its type (PDF, DOC, ↗ ...), the title and the type or address under it
 const LinkItem = ({ link }: { link: Link }) => {
   const type = link.href ? getLinkType(link.href) : undefined;
+  const Badge = type ? BADGES[type] : LuMinus;
   const content = (
     <>
       <span className={`link-tile__badge link-tile__badge--${type ?? "none"}`} aria-hidden="true">
-        {type ? BADGES[type] : "–"}
+        <Badge focusable="false" />
       </span>
       <span className="link-tile__text">
         <span className="link-tile__title">{link.title}</span>

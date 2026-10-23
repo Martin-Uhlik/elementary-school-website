@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
+import { LuCamera } from "react-icons/lu";
 import type { Gallery } from "@/data/types";
 
 type Props = { gallery: Gallery; href: string; day?: string; previews: string[] };
@@ -42,10 +43,7 @@ const GalleryCard = ({ gallery, href, day, previews }: Props) => {
               "▶"
             ) : (
               <>
-                <svg viewBox="0 0 16 16" fill="currentColor" focusable="false">
-                  <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                  <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.17a2 2 0 0 1-1.42-.59l-.82-.82A2 2 0 0 0 9.17 2H6.83a2 2 0 0 0-1.42.59l-.82.82A2 2 0 0 1 3.17 4zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0" />
-                </svg>
+                <LuCamera focusable="false" />
                 {day ?? gallery.year}
               </>
             )}

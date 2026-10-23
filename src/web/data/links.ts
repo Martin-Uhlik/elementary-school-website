@@ -552,10 +552,9 @@ export const links: Link[] = [
     groupId: "rodice-oznameni-fromulare",
     title: "Co dělat, když...",
     href: "/dokument/Co_delat.pdf",
-    description: [
-      "Průvodce nežádoucími sociálními jevy a možnostmi jejich řešení pro rodiče žáků základních škol.",
+    description: ["Průvodce nežádoucími sociálními jevy a možnostmi jejich řešení pro rodiče žáků základních škol."],
+    details:
       "Obsah: Podílíme se na výchově vašich dětí (přehled kontaktů). Co děti potřebují? Jaká mají práva a povinnosti? Co potřebují rodiče? Jaká mají práva a jaké povinnosti? Jak se projevuje nežádoucí chování dětí? Co dělat, když se moje dítě „nemožně“ chová? Co dělat, když moje dítě má nevhodné kamarády? Co dělat, když moje dítě chodí za školu? Co dělat, když je moje dítě šikanováno nebo šikanuje? Co dělat, když moje dítě kouří, pije alkohol nebo zkouší drogy? Co dělat, když moje dítě podléhá počítači, televizi a mobilu? Co dělat, když si moje dítě ubližuje? Literatura.",
-    ],
   },
   {
     id: "rodice-zapis-plakat-zapis-zaku-do-1-tridy",

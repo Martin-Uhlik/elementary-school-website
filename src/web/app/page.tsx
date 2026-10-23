@@ -20,7 +20,7 @@ const HomePage = async () => {
 
       <div className="body body--home">
         <div className="home-grid">
-          <section className="article__section article__section--plain">
+          <section className="article__section">
             <h1>Základní informace</h1>
             <div className="persons persons--single">
               {people.map((person) => (

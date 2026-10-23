@@ -64,7 +64,7 @@ const OrganizaceDruzinaPage = async () => {
           </div>
         </div>
         <div className="article">
-          <div className="article__section article__section--plain">
+          <div className="article__section">
             <h1>Kontakty</h1>
             <div className="persons">
               {educators.map((person) => (

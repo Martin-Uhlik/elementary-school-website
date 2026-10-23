@@ -17,6 +17,8 @@ export type Link = {
   // missing for a plain text item
   href?: string;
   description?: string[];
+  // a longer note shown in a tooltip next to the link
+  details?: string;
 };
 
 // Part of the school a gallery or a person belongs to

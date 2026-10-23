@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { isActive, navigation } from "@/lib/navigation";
+import LayoutSwitch from "@/components/LayoutSwitch";
 import ThemeSwitch from "@/components/ThemeSwitch";
 
 const Header = () => {
@@ -84,6 +85,7 @@ const Header = () => {
                 );
               })}
             </ul>
+            <LayoutSwitch />
             <ThemeSwitch />
           </div>
         </div>
