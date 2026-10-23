@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="cs" />
+<meta name="title" content="Malé etudy pro klávesnici a myš Malé etudy pro klávesnici a myš  - Jak rychle píšeš?" />
+<meta name="description" content="Zjisti jak rychle píšeš!" />
+            
+<meta name="copyright" content="EDGERING.ORG, 2012" />
+<meta name="author" content="EDGERING WEB DEVELOPMENT, jirka@edgering.org" />
+<meta name="robots" content="index, follow" />
+<meta http-equiv="cache-control" content="no-cache" />
+   
+<style type="text/css" media="screen">@import url(http://www.zsvltava.cz/mysak/core/css/screen.css);</style>
+<link type="text/css" href="../core/css/ui-lightness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
+   
+<link href='http://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet' type='text/css'>   
+   
+<script type="text/javascript" src="../core/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../core/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../core/js/lib.js"></script>
+   
+<script type="text/javascript">
+<!--
+    
+$(document).ready(function(){
+            
+  $("#dialog").dialog({
+    autoOpen: false,
+    hide: "explode",
+    modal: false 
+  });
+                         
+  $(".drg").draggable();
+  
+  $(".Board").html('<p><textarea cols="30" rows="25"></textarea></p><p id="brdInfoPanel"><span id="valKeyPress"></span> <span id="valChars"></span></p>');
+    
+  $(".Board textarea").keyup(function(e){
+    KeyPress++;      
+    $(this).parents(".Board").find("span#valKeyPress").html(KeyPress);
+    $(this).parents(".Board").find("span#valChars").html($(this).val().length);        
+  })
+                
+      
+  $("#pnlBtmNav_0 a").click(function(){ $("#CviceniInfo").toggle();  })
+     
+  default_text = $("#info p").html(); 
+                        
+})
+
+  var _gaq = _gaq || [];
+ _gaq.push(['_setAccount', 'UA-2470694-19']);
+ _gaq.push(['_trackPageview']);
+
+ (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+-->
+</script>
+
+<style type="text/css" media="screen">@import url(http://www.zsvltava.cz/mysak/cviceni/12.css);</style>
+<script type="text/javascript" src="12.js"></script>
+</head>
+
+<body> 
+ <h1><a href="../index.html">Malé etudy pro klávesnici a myš  - Jak rychle píšeš?</a></h1>   
+ <div id="inn">
+
+  <div id="info">
+  <span id="medal" class="drg"></span>           
+  <h2>12. Jak rychle píšeš?</h2>
+   <p> 
+   Zjisti jak rychle píšeš!  </p>
+  <noscript><div style="padding-top: 20px;">Pro správné fungování je třeba mít povolený Java Script.</div></noscript>          
+ </div> 
+   
+ <div id="content">
+  <div id="content_pad" class="content_pad_cv">       
+   <div id="inner">
+    <div id="inner_pad"><table cellspacing="10" cellpadding="0" style="width: 36em; margin: 0 auto 1em auto;">
+ <tr>
+  <th colspan="2">
+   <a style="border-radius: 12px; -moz-border-radius: 12px; letter-spacing: -1px; padding: 0.4em 0; display: block; color: #000; font-size: 2em; background: #9bed3a; text-decoration: none;" href="#" id="btnStart">&rarr; START &larr;</a>
+   <a style="border-radius: 12px; -moz-border-radius: 12px; letter-spacing: -1px; padding: 0.4em 0; display: block; color: #000; font-size: 2em; background: #CBCFD2; text-decoration: none; color: #F4F4F4; " href="#" id="btnStop">&rarr; STOP <span></span> &larr;</a>
+  </th>
+ </tr>
+ <tr style="font-size: 10em; font-family: Verdana;"> 
+  <th id="lblQ" style="width: 50%; border: 1px solid #CCCFD1; height: 1.5em;"></th>
+  <th id="lblA" style="width: 50%; background: #fff;"></th>
+ </tr>
+ <tr style="font-size: 3em; color: #fff; background: #21262B;">
+  <th id="lblAll">0</th>
+  <th><span id="lblSpravne">0</span> &nbsp; <span id="lblProc">0</span></th>
+ </tr>  
+ <tr style="font-size: 12px;">
+  <th style="padding: 8px 0;"><span id="lbl_popis"></span></th>
+  <th style="padding: 8px 0;"><span id="lbl_popis2"></span></th>
+ </tr> 
+ <tr>
+  <td><div data-default="2" class="slider" id="slider" style="width: 200px; margin: 0 auto;"></div></td>
+  <td><div data-default="3" class="slider" id="slider2" style="width: 200px; margin: 0 auto;"></div></td>
+ </tr> 
+ <tr>
+  <th>obtížnost: <span id="lbl_hor"></span></th>
+  <th>rychlost: <span id="lbl_hor2"></span></th>
+ </tr> 
+</table></div>        
+             
+    </div>
+   </div>
+    
+        
+    <div id="pnlBtmNav">
+     <ul class="mnu">
+      <li id="pnlBtmNav_0"><a href="#CviceniInfo">Informace o cvičení</a></li>
+      <li id="pnlBtmNav_1"><a href="11.html">předchozí</a></li>            
+     </ul>
+    </div>
+   
+        <div id="CviceniInfo">
+           <div id="HPinfo">     
+       <h3>informace o cvičení Jak rychle píšeš?</h3>
+       <p>Cvičení, pomocí kterého lze monitorovat vývoj orientace na klávesnici. Díky rozložení na jednotlivé znaky lze sledovat a zároveň trénovat specifické oblasti znaků.</p>
+      </div> 
+           </div>     
+         
+         
+  </div>  
+  </div>
+          
+  <p id="foot">
+   <img src="http://toplist.cz/dot.asp?id=1128801" border="0" alt="TOPlist" width="1" height="1" />
+   <img src="http://toplist.cz/dot.asp?id=71966" border="0" alt="TOPlist" width="1" height="1" />   
+  </p>        
+  
+ </body>
+</html>

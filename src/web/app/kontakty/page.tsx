@@ -1,0 +1,600 @@
+// Ported from html/kontakty.html
+export default function KontaktyPage() {
+  return (
+    <>
+      <div className="body">
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Učitelé</h1>
+            <div className="persons">
+              <div className="person">
+                <h2 className="h2">Mgr. Uhlíková Ivana</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:uhlikova@zsmp.cz">uhlikova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 114</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 574</span>
+                  </div>
+                </div>
+                <span>ředitelka školy, učitelka předmětů fyzika 6.B, 7.tř., 8.tř. a 9.AB</span>{" "}
+                <span>
+                  aprobace učitelství všeobecně vzdělávacích předmětů fyzika - základy techniky na Pedagogické fakultě
+                  Univerzity Palackého Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Vařechová Kateřina</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:varechova@zsmp.cz">varechova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 131</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 591</span>
+                  </div>
+                </div>
+                <span>zástupkyně ředitele školy, učitelka předmětů anglický jazyk 7.tř. a 9.AB</span>{" "}
+                <span>
+                  aprobace učitelství cizích jazyků pro ZŠ - angličtina na Pedagogické fakultě Masarykovy univerzity
+                  Brno
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">RNDr. Bukovjan Miroslav</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:bukovjan@zsmp.cz">bukovjan@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 117</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 577</span>
+                  </div>
+                </div>
+                <span>
+                  správce počítačové sítě, učitel předmětů informatika 4.tř. až 9.tř., fyzika 6.A, pracovní činnosti
+                  chlapci 6.tř až 9.tř., hudební výchova 8.tř. a 9.AB
+                </span>{" "}
+                <span>
+                  aprobace učitelství 5.-12. ročník matematika - zeměpis na Přírodovědecké fakultě Masarykovy univerzity
+                  Brno
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Číhalíková Jana</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:cihalikova@zsmp.cz">cihalikova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 118</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 578</span>
+                  </div>
+                </div>
+                <span>
+                  učitelka předmětů český jazyk a literatura 8.tř. a 9.AB, dějepis 8.tř. a 9.AB, výtvarná výchova 9.A,
+                  pracovní činnosti děvčata 9.AB, seminář z českého jazyka 9.AB, třídní učitelka 9.A
+                </span>{" "}
+                <span>aprobace český jazyk a literatura - dějepis na Pedagogické fakultě TU Liberec</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Dokoupilová Ivana</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:dokoupilova@zsmp.cz">dokoupilova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 131</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 591</span>
+                  </div>
+                </div>
+                <span>
+                  učitelka předmětů anglický jazyk 5.tř. až 8.tř., konverzace v anglickém jazyce 6.AB až 9.tř., hudební
+                  výchova 6.AB{" "}
+                </span>{" "}
+                <span>aprobace angličtina a výchova ke zdraví na Pedagogické fakultě Univerzity Palackého Olomouc</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Domanská Jitka</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:domanska@zsmp.cz">domanska@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 128</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 588</span>
+                  </div>
+                </div>
+                <span>učitelka předmětů první třídy, třídní učitelka 1.tř.</span>{" "}
+                <span>aprobace učitelství pro 1. stupeň ZŠ na Pedagogické fakultě Masarykovy univerzity Brno</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Domanská Eva</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:domanskaeva@zsmp.cz">domanskaeva@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 112</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 572</span>
+                  </div>
+                </div>
+                <span>
+                  učitelka předmětů páté třídy, prvouka 3.tř., pracovní činnosti 3.tř., výtvarná výchova 3.tř., třídní
+                  učitelka 5.tř.
+                </span>{" "}
+                <span>aprobace učitelství pro 1. stupeň ZŠ na Pedagogické fakultě Univerzity Palackého Olomouc</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Hrančík Přemysl</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:hrancik@zsmp.cz">hrancik@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 117</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 577</span>
+                  </div>
+                </div>
+                <span>
+                  učitel předmětů zeměpis 6.tř. až 9.tř., tělesná výchova chlapci 6.tř. až 9.tř., sportovní hry 6.tř. až
+                  9.tř., třídní učitel 8.tř.
+                </span>{" "}
+                <span>
+                  aprobace biologie - zeměpis - geolologie na Přírodovědecké fakultě Univerzity Palackého Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Hrušková Alena</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:hruskova@zsmp.cz">hruskova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 129</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 589</span>
+                  </div>
+                </div>
+                <span>
+                  učitelka předmětů matematika 7.tř. a 8.tř., přírodopis 6.AB., 7.tř. a 8.tř., výtvarná výchova 7.tř. a
+                  8.tř., hudební výchova 7.tř., pracovní činnosti děvčata 6.AB, 7.tř. a 8.tř., třídní učitelka 7.tř.
+                </span>{" "}
+                <span>
+                  aprobace učitelství matematika - biologie na Přírodovědecké fakultě Masarykovy univerzity Brno
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Krejčiříková Andrea</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:krejcirikova@zsmp.cz">krejcirikova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 112</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 572</span>
+                  </div>
+                </div>
+                <span>učitelka předmětů druhé třídy, třídní učitelka 2.tř.</span>{" "}
+                <span>aprobace učitelství pro 1. stupeň ZŠ na Pedagogické fakultě Univerzity Palackého Olomouc</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Lehnertová Jitka</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:lehnertova@zsmp.cz">lehnertova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 118</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 578</span>
+                  </div>
+                </div>
+                <span>
+                  učitelka předmětů český jazyk a literatura 6.AB. a 7.tř., dějepis 6.AB a 7.tř., tělesná výchova
+                  děvčata 6.AB, třídní učitelka 6.A
+                </span>{" "}
+                <span>
+                  aprobace český jazyk a literatura - dějepis na Pedagogické fakultě Univerzity Palackého Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Lekavá Pavla</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:lekava@zsmp.cz">lekava@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 130</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 590</span>
+                  </div>
+                </div>
+                <span>
+                  výchovná poradkyně, učitelka předmětů chemie 8.tř. a 9.AB, přírodopis 9.AB, tělesná výchova 4.tř. a
+                  5.tř., tělesná výchova děvčata 7.tř. až 9.tř., pracovní činnosti 4.tř. a 5.tř., třídní učitelka 9.B
+                </span>{" "}
+                <span>aprobace biologie - chemie na Přírodovědecké fakultě Univerzity Palackého Olomouc</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Matějíková Lenka</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:matejikova@zsmp.cz">matejikova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 131</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 591</span>
+                  </div>
+                </div>
+                <span>
+                  školní metodik prevence, učitelka předmětů německý jazyk 7.tř. až 9.AB, občanská výchova 6.tř. až
+                  9.tř., výchova ke zdraví 6.AB, 8.tř. a 9.AB, třídní učitelka 6.B
+                </span>{" "}
+                <span>
+                  aprobace německý jazyk - občanská výchova na Pedagogické fakultě Univerzity Palackého Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Studničková Jaroslava</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:studnickova@zsmp.cz">studnickova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 116</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 576</span>
+                  </div>
+                </div>
+                <span>
+                  učitelka předmětů matematika 6.AB a 9.AB, seminář z matematiky 9.AB, výtvarná výchova 6.AB a 9.B
+                </span>{" "}
+                <span>
+                  aprobace matematika - deskriptivní geometrie na Přírodovědecké fakultě Univerzity Palackého Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Šmahajová Miroslava</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:smahajova@zsmp.cz">smahajova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 119</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 579</span>
+                  </div>
+                </div>
+                <span>vychovatelka školní družiny</span>{" "}
+                <span>aprobace vychovatelství a učitelka MŠ na Střední pedagogické škole Znojmo</span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Klobásková Ivana</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:klobaskova@zsmp.cz">klobaskova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 112</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 572</span>
+                  </div>
+                </div>
+                <span>učitelka předmětů čtvrté třídy, třídní učitelka 4.tř.</span>{" "}
+                <span>
+                  aprobace učitelství pro školy vyžadující zvláštní péči na Pedagogické fakultě Univerzity Palackého
+                  Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Mgr. Bc. Štvánová Alena</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:stvanova@zsmp.cz">stvanova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 120</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 580</span>
+                  </div>
+                </div>
+                <span>učitelka předmětů třetí třídy, anglický jazyk 8.tř., třídní učitelka 3.tř.</span>{" "}
+                <span>
+                  aprobace učitelství pro 1. stupeň ZŠ a speciální pedagogika na Pedagogické fakultě Univerzity
+                  Palackého Olomouc
+                </span>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Zapletalová Barbora</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:zapletalova@zsmp.cz">zapletalova@zsmp.cz</a>
+                  </div>
+                </div>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 119</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 579</span>
+                  </div>
+                </div>
+                <span>vychovatelka školní družiny aprobace Vychovatel na Akademii HUSPOL s.r.o. Kunovice</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Asistentky učitelů</h1>
+            <div className="persons">
+              <div className="phone">
+                <span className="phone__label">tel.:</span>
+                <div className="phone__numbers">
+                  <span className="phone__number">vnitřní: 120</span>{" "}
+                  <span className="phone__number">vnitrostátní: 518 698 580</span>
+                </div>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Kristýna Kurečková, DiS.</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:kureckova@zsmp.cz">kureckova@zsmp.cz</a>
+                  </div>
+                </div>
+
+                <span>asistentka 2.tř.</span>
+              </div>
+              <div className="person">
+                <h2 className="h2">Renata Vyskočilová</h2>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:vyskocilova@zsmp.cz">vyskocilova@zsmp.cz</a>
+                  </div>
+                </div>
+
+                <span>asistentka 4.tř.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Knihovna</h1>
+            <div className="persons">
+              <div className="phone">
+                <span className="phone__label">tel.:</span>
+                <div className="phone__numbers">
+                  <span className="phone__number">vnitřní: 113</span>{" "}
+                  <span className="phone__number">vnitrostátní: 518 698 573</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Hospodářka, vedoucí školní jídelny</h1>
+            <div className="persons">
+              <div className="person">
+                <h2 className="h2">Jana Petruchová</h2>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">vnitřní: 111</span>{" "}
+                    <span className="phone__number">vnitrostátní: 518 698 571</span>{" "}
+                    <span className="phone__number">mobilní 739 357 890</span>
+                  </div>
+                </div>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:petruchova@zsmp.cz">petruchova@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Kuchyň</h1>
+            <div className="persons">
+              <div className="phone">
+                <span className="phone__label">tel.:</span>
+                <div className="phone__numbers">
+                  <span className="phone__number">vnitřní: 121</span>{" "}
+                  <span className="phone__number">vnitrostátní: 518 698 581</span>
+                </div>
+              </div>
+
+              <div className="person">
+                <h2 className="h2">Radek Lekavý</h2>
+              </div>
+              <div className="person">
+                <h2 className="h2">Jana Repíková</h2>
+              </div>
+              <div className="person">
+                <h2 className="h2">Marie Vrtalová</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Správní zaměstnaci</h1>
+            <div className="persons">
+              <div className="phone">
+                <span className="phone__label">tel.:</span>
+                <div className="phone__numbers">
+                  <span className="phone__number">vnitřní: 123</span>{" "}
+                  <span className="phone__number">vnitrostátní: 518 698 583</span>
+                </div>
+              </div>
+              <div className="person">
+                <h2 className="h2">Jaroslav Lovecký</h2>
+              </div>
+              <div>
+                <h2 className="h2">Michaela Vránová</h2>
+              </div>
+              <div className="person">
+                <h2 className="h2">Alena Šantavá</h2>
+              </div>
+              <div className="person">
+                <h2 className="h2">Pavlína Šantavá</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Zástupkyně ředitelky pro MŠ</h1>
+            <div className="persons">
+              <div className="person">
+                <h2 className="h2">Mgr. Jana Zezulová</h2>
+                <div className="phone">
+                  <span className="phone__label">tel.:</span>
+                  <div className="phone__numbers">
+                    <span className="phone__number">mobilní 739 357 820</span>
+                  </div>
+                </div>
+                <div className="email">
+                  <span className="email__label">e-mail:</span>
+                  <div className="email__links">
+                    <a href="mailto:zezulova@zsmp.cz">zezulova@zsmp.cz</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Mateřská škola - ulice Velkomoravská 409</h1>
+            <div className="persons">
+              <div className="phone">
+                <span className="phone__label">tel.:</span>
+                <div className="phone__numbers">
+                  <span className="phone__number">mobilní 737 008 186</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="article">
+          <hr className="article__line" />
+          <div className="article__section">
+            <h1>Mateřská škola - ulice Sokolská</h1>
+            <div className="persons">
+              <div className="phone">
+                <span className="phone__label">tel.:</span>
+                <div className="phone__numbers">
+                  <span className="phone__number">mobilní 739 826 607</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

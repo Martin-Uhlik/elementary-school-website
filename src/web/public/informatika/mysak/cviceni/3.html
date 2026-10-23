@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="cs" />
+<meta name="title" content="Malé etudy pro klávesnici a myš Malé etudy pro klávesnici a myš  - Rozházené barvy" />
+<meta name="description" content="Tvým úkolem je označit myší všechny dvojice stejných barev." />
+            
+<meta name="copyright" content="EDGERING.ORG, 2012" />
+<meta name="author" content="EDGERING WEB DEVELOPMENT, jirka@edgering.org" />
+<meta name="robots" content="index, follow" />
+<meta http-equiv="cache-control" content="no-cache" />
+   
+<style type="text/css" media="screen">@import url(http://www.zsvltava.cz/mysak/core/css/screen.css);</style>
+<link type="text/css" href="../core/css/ui-lightness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
+   
+<link href='http://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet' type='text/css'>   
+   
+<script type="text/javascript" src="../core/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../core/js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="../core/js/lib.js"></script>
+   
+<script type="text/javascript">
+<!--
+    
+$(document).ready(function(){
+            
+  $("#dialog").dialog({
+    autoOpen: false,
+    hide: "explode",
+    modal: false 
+  });
+                         
+  $(".drg").draggable();
+  
+  $(".Board").html('<p><textarea cols="30" rows="25"></textarea></p><p id="brdInfoPanel"><span id="valKeyPress"></span> <span id="valChars"></span></p>');
+    
+  $(".Board textarea").keyup(function(e){
+    KeyPress++;      
+    $(this).parents(".Board").find("span#valKeyPress").html(KeyPress);
+    $(this).parents(".Board").find("span#valChars").html($(this).val().length);        
+  })
+                
+      
+  $("#pnlBtmNav_0 a").click(function(){ $("#CviceniInfo").toggle();  })
+     
+  default_text = $("#info p").html(); 
+                        
+})
+
+  var _gaq = _gaq || [];
+ _gaq.push(['_setAccount', 'UA-2470694-19']);
+ _gaq.push(['_trackPageview']);
+
+ (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+-->
+</script>
+
+<style type="text/css" media="screen">@import url(http://www.zsvltava.cz/mysak/cviceni/3.css);</style>
+<script type="text/javascript" src="3.js"></script>
+</head>
+
+<body> 
+ <h1><a href="../index.html">Malé etudy pro klávesnici a myš  - Rozházené barvy</a></h1>   
+ <div id="inn">
+
+  <div id="info">
+  <span id="medal" class="drg"></span>           
+  <h2>3. Rozházené barvy</h2>
+   <p> 
+   Tvým úkolem je označit myší všechny dvojice stejných barev.  </p>
+  <noscript><div style="padding-top: 20px;">Pro správné fungování je třeba mít povolený Java Script.</div></noscript>          
+ </div> 
+   
+ <div id="content">
+  <div id="content_pad" class="content_pad_cv">       
+   <div id="inner">
+    <div id="inner_pad"><table class="shadow" style="border: 4px solid #fff; margin: 0 auto;" id="tblPuzzle" cellspacing="0" cellpadding="0"></table>
+
+<div id="double_score_holder">
+ <p class="double_score"><span id="lblSpravne">0</span><span id="lblSpatne">0</span></p> 
+</div>
+
+<table id="lblInfo">
+ <tr>
+  <td style="font-size: 30px; border-right: 3px solid #CCCFD1; padding-right: 10px;">   
+   <span id="lbl_hor"></span> &times; <span id="lbl_ver"></span>  
+  </td>  
+  <th>sloupec</th><td><a class="like_button" href="#" id="lblColPlus">+</a></td><td><a class="like_button" href="#" id="lblColMinus">&minus;</a></td>
+  <th>řada</th><td><a class="like_button" href="#" id="lblRowPlus">+</a></td><td><a class="like_button" href="#" id="lblRowMinus">&minus;</a></td>
+ 
+  <th class="lblMixer" style="padding-left: 30px;"><a href="#" id="lblMixIt">zamíchat</a></th>
+ </tr>  
+</table></div>        
+             
+    </div>
+   </div>
+    
+        
+    <div id="pnlBtmNav">
+     <ul class="mnu">
+      <li id="pnlBtmNav_0"><a href="#CviceniInfo">Informace o cvičení</a></li>
+      <li id="pnlBtmNav_1"><a href="2.html">předchozí</a></li>      <li id="pnlBtmNav_2"><a href="4.html">předchozí</a></li>      
+     </ul>
+    </div>
+   
+        <div id="CviceniInfo">
+           <div id="HPinfo">     
+       <h3>informace o cvičení Rozházené barvy</h3>
+       <p>Cvičení aktivující obě mozkové hemisféry a odhaluje cit a míru schopnosti rozlišovat odstíny barev. Vícerozměrné mřížky nabízející větší škálu odstínů jedné barvy a umožní tak odhalit vysokou rozlišovací schopnost u toho, kdo cvičení zvládne.</p>
+      </div> 
+           </div>     
+         
+         
+  </div>  
+  </div>
+          
+  <p id="foot">
+   <img src="http://toplist.cz/dot.asp?id=1128801" border="0" alt="TOPlist" width="1" height="1" />
+   <img src="http://toplist.cz/dot.asp?id=71966" border="0" alt="TOPlist" width="1" height="1" />   
+  </p>        
+  
+ </body>
+</html>
