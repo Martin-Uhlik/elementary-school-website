@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { isActive, navigation } from "@/lib/navigation";
+import ThemeSwitch from "@/components/ThemeSwitch";
 
 const Header = () => {
   const pathname = usePathname();
@@ -23,12 +24,15 @@ const Header = () => {
 
   // close the mobile menu after navigating
   useEffect(() => {
-    collapseRef.current?.classList.remove("show");
+    // hide through Bootstrap so the toggler's aria-expanded stays in sync
+    import("bootstrap").then(({ Collapse }) => {
+      if (collapseRef.current) Collapse.getInstance(collapseRef.current)?.hide();
+    });
   }, [pathname]);
 
   return (
     <header className={`header${sticky ? " sticky" : ""}`} id="myHeader">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Hlavní menu">
         <div className="container-fluid align-center">
           <Link className="navbar-brand" href="/">
             ZŠMP
@@ -40,7 +44,7 @@ const Header = () => {
             data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation"
+            aria-label="Zobrazit menu"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -59,14 +63,14 @@ const Header = () => {
                 }
                 return (
                   <li className="nav-item dropdown" key={item.label}>
-                    <a
+                    <button
+                      type="button"
                       className={`nav-link dropdown-toggle${active}`}
-                      role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
                       {item.label}
-                    </a>
+                    </button>
                     <ul className="dropdown-menu">
                       {item.children.map((child) => (
                         <li key={child.href}>
@@ -80,6 +84,7 @@ const Header = () => {
                 );
               })}
             </ul>
+            <ThemeSwitch />
           </div>
         </div>
       </nav>

@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# tour videos are too big for git (GitHub rejects files over 100 MB); copy them to the server separately
+/public/data/videos/*.mp4

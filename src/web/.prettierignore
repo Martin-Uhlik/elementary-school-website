@@ -1,4 +1,4 @@
-# legacy static files copied from html/
+# legacy static files from the old html site
 public/
 .next/
 node_modules/

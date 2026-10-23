@@ -1,6 +1,6 @@
 # ZŠMP web (Next.js)
 
-Next.js port of the static site in `../../html`. It renders the same pages with the same look; the old site stays untouched until this one replaces it.
+Next.js port of the old static site (formerly `html/`, still available in git history). It renders the same pages with the same look.
 
 ## Run
 
@@ -14,7 +14,7 @@ npm run format         # Prettier; format:check only checks
 
 ## Layout
 
-- `app/` one folder per page, same URLs as before without `.html` (e.g. `/organizace/skola`). Pages were converted from `html/**/*.html`.
+- `app/` one folder per page, same URLs as before without `.html` (e.g. `/organizace/skola`). Pages were converted from the old `html/**/*.html`.
 - `app/layout.tsx` shared shell: header, cookie bar, seasonal background, footer.
 - `components/` client pieces that replaced the jQuery in `index.js` (sticky header, cookie bar, carousel, gallery).
 - `lib/navigation.ts` main menu items.

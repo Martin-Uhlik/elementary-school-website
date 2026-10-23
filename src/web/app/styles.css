@@ -5,7 +5,12 @@
   --bg-secondary: #b2b2b2;
 
   --text-secondary: white;
-  --text-placeholder: #b2b2b2;
+  --text-placeholder: #767676; /* darkest grey with 4.5:1 contrast on white */
+  --row-alt-bg: #e7e9eb;
+  --link-on-row-alt: #0a58ca;
+  --icon-filter: invert(18%) sepia(15%) saturate(333%) hue-rotate(146deg) brightness(98%) contrast(90%);
+  --icon-filter-hover: invert(18%) sepia(15%) saturate(333%) hue-rotate(146deg) brightness(98%) contrast(30%);
+  --background-elem-opacity: 1;
 
   /* Shadows */
   --shadow-normal: 0 0.25rem 1rem #00000040;
@@ -374,13 +379,11 @@ a {
   height: 3rem;
   width: 3rem;
   cursor: pointer;
-  filter: invert(18%) sepia(15%) saturate(333%) hue-rotate(146deg) brightness(98%) contrast(90%)
-    drop-shadow(3px 5px 2px rgb(0 0 0 / 0.1));
+  filter: var(--icon-filter) drop-shadow(3px 5px 2px rgb(0 0 0 / 0.1));
 }
 
 .gallery-navigation__icon:hover {
-  filter: invert(18%) sepia(15%) saturate(333%) hue-rotate(146deg) brightness(98%) contrast(30%)
-    drop-shadow(2px 2px 2px rgb(0 0 0 / 0.2));
+  filter: var(--icon-filter-hover) drop-shadow(2px 2px 2px rgb(0 0 0 / 0.2));
 }
 
 .gallery-list {
@@ -517,7 +520,7 @@ a {
 }
 
 .inf tr:nth-child(2n) {
-  background-color: #e7e9eb;
+  background-color: var(--row-alt-bg);
 }
 
 .inf td {
@@ -545,7 +548,7 @@ a {
 }
 
 .table tr:nth-child(2n) {
-  background-color: #e7e9eb;
+  background-color: var(--row-alt-bg);
 }
 
 .table td {
@@ -951,4 +954,70 @@ video.video-js {
 
 .video-quality {
   margin-bottom: 3rem;
+}
+
+/* Accessibility */
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background: var(--bs-body-bg);
+  box-shadow: var(--shadow-small);
+}
+
+/* white keeps 4.5:1 contrast on the primary blue; the active item is underlined instead of brighter */
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+}
+
+/* icon buttons: look like the plain icons they replaced */
+.main-down,
+.gallery-navigation__button {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.main-down img {
+  height: 100%;
+}
+
+/* link colours with at least 4.5:1 contrast on the grey rows and the dark footer */
+.inf a,
+.table a {
+  color: var(--link-on-row-alt);
+}
+
+.footer a {
+  color: #9ec5fe;
+}
+
+/* Dark theme: Bootstrap switches its own colours with data-bs-theme, these cover the site's custom ones */
+[data-bs-theme="dark"] {
+  --bg-primary: #1b1f22;
+  --text-placeholder: #adb5bd;
+  --row-alt-bg: #2b3035;
+  --link-on-row-alt: var(--bs-link-color);
+  --icon-filter: invert(90%);
+  --icon-filter-hover: invert(70%);
+  --background-elem-opacity: 0.06;
+  --shadow-normal: 0 0.25rem 1rem #00000080;
+}
+
+img.background-elem,
+img.background-elem-wide {
+  opacity: var(--background-elem-opacity);
+}
+
+/* theme switch in the navbar */
+.theme-switch .nav-link {
+  display: flex;
+  align-items: center;
 }

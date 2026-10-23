@@ -25,14 +25,14 @@ const CookieBar = () => {
   };
 
   return (
-    <div className={`cookies-bar${hidden ? " cookie-bar--hidden" : ""}`} id="cookieBar">
+    <aside className={`cookies-bar${hidden ? " cookie-bar--hidden" : ""}`} id="cookieBar" aria-label="Cookies">
       <span className="cookies-bar__text">Tento web nepoužívá žádné cookies.</span>
       <div className="cookies-bar__buttons">
-        <button className="cookies-bar__button btn btn-primary" onClick={confirm}>
+        <button type="button" className="cookies-bar__button btn btn-primary" onClick={confirm}>
           OK
         </button>
       </div>
-    </div>
+    </aside>
   );
 };
 

@@ -26,7 +26,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // legacy static files copied from html/
+    // legacy static files from the old html site
     "public/**",
   ]),
 ]);
