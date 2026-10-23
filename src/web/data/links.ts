@@ -57,11 +57,6 @@ export const linkGroups: LinkGroup[] = [
     title: "Dokumenty",
   },
   {
-    id: "organizace-materska-skola-dokumenty",
-    page: "/organizace/materska-skola",
-    title: "Dokumenty",
-  },
-  {
     id: "rodice-oznameni-fromulare",
     page: "/rodice/oznameni-fromulare",
   },
@@ -124,6 +119,19 @@ export const linkGroups: LinkGroup[] = [
     page: "/rodice/odkazy",
     title: "Ministerstvo školství, mládeže a tělovýchovy",
   },
+  {
+    id: "organizace-rada-skoly",
+    page: "/organizace/rada-skoly",
+  },
+  {
+    id: "organizace-druzina-dotaznik",
+    page: "/organizace/druzina",
+    title: "Dotazník",
+  },
+  {
+    id: "skolni-poradenske-sluzby",
+    page: "/skolni-poradenske-sluzby",
+  },
 ];
 
 export const links: Link[] = [
@@ -137,13 +145,13 @@ export const links: Link[] = [
     id: "home-oznameni-doucovani-zaku",
     groupId: "home-oznameni",
     title: "Doučování žáků",
-    href: "/dokument/2021_doučování.doc",
+    href: "/dokument/2021_doucovani.doc",
   },
   {
     id: "home-oznameni-zapojeni-do-projektu-desatero-pro-primar",
     groupId: "home-oznameni",
     title: "Zapojení do projektu “Desatero pro primární prevenci”",
-    href: "/dokument/2021_Desatero pro primární prevenci.doc",
+    href: "/dokument/2021_prevence.doc",
   },
   {
     id: "home-oznameni-pronajem-jazykove-ucebny",
@@ -164,6 +172,12 @@ export const links: Link[] = [
     href: "https://zsmp.edupage.org/",
   },
   {
+    id: "home-oznameni-op-jak-sablony-ii",
+    groupId: "home-oznameni",
+    title: "OP JAK ŠABLONY II",
+    href: "/dokument/2026_op_jak_sablony_II.png",
+  },
+  {
     id: "dokumenty-zaci-se-vyucuji-dle-skolniho-vzdelavaciho-programu",
     groupId: "dokumenty-zaci-se-vyucuji-dle",
     title: "Školního vzdělávacího programu",
@@ -176,12 +190,6 @@ export const links: Link[] = [
     href: "/dokument/svp_dodatek03.doc",
   },
   {
-    id: "dokumenty-zaci-se-vyucuji-dle-priloha-svp-pro-druzinu",
-    groupId: "dokumenty-zaci-se-vyucuji-dle",
-    title: "Příloha ŠVP pro družinu",
-    href: "/dokument/02svpDruzina.doc",
-  },
-  {
     id: "dokumenty-zaci-se-vyucuji-dle-priloha-svp-pro-nabozenstvi",
     groupId: "dokumenty-zaci-se-vyucuji-dle",
     title: "Příloha ŠVP pro náboženství",
@@ -191,25 +199,13 @@ export const links: Link[] = [
     id: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni-skolnim-radem",
     groupId: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni",
     title: "Školním řádem",
-    href: "/dokument/011skolrad.doc",
+    href: "/dokument/skol_rad.doc",
   },
   {
-    id: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni-dodatek-skolniho-radu-c-1-2017-prava-pov",
+    id: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni-sankcnim-radem",
     groupId: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni",
-    title: "Dodatek školního řádu č.1/2017 - práva, povinosti, opatření",
-    href: "/dokument/012skolrad.doc",
-  },
-  {
-    id: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni-skolni-rad-dodatek-c-2",
-    groupId: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni",
-    title: "Školní řád - dodatek č. 2",
-    href: "/dokument/2020_Školní řád - dodatek č. 2.doc",
-  },
-  {
-    id: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni-skolni-rad-dodatek-c-3",
-    groupId: "dokumenty-zaci-se-ridi-a-jsou-hodnoceni",
-    title: "Školní řád - dodatek č. 3",
-    href: "/dokument/2022_Školní řád - dodatek č. 3.doc",
+    title: "Sankčním řádem",
+    href: "/dokument/sankcni_rad.doc",
   },
   {
     id: "dokumenty-zaci-se-mohou-zapojit-do-krouzku-nabidka-pro-skolni-rok",
@@ -290,9 +286,45 @@ export const links: Link[] = [
     href: "/dokument/zprava2223.docx",
   },
   {
+    id: "dokumenty-vyrocni-zpravy-vyrocni-zprava-o-cinnosti-skoly-za-skoln-2-2",
+    groupId: "dokumenty-vyrocni-zpravy",
+    title: "Výroční zpráva o činnosti školy za školní rok 2023-2024",
+    href: "/dokument/zprava2324.docx",
+  },
+  {
+    id: "dokumenty-vyrocni-zpravy-vyrocni-zprava-o-cinnosti-skoly-za-skoln-2-2-2",
+    groupId: "dokumenty-vyrocni-zpravy",
+    title: "Výroční zpráva o činnosti školy za školní rok 2024-2025",
+    href: "/dokument/zprava2425.docx",
+  },
+  {
     id: "dokumenty-projekty-op-jak",
     groupId: "dokumenty-projekty",
     title: "OP JAK",
+  },
+  {
+    id: "uredni-deska-navrh-rozpoctu-2027-2028",
+    groupId: "uredni-deska",
+    title: "Návrh rozpočtu 2027-2028",
+    href: "/dokument/2025_návrh rozpočtu 2027_2028.pdf",
+  },
+  {
+    id: "uredni-deska-rozpocet-na-rok-2026",
+    groupId: "uredni-deska",
+    title: "Rozpočet na rok 2026",
+    href: "/dokument/2025_rozpočet na rok 2026.pdf",
+  },
+  {
+    id: "uredni-deska-schvaleny-plan-rozpoctu-na-rok-2024",
+    groupId: "uredni-deska",
+    title: "Schválený plán rozpočtu na rok 2024",
+    href: "/dokument/2024_schvaleny_plan_rozpoctu_2024.pdf",
+  },
+  {
+    id: "uredni-deska-schvaleny-navrh-rozpoctu-na-rok-2025-202",
+    groupId: "uredni-deska",
+    title: "Schválený návrh rozpočtu na rok 2025, 2026",
+    href: "/dokument/2025-26_schvaleny_navrh_rozpoctu_2025_2026.pdf",
   },
   {
     id: "uredni-deska-plan-rozpoctu-na-rok-2024",
@@ -375,13 +407,13 @@ export const links: Link[] = [
   {
     id: "jidelna-dokumenty-smernice-o-stravovani-zaku-v-zs",
     groupId: "jidelna-dokumenty",
-    title: "Směrnice o stravování žáků v ZŠ",
+    title: "Informace o stravování žáků v ZŠ",
     href: "/dokument/jidelna-smernice_zs.doc",
   },
   {
     id: "jidelna-dokumenty-smernice-o-stravovani-deti-v-ms",
     groupId: "jidelna-dokumenty",
-    title: "Směrnice o stravování dětí v MŠ",
+    title: "Informace o stravování dětí v MŠ",
     href: "/dokument/jidelna-smernice_ms.doc",
   },
   {
@@ -389,6 +421,12 @@ export const links: Link[] = [
     groupId: "jidelna-dokumenty",
     title: "Ceník stravného od 1. 9. 2023",
     href: "/dokument/20230901_stravne.doc",
+  },
+  {
+    id: "jidelna-dokumenty-smernice-stravovani",
+    groupId: "jidelna-dokumenty",
+    title: "Směrnice stravování",
+    href: "/dokument/jidelna-smernice.doc",
   },
   {
     id: "hala-zadost-o-pronajem-telocvicny",
@@ -399,7 +437,7 @@ export const links: Link[] = [
   {
     id: "hala-cenik-pronajmu-od-1-10-2022",
     groupId: "hala",
-    title: "Ceník pronájmu od 1. 10. 2022",
+    title: "Ceník pronájmu",
     href: "/dokument/20221001_cena_pronajmu_haly.doc",
   },
   {
@@ -409,22 +447,16 @@ export const links: Link[] = [
     href: "/dokument/druzina-prihlaska.doc",
   },
   {
-    id: "organizace-druzina-dokumenty-kriteria-prijeti-zaka-do-skolni-druziny",
+    id: "organizace-druzina-dokumenty-kriteria-skolni-druziny",
     groupId: "organizace-druzina-dokumenty",
-    title: "Kritéria přijetí žáka do školní družiny",
-    href: "/dokument/druzina-kriteria.doc",
+    title: "Kritéria školní družiny",
+    href: "/dokument/druzina_kriteria.doc",
   },
   {
-    id: "organizace-druzina-dokumenty-zapis-do-skolni-druziny-pro-skolni-rok",
+    id: "organizace-druzina-dokumenty-prihlaska-k-dochazce-do-skolni-druziny",
     groupId: "organizace-druzina-dokumenty",
-    title: "Zápis do školní družiny pro školní rok",
-    href: "/dokument/druzina-zapis.doc",
-  },
-  {
-    id: "organizace-druzina-dokumenty-zapisni-listek-do-skolni-druziny",
-    groupId: "organizace-druzina-dokumenty",
-    title: "Zápisní lístek do školní družiny",
-    href: "/dokument/druzina-listek.doc",
+    title: "Přihláška k docházce do školní družiny",
+    href: "/dokument/druzina_zapisni_listek.doc",
   },
   {
     id: "organizace-druzina-dokumenty-odhlaseni-ze-skolni-druziny",
@@ -436,67 +468,43 @@ export const links: Link[] = [
     id: "organizace-druzina-dokumenty-zadost-o-uvolneni-zaka-na-mimoskolni-akt",
     groupId: "organizace-druzina-dokumenty",
     title: "Žádost o uvolnění žáka na mimoškolní aktivity",
-    href: "/dokument/druzina-uvolneni.doc",
+    href: "/dokument/druzina_zadost_mimoskolni_aktivity.doc",
+  },
+  {
+    id: "organizace-druzina-dokumenty-zadost-o-osvobozeni-od-uplaty-za-skolni",
+    groupId: "organizace-druzina-dokumenty",
+    title: "Žádost o osvobození od úplaty za školní družinu",
+    href: "/dokument/druzina_osvobozeni_uplaty.doc",
   },
   {
     id: "organizace-druzina-dokumenty-vnitrni-rad-skolni-druziny",
     groupId: "organizace-druzina-dokumenty",
     title: "Vnitřní řád školní družiny",
-    href: "/dokument/druzina-rad.doc",
+    href: "/dokument/druzina_rad.docx",
   },
   {
-    id: "organizace-materska-skola-dokumenty-skolni-rad",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Školní řád",
-    href: "/dokument/skolka-rad.doc",
+    id: "organizace-druzina-dokumenty-skolni-vzdelavaci-program-druziny",
+    groupId: "organizace-druzina-dokumenty",
+    title: "Školní vzdělávací program družiny",
+    href: "/dokument/druzina_svp.docx",
   },
   {
-    id: "organizace-materska-skola-dokumenty-skolni-vzdelavaci-program",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Školní vzdělávací program",
-    href: "/dokument/skolka-SVP.doc",
-  },
-  {
-    id: "organizace-materska-skola-dokumenty-uplata-za-predskolni-vzdelavani-ustanove",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Úplata za předškolní vzdělávání - ustanovení",
-    href: "/dokument/skolka-uplata-ustanoveni.doc",
-  },
-  {
-    id: "organizace-materska-skola-dokumenty-uplata-za-predskolni-vzdelavani",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Úplata za předškolní vzdělávání",
-    href: "/dokument/skolka-uplata.doc",
-  },
-  {
-    id: "organizace-materska-skola-dokumenty-kriteria-pro-prijimani-deti",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Kritéria pro přijímání dětí",
-    href: "/dokument/skolka-kriteria.doc",
-  },
-  {
-    id: "organizace-materska-skola-dokumenty-prideleni-registracniho-cisla",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Přidělení registračního čísla",
-    href: "/dokument/skolka-registr.doc",
-  },
-  {
-    id: "organizace-materska-skola-dokumenty-dohoda-rodicu-vyrizovani-zalezitosti",
-    groupId: "organizace-materska-skola-dokumenty",
-    title: "Dohoda rodičů - vyřizování záležitostí",
-    href: "/dokument/skolka-dohoda.doc",
+    id: "organizace-druzina-dokumenty-dodatek-ke-skolnimu-vzdelavacimu-program",
+    groupId: "organizace-druzina-dokumenty",
+    title: "Dodatek ke školnímu vzdělávacímu programu družiny",
+    href: "/dokument/druzina_svp_dodatek.docx",
   },
   {
     id: "rodice-oznameni-fromulare-konzultacni-hodiny-vychovneho-poradce-a",
     groupId: "rodice-oznameni-fromulare",
     title: "Konzultační hodiny výchovného poradce a školního metodika prevence",
-    href: "/dokument/vp_smp.doc",
+    href: "/dokument/vp_smp.pdf",
   },
   {
     id: "rodice-oznameni-fromulare-konzultacni-hodiny-ucitelu",
     groupId: "rodice-oznameni-fromulare",
     title: "Konzultační hodiny učitelů",
-    href: "/dokument/konzultace.doc",
+    href: "/dokument/konzultace.pdf",
   },
   {
     id: "rodice-oznameni-fromulare-odchod-zaka-z-vyucovani",
@@ -517,7 +525,7 @@ export const links: Link[] = [
     id: "rodice-oznameni-fromulare-prijeti-zaka-k-zakladnimu-vzdelavani",
     groupId: "rodice-oznameni-fromulare",
     title: "Přijetí žáka k základnímu vzdělávání",
-    href: "/dokument/prijeti-zs.doc",
+    href: "/dokument/202503_zadost_prijeti.doc",
     description: ["Pro rodiče žáků první třídy."],
   },
   {
@@ -531,7 +539,7 @@ export const links: Link[] = [
     id: "rodice-oznameni-fromulare-odklad-povinne-skolni-dochazky",
     groupId: "rodice-oznameni-fromulare",
     title: "Odklad povinné školní docházky",
-    href: "/dokument/odklad.doc",
+    href: "/dokument/202503_zadost_odklad.doc",
     description: ["Pro rodiče žáků nastupujících do první třídy."],
   },
   {
@@ -1281,5 +1289,41 @@ export const links: Link[] = [
     groupId: "rodice-odkazy-ministerstvo-skolstvi-mladeze-a-telovych",
     title: "www.msmt.cz",
     href: "https://www.msmt.cz",
+  },
+  {
+    id: "skolni-poradenske-sluzby-hodnoceni-mpp-2025-2026",
+    groupId: "skolni-poradenske-sluzby",
+    title: "Hodnocení MPP 2025-2026",
+    href: "/dokument/hodnoceni_mpp_2025_2026.pdf",
+  },
+  {
+    id: "skolni-poradenske-sluzby-preventivni-program-skoly-2026-2027",
+    groupId: "skolni-poradenske-sluzby",
+    title: "Preventivní program školy 2026-2027",
+    href: "/dokument/preventivni_program_skoly_2026_2027.pdf",
+  },
+  {
+    id: "skolni-poradenske-sluzby-krizovy-scenar-sikana",
+    groupId: "skolni-poradenske-sluzby",
+    title: "Krizový scénář – šikana",
+    href: "/dokument/krizovy_scenar_sikana.pdf",
+  },
+  {
+    id: "skolni-poradenske-sluzby-skolni-poradenske-sluzby",
+    groupId: "skolni-poradenske-sluzby",
+    title: "Školní poradenské služby",
+    href: "/dokument/skolni_poradenske_sluzby.pdf",
+  },
+  {
+    id: "organizace-druzina-dotaznik-vyhodnoceni-dotazniku",
+    groupId: "organizace-druzina-dotaznik",
+    title: "Vyhodnocení dotazníku",
+    href: "/dokument/druzina_vyhodnoceni_dotazniku.doc",
+  },
+  {
+    id: "organizace-rada-skoly-volebni-rad-skolske-rady",
+    groupId: "organizace-rada-skoly",
+    title: "Volební řád školské rady",
+    href: "/dokument/20260115_volba_rady.doc",
   },
 ];

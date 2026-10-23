@@ -2334,40 +2334,26 @@ a.link-tile:focus-visible {
   white-space: nowrap;
 }
 
-@media (min-width: 992px) and (max-width: 1399.98px) {
-  .header .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0.4rem;
-    padding-left: 0.4rem;
+/* the full menu shows from 1400px; until 1600px it is tightened and the longest item takes two lines */
+@media (min-width: 1400px) and (max-width: 1599.98px) {
+  .header .navbar-expand-xxl .navbar-nav .nav-link {
+    padding-right: 0.35rem;
+    padding-left: 0.35rem;
+    font-size: 0.92rem;
+  }
+
+  .header .navbar-nav {
+    align-items: center;
+  }
+
+  .header .navbar-nav .nav-link--long {
+    max-width: 10.5rem;
+    white-space: normal;
+    line-height: 1.15;
+    text-align: center;
   }
 }
 
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .header:not(.sticky) {
-    padding-right: 1rem;
-    padding-left: 1rem;
-  }
-
-  .header .navbar-nav .nav-link {
-    font-size: 0.9rem;
-  }
-}
-
-@media (min-width: 992px) and (max-width: 1099.98px) {
-  .header:not(.sticky) {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-  }
-
-  .header .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0.25rem;
-    padding-left: 0.25rem;
-    font-size: 0.82rem;
-  }
-
-  .header .navbar-brand {
-    margin-right: 0.5rem;
-  }
-}
 
 /* darker blue so links keep 4.5:1 on the grey card */
 .person-card__contact {

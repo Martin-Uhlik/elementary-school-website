@@ -10,7 +10,7 @@ const FotoVideoPage = async () => {
     <div className="body">
       <div className="article">
         <div className="article__section">
-          <h1>Foto a video</h1>
+          <h1>Galerie</h1>
           <ul className="gallery-sections">
             {sections.map((section) => (
               <li key={section.unit}>

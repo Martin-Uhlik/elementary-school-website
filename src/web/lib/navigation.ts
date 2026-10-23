@@ -1,7 +1,7 @@
 export type NavLink = { href: string; label: string };
 export type NavItem = NavLink | { label: string; prefix: string; children: NavLink[] };
 
-// Main menu, ported from html/data/header.html
+// Main menu, as on the production site (zsmp.cz, October 2026) plus Informatika
 export const navigation: NavItem[] = [
   { href: "/", label: "Hlavní strana" },
   { href: "/uredni-deska", label: "Úřední deska" },
@@ -13,7 +13,7 @@ export const navigation: NavItem[] = [
       { href: "/organizace/prubeh-skolniho-roku", label: "Průběh školního roku" },
       { href: "/organizace/rada-skoly", label: "Rada školy" },
       { href: "/organizace/srpds", label: "SRPDŠ" },
-      { href: "/organizace/eduroam", label: "Eduroam" },
+      // { href: "/organizace/eduroam", label: "Eduroam" },
       { href: "/organizace/skola", label: "Škola" },
       { href: "/organizace/druzina", label: "Družina" },
       { href: "/organizace/materska-skola", label: "Mateřská škola" },
@@ -21,7 +21,7 @@ export const navigation: NavItem[] = [
     ],
   },
   { href: "/dokumenty", label: "Dokumenty" },
-  { href: "/foto-video", label: "Foto a Video" },
+  { href: "/foto-video", label: "Galerie" },
   { href: "/jidelna", label: "Jídelna" },
   {
     label: "Rodiče",
@@ -32,7 +32,8 @@ export const navigation: NavItem[] = [
       // { href: "/rodice/zapis", label: "Zápis do 1. třídy" },
     ],
   },
-  { href: "/hala", label: "Hala" },
+  { href: "/hala", label: "Pronájem haly" },
+  { href: "/skolni-poradenske-sluzby", label: "Školní poradenské služby" },
   { href: "/informatika", label: "Informatika" },
 ];
 

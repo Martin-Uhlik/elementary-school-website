@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <header className={`header${sticky ? " sticky" : ""}`} id="myHeader">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Hlavní menu">
+      <nav className="navbar navbar-expand-xxl navbar-dark bg-primary" aria-label="Hlavní menu">
         <div className="container-fluid align-center">
           <Link className="navbar-brand" href="/">
             ZŠMP
@@ -56,7 +56,11 @@ const Header = () => {
                 if (!("children" in item)) {
                   return (
                     <li className="nav-item" key={item.href}>
-                      <Link className={`nav-link${active}`} href={item.href} aria-current={active ? "page" : undefined}>
+                      <Link
+                        className={`nav-link${active}${item.label.length > 20 ? " nav-link--long" : ""}`}
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                      >
                         {item.label}
                       </Link>
                     </li>

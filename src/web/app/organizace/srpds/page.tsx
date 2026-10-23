@@ -8,7 +8,7 @@ const OrganizaceSrpdsPage = async () => {
       <div className="body">
         <div className="article">
           <div className="article__section">
-            <h1>Spolek rodičů a přátel dětí školy</h1>
+            <h1>Sdružení rodičů a přátel dětí školy</h1>
             <span>
               SRPDŠ je registrované občanské sdružení u Ministerstva vnitra ČR dne 9. 7. 1992, č. j. VSC/1-12387/92-RS.
               S účinností od 1. 1. 1993 je registrováno u FÚ Veselí nad Moravou, přiděleno DIČ: CZ47375868.
@@ -19,6 +19,11 @@ const OrganizaceSrpdsPage = async () => {
                 {board.map((person) => (
                   <span key={person.id}>
                     {person.position}: {personName(person)}
+                    {person.email && (
+                      <>
+                        , e-mail: <a href={`mailto:${person.email}`}>{person.email}</a>
+                      </>
+                    )}
                   </span>
                 ))}
                 <span>+ zástupci jednotlivých tříd</span>
@@ -28,16 +33,26 @@ const OrganizaceSrpdsPage = async () => {
             <h3>1. Činnost spolku</h3>
             <ul>
               <li>
-                hlavní činností spolku je spolupráce zákonných zástupců dětí se Základní školou a Mateřskou školou,
+                Hlavní činností spolku je spolupráce zákonných zástupců dětí se Základní školou a Mateřskou školou,
                 Moravský Písek, Velkomoravská 168.
               </li>
               <li>
-                pomoc škole materiálními a finančními prostředky při zajišťování výchovné činnosti a zlepšování školního
+                Pomoc škole materiálními a finančními prostředky při zajišťování výchovné činnosti a zlepšování školního
                 prostředí.
               </li>
             </ul>
             <span>předkládání návrhů, připomínek a stížnosti rodičů a podílení se na jejich vyřízení.</span>
-            <h3>2. Členství</h3>
+            <h3>2. Povinnosti členů SRPDŠ</h3>
+            <ul>
+              <li>Člen SRPDŠ je povinen dodržovat stanovy SRPDŠ a zaplatit ve stanovené lhůtě členský příspěvek</li>
+              <li>Spolupracovat při realizaci cílů SRPDŠ</li>
+              <li>Plnit odsouhlasené postupy a rozhodnutí</li>
+              <li>
+                Zdržet se jakéhokoli jednání, jímž by byla poškozena pověst a dobré jméno organizace nebo uvádět na
+                veřejnosti záležitosti, o nichž se dozvěděl v souvislosti s činností SRPDŠ
+              </li>
+            </ul>
+            <h3>3. Členství</h3>
             <ul>
               <li>
                 Členem SRPDŠ se může stát každý občan starší 18 let, který souhlasí se stanovami SRPDŠ a jeho činností.
@@ -53,11 +68,11 @@ const OrganizaceSrpdsPage = async () => {
             </span>
             <ul>
               <li>
-                rodiče a zákonní zástupci dětí aktuálně registrovaných ve škole, kteří zaplatí členský příspěvek, se
+                Rodiče a zákonní zástupci dětí aktuálně registrovaných ve škole, kteří zaplatí členský příspěvek, se
                 automaticky stávají členy.
               </li>
               <li>
-                ostatní osoby se stávají členy SRPŠ po podání písemné přihlášky výboru rady SRPŠ a zaplacení členského
+                Ostatní osoby se stávají členy SRPŠ po podání písemné přihlášky výboru rady SRPDŠ a zaplacení členského
                 příspěvku.
               </li>
             </ul>
@@ -66,22 +81,26 @@ const OrganizaceSrpdsPage = async () => {
             </span>
             <ul>
               <li>
-                ukončením školní docházky žáka do školy pro jeho rodiče nebo zákonného zástupce, ledaže by tento člen
+                Ukončením školní docházky žáka do školy pro jeho rodiče nebo zákonného zástupce, ledaže by tento člen
                 požádal o zachování členství;
               </li>
-              <li>doručením písemné žádosti o skončení členství výboru;</li>
+              <li>Doručením písemné žádosti o skončení členství výboru;</li>
               <li>
-                vyloučením pro neplacení členského příspěvku ve lhůtě určené výborem. O vyloučení člena rozhoduje po
+                Vyloučením pro neplacení členského příspěvku ve lhůtě určené výborem. O vyloučení člena rozhoduje po
                 opakované výzvě k zaplacení příspěvku výbor;
               </li>
-              <li>úmrtím člena; • zánikem spolku.</li>
               <li>
-                Při ukončení členství nebo vyloučení člena ze SRPŠ mu nevzniká nárok na vrácení finančních prostředků či
-                jiných darů.
+                Vyloučením z důvodu závažného nebo opakovaného porušování stanov, jiných vnitřních předpisů spolku,
+                usnesení a rozhodnutí orgánů spolku nebo jiných členských povinností;
               </li>
-              <li>Člen SRPDŠ je povinen dodržovat stanovy SRPDŠ a zaplatit ve stanovené lhůtě členský příspěvek.</li>
+              <li>Úmrtím člena;</li>
+              <li>Zánikem spolku;</li>
+              <li>
+                Při ukončení členství nebo vyloučení člena ze SRPDŠ mu nevzniká nárok na vrácení finančních prostředků
+                či jiných darů.
+              </li>
             </ul>
-            <h3>3. Orgány spolku</h3>
+            <h3>4. Orgány spolku</h3>
             <ul>
               <li>
                 Nejvyšším orgánem je rada SRPDŠ (dále jen „rada“), složená ze zástupců členů SRPDŠ zvolených v
@@ -97,8 +116,8 @@ const OrganizaceSrpdsPage = async () => {
             <ul>
               <li>Spolek zaniká: zrušením spolku s likvidací, fúzí spolků nebo rozdělením spolku.</li>
               <li>
-                O zániku SRPŠ rozhoduje rada a výbor jej oznamuje orgánům, u kterých je SRPŠ registrován. Při zániku se
-                stanoví likvidační komise, která vypořádá práva a závazky SRPŠ.
+                O zániku SRPDŠ rozhoduje rada a výbor jej oznamuje orgánům, u kterých je SRPDŠ registrován. Při zániku
+                se stanoví likvidační komise, která vypořádá práva a závazky SRPDŠ.
               </li>
               <li>Zánik SRPŠ ohlásí předseda výboru řediteli školy.</li>
               <li>
@@ -114,7 +133,9 @@ const OrganizaceSrpdsPage = async () => {
               </li>
               <li>Změny a dodatky těchto stanov schvaluje rada SRPŠ písemným zápisem.</li>
             </ul>
-            <span>V Moravském Písku dne 26. 9. 2019</span> <span>Adéla Zásmětová</span> <span>předsedkyně</span>
+            <span>V Moravském Písku dne 8. 10. 2024</span>
+            <span>v. r. Barbora Janíková</span>
+            <span>předsedkyně</span>
           </div>
         </div>
       </div>

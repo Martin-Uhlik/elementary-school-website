@@ -1,14 +1,11 @@
 import { LuSun } from "react-icons/lu";
 import FeatureLink from "@/components/content/FeatureLink";
-import LinkList from "@/components/content/LinkList";
-import { getLinkGroup } from "@/lib/content/links";
 import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
 
 // Ported from html/organizace/materska-skola.html
 const OrganizaceMaterskaSkolaPage = async () => {
   const staff = await getPeople("Mateřská škola");
-  const materskaSkolaDokumenty = await getLinkGroup("organizace-materska-skola-dokumenty");
   return (
     <>
       <div className="body">
@@ -29,12 +26,6 @@ const OrganizaceMaterskaSkolaPage = async () => {
                 s opékáním špekáčků ke dni dětí.
               </span>
             </div>
-          </div>
-        </div>
-        <div className="article">
-          <div className="article__section">
-            <h1>Dokumenty</h1>
-            <LinkList links={materskaSkolaDokumenty.links} />
           </div>
         </div>
         <div className="article">

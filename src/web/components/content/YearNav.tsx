@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { yearAnchor } from "@/lib/content/galleries";
 
-// Sticky bar on an archive page: back to Foto a video, the year in view, arrows to the neighbouring years and a year picker
+// Sticky bar on an archive page: back to Galerie, the year in view, arrows to the neighbouring years and a year picker
 const YearNav = ({ years }: { years: number[] }) => {
   const bar = useRef<HTMLElement>(null);
   const [current, setCurrent] = useState(years[0]);
@@ -56,7 +56,7 @@ const YearNav = ({ years }: { years: number[] }) => {
   return (
     <nav className={`year-nav${stuck ? " is-stuck" : ""}`} ref={bar} style={{ top }} aria-label="Roky">
       <Link href="/foto-video" className="year-nav__back">
-        <span aria-hidden="true">←</span> <span className="year-nav__back-text">Foto a video</span>
+        <span aria-hidden="true">←</span> <span className="year-nav__back-text">Galerie</span>
       </Link>
       <div className="year-nav__years">
         {older ? (

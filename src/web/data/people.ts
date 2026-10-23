@@ -1,6 +1,6 @@
 import type { Person } from "./types";
 
-// Extracted from the old hardcoded pages; the order of the array is the order on every page
+// From the production pages (zsmp.cz, October 2026); the order of the array is the order on every page
 
 export const people: Person[] = [
   {
@@ -8,7 +8,7 @@ export const people: Person[] = [
     titleBefore: "Mgr.",
     firstName: "Ivana",
     lastName: "Uhlíková",
-    labels: ["Učitelé", "Základní informace"],
+    labels: ["Základní informace", "Učitelé"],
     position: "ředitelka",
     email: "uhlikova@zsmp.cz",
     phones: [
@@ -21,54 +21,107 @@ export const people: Person[] = [
         number: "518 698 574",
       },
     ],
-    description: [
-      "ředitelka školy, učitelka předmětů fyzika 6.B, 7.tř., 8.tř. a 9.AB",
-      "aprobace učitelství všeobecně vzdělávacích předmětů fyzika - základy techniky na Pedagogické fakultě Univerzity Palackého Olomouc",
-    ],
   },
   {
     id: "varechova-katerina",
     titleBefore: "Mgr.",
     firstName: "Kateřina",
     lastName: "Vařechová",
-    labels: ["Učitelé", "Základní informace"],
-    position: "zástupkyně ředitelky",
+    labels: ["Základní informace", "Učitelé"],
+    position: "zástupkyně ředitelky pro ZŠ",
     email: "varechova@zsmp.cz",
     phones: [
       {
         kind: "internal",
-        number: "131",
+        number: "116",
       },
       {
         kind: "landline",
         number: "518 698 576",
       },
     ],
-    description: [
-      "zástupkyně ředitele školy, učitelka předmětů anglický jazyk 7.tř. a 9.AB",
-      "aprobace učitelství cizích jazyků pro ZŠ - angličtina na Pedagogické fakultě Masarykovy univerzity Brno",
+  },
+  {
+    id: "zezulova-jana",
+    titleBefore: "Mgr.",
+    firstName: "Jana",
+    lastName: "Zezulová",
+    labels: ["Základní informace", "Zástupkyně ředitelky pro MŠ", "Mateřská škola"],
+    position: "zástupkyně ředitelky pro MŠ",
+    email: "zezulova@zsmp.cz",
+    phones: [
+      {
+        kind: "mobile",
+        number: "739 357 820",
+      },
     ],
   },
   {
-    id: "bukovjan-miroslav",
-    titleBefore: "RNDr.",
-    firstName: "Miroslav",
-    lastName: "Bukovjan",
-    labels: ["Učitelé"],
-    email: "bukovjan@zsmp.cz",
+    id: "polehnova-helena",
+    firstName: "Helena",
+    lastName: "Polehňová",
+    labels: ["Základní informace", "Vedoucí školní jídelny"],
+    position: "vedoucí školní jídelny",
+    email: "polehnova@zsmp.cz",
     phones: [
       {
         kind: "internal",
-        number: "117",
+        number: "119",
       },
       {
         kind: "landline",
-        number: "518 698 577",
+        number: "518 698 579",
+      },
+      {
+        kind: "mobile",
+        number: "733 578 179",
       },
     ],
-    description: [
-      "správce počítačové sítě, učitel předmětů informatika 4.tř. až 9.tř., fyzika 6.A, pracovní činnosti chlapci 6.tř až 9.tř., hudební výchova 8.tř. a 9.AB",
-      "aprobace učitelství 5.-12. ročník matematika - zeměpis na Přírodovědecké fakultě Masarykovy univerzity Brno",
+  },
+  {
+    id: "blazkova-marta",
+    firstName: "Marta",
+    lastName: "Blažková",
+    labels: ["Základní informace", "Hospodářka"],
+    position: "hospodářka",
+    email: "blazkova@zsmp.cz",
+    phones: [
+      {
+        kind: "internal",
+        number: "111",
+      },
+      {
+        kind: "landline",
+        number: "518 698 571",
+      },
+    ],
+  },
+  {
+    id: "lovecky-jaroslav",
+    firstName: "Jaroslav",
+    lastName: "Lovecký",
+    labels: ["Základní informace", "Správní zaměstnanci"],
+    position: "školník",
+    email: "lovecky4@seznam.cz",
+    phones: [
+      {
+        kind: "mobile",
+        number: "602 723 104",
+      },
+    ],
+  },
+  {
+    id: "santava-pavlina",
+    firstName: "Pavlína",
+    lastName: "Šantavá",
+    labels: ["Základní informace", "Správní zaměstnanci", "Hala"],
+    position: "správce haly",
+    email: "santava@zsmp.cz",
+    phones: [
+      {
+        kind: "mobile",
+        number: "734 141 727",
+      },
     ],
   },
   {
@@ -88,10 +141,6 @@ export const people: Person[] = [
         number: "518 698 578",
       },
     ],
-    description: [
-      "učitelka předmětů český jazyk a literatura 8.tř. a 9.AB, dějepis 8.tř. a 9.AB, výtvarná výchova 9.A, pracovní činnosti děvčata 9.AB, seminář z českého jazyka 9.AB, třídní učitelka 9.A",
-      "aprobace český jazyk a literatura - dějepis na Pedagogické fakultě TU Liberec",
-    ],
   },
   {
     id: "dokoupilova-ivana",
@@ -108,10 +157,6 @@ export const people: Person[] = [
         kind: "landline",
         number: "518 698 591",
       },
-    ],
-    description: [
-      "učitelka předmětů anglický jazyk 5.tř. až 8.tř., konverzace v anglickém jazyce 6.AB až 9.tř., hudební výchova 6.AB",
-      "aprobace angličtina a výchova ke zdraví na Pedagogické fakultě Univerzity Palackého Olomouc",
     ],
   },
   {
@@ -131,10 +176,6 @@ export const people: Person[] = [
         number: "518 698 588",
       },
     ],
-    description: [
-      "učitelka předmětů první třídy, třídní učitelka 1.tř.",
-      "aprobace učitelství pro 1. stupeň ZŠ na Pedagogické fakultě Masarykovy univerzity Brno",
-    ],
   },
   {
     id: "domanska-eva",
@@ -146,16 +187,12 @@ export const people: Person[] = [
     phones: [
       {
         kind: "internal",
-        number: "112",
+        number: "128",
       },
       {
         kind: "landline",
-        number: "518 698 572",
+        number: "518 698 588",
       },
-    ],
-    description: [
-      "učitelka předmětů páté třídy, prvouka 3.tř., pracovní činnosti 3.tř., výtvarná výchova 3.tř., třídní učitelka 5.tř.",
-      "aprobace učitelství pro 1. stupeň ZŠ na Pedagogické fakultě Univerzity Palackého Olomouc",
     ],
   },
   {
@@ -175,10 +212,6 @@ export const people: Person[] = [
         number: "518 698 577",
       },
     ],
-    description: [
-      "učitel předmětů zeměpis 6.tř. až 9.tř., tělesná výchova chlapci 6.tř. až 9.tř., sportovní hry 6.tř. až 9.tř., třídní učitel 8.tř.",
-      "aprobace biologie - zeměpis - geolologie na Přírodovědecké fakultě Univerzity Palackého Olomouc",
-    ],
   },
   {
     id: "hruskova-alena",
@@ -196,10 +229,6 @@ export const people: Person[] = [
         kind: "landline",
         number: "518 698 589",
       },
-    ],
-    description: [
-      "učitelka předmětů matematika 7.tř. a 8.tř., přírodopis 6.AB., 7.tř. a 8.tř., výtvarná výchova 7.tř. a 8.tř., hudební výchova 7.tř., pracovní činnosti děvčata 6.AB, 7.tř. a 8.tř., třídní učitelka 7.tř.",
-      "aprobace učitelství matematika - biologie na Přírodovědecké fakultě Masarykovy univerzity Brno",
     ],
   },
   {
@@ -219,10 +248,6 @@ export const people: Person[] = [
         number: "518 698 572",
       },
     ],
-    description: [
-      "učitelka předmětů druhé třídy, třídní učitelka 2.tř.",
-      "aprobace učitelství pro 1. stupeň ZŠ na Pedagogické fakultě Univerzity Palackého Olomouc",
-    ],
   },
   {
     id: "lehnertova-jitka",
@@ -241,10 +266,6 @@ export const people: Person[] = [
         number: "518 698 578",
       },
     ],
-    description: [
-      "učitelka předmětů český jazyk a literatura 6.AB. a 7.tř., dějepis 6.AB a 7.tř., tělesná výchova děvčata 6.AB, třídní učitelka 6.A",
-      "aprobace český jazyk a literatura - dějepis na Pedagogické fakultě Univerzity Palackého Olomouc",
-    ],
   },
   {
     id: "lekava-pavla",
@@ -252,6 +273,7 @@ export const people: Person[] = [
     firstName: "Pavla",
     lastName: "Lekavá",
     labels: ["Učitelé"],
+    position: "výchovná poradkyně",
     email: "lekava@zsmp.cz",
     phones: [
       {
@@ -263,10 +285,6 @@ export const people: Person[] = [
         number: "518 698 590",
       },
     ],
-    description: [
-      "výchovná poradkyně, učitelka předmětů chemie 8.tř. a 9.AB, přírodopis 9.AB, tělesná výchova 4.tř. a 5.tř., tělesná výchova děvčata 7.tř. až 9.tř., pracovní činnosti 4.tř. a 5.tř., třídní učitelka 9.B",
-      "aprobace biologie - chemie na Přírodovědecké fakultě Univerzity Palackého Olomouc",
-    ],
   },
   {
     id: "matejikova-lenka",
@@ -274,64 +292,17 @@ export const people: Person[] = [
     firstName: "Lenka",
     lastName: "Matějíková",
     labels: ["Učitelé"],
+    position: "školní metodik prevence",
     email: "matejikova@zsmp.cz",
     phones: [
       {
         kind: "internal",
-        number: "131",
+        number: "130",
       },
       {
         kind: "landline",
-        number: "518 698 591",
+        number: "518 698 590",
       },
-    ],
-    description: [
-      "školní metodik prevence, učitelka předmětů německý jazyk 7.tř. až 9.AB, občanská výchova 6.tř. až 9.tř., výchova ke zdraví 6.AB, 8.tř. a 9.AB, třídní učitelka 6.B",
-      "aprobace německý jazyk - občanská výchova na Pedagogické fakultě Univerzity Palackého Olomouc",
-    ],
-  },
-  {
-    id: "studnickova-jaroslava",
-    titleBefore: "Mgr.",
-    firstName: "Jaroslava",
-    lastName: "Studničková",
-    labels: ["Učitelé"],
-    email: "studnickova@zsmp.cz",
-    phones: [
-      {
-        kind: "internal",
-        number: "116",
-      },
-      {
-        kind: "landline",
-        number: "518 698 576",
-      },
-    ],
-    description: [
-      "učitelka předmětů matematika 6.AB a 9.AB, seminář z matematiky 9.AB, výtvarná výchova 6.AB a 9.B",
-      "aprobace matematika - deskriptivní geometrie na Přírodovědecké fakultě Univerzity Palackého Olomouc",
-    ],
-  },
-  {
-    id: "smahajova-miroslava",
-    firstName: "Miroslava",
-    lastName: "Šmahajová",
-    labels: ["Učitelé", "Družina"],
-    position: "vychovatelka školní družiny",
-    email: "smahajova@zsmp.cz",
-    phones: [
-      {
-        kind: "internal",
-        number: "119",
-      },
-      {
-        kind: "landline",
-        number: "518 698 579",
-      },
-    ],
-    description: [
-      "vychovatelka školní družiny",
-      "aprobace vychovatelství a učitelka MŠ na Střední pedagogické škole Znojmo",
     ],
   },
   {
@@ -351,9 +322,23 @@ export const people: Person[] = [
         number: "518 698 572",
       },
     ],
-    description: [
-      "učitelka předmětů čtvrté třídy, třídní učitelka 4.tř.",
-      "aprobace učitelství pro školy vyžadující zvláštní péči na Pedagogické fakultě Univerzity Palackého Olomouc",
+  },
+  {
+    id: "polaskova-dana",
+    titleBefore: "Mgr.",
+    firstName: "Dana",
+    lastName: "Polášková",
+    labels: ["Učitelé"],
+    email: "polaskova@zsmp.cz",
+    phones: [
+      {
+        kind: "internal",
+        number: "117",
+      },
+      {
+        kind: "landline",
+        number: "518 698 572",
+      },
     ],
   },
   {
@@ -370,37 +355,81 @@ export const people: Person[] = [
       },
       {
         kind: "landline",
-        number: "518 698 580",
+        number: "518 698 572",
       },
     ],
-    description: [
-      "učitelka předmětů třetí třídy, anglický jazyk 8.tř., třídní učitelka 3.tř.",
-      "aprobace učitelství pro 1. stupeň ZŠ a speciální pedagogika na Pedagogické fakultě Univerzity Palackého Olomouc",
+  },
+  {
+    id: "nekardova-michaela",
+    titleBefore: "Ing.",
+    firstName: "Michaela",
+    lastName: "Nekardová",
+    labels: ["Učitelé"],
+    email: "nekardova@zsmp.cz",
+  },
+  {
+    id: "slezak-rene",
+    firstName: "René",
+    lastName: "Slezák",
+    labels: ["Učitelé"],
+    email: "slezak@zsmp.cz",
+    phones: [
+      {
+        kind: "internal",
+        number: "131",
+      },
+      {
+        kind: "landline",
+        number: "518 698 591",
+      },
+    ],
+  },
+  {
+    id: "vyskocilova-renata",
+    firstName: "Renata",
+    lastName: "Vyskočilová",
+    labels: ["Školní družiny", "Družina"],
+    position: "vychovatelka školní družiny",
+    email: "vyskocilova@zsmp.cz",
+    phones: [
+      {
+        kind: "landline",
+        number: "518 698 571",
+      },
+    ],
+  },
+  {
+    id: "smahajova-miroslava",
+    firstName: "Miroslava",
+    lastName: "Šmahajová",
+    labels: ["Školní družiny", "Družina"],
+    position: "vychovatelka školní družiny",
+    email: "smahajova@zsmp.cz",
+    phones: [
+      {
+        kind: "landline",
+        number: "518 698 571",
+      },
     ],
   },
   {
     id: "zapletalova-barbora",
     firstName: "Barbora",
     lastName: "Zapletalová",
-    labels: ["Učitelé", "Družina", "Rada školy: zástupci školy"],
+    labels: ["Školní družiny", "Družina", "Rada školy: zástupci školy"],
     position: "vychovatelka školní družiny",
     email: "zapletalova@zsmp.cz",
     phones: [
       {
-        kind: "internal",
-        number: "119",
-      },
-      {
         kind: "landline",
-        number: "518 698 579",
+        number: "518 698 571",
       },
     ],
-    description: ["vychovatelka školní družiny aprobace Vychovatel na Akademii HUSPOL s.r.o. Kunovice"],
   },
   {
-    id: "asistentky-ucitelu",
-    name: "Asistentky učitelů",
-    labels: ["Kontakt", "Asistentky učitelů"],
+    id: "asistentky-pedagogu",
+    name: "Asistentky pedagogů",
+    labels: ["Kontakt", "Asistentky pedagogů"],
     phones: [
       {
         kind: "internal",
@@ -413,21 +442,26 @@ export const people: Person[] = [
     ],
   },
   {
+    id: "kopp-martina",
+    firstName: "Martina",
+    lastName: "Kopp",
+    labels: ["Asistentky pedagogů"],
+    email: "kopp@zsmp.cz",
+  },
+  {
     id: "kureckova-kristyna",
     firstName: "Kristýna",
     lastName: "Kurečková",
     titleAfter: "DiS.",
-    labels: ["Asistentky učitelů"],
+    labels: ["Asistentky pedagogů"],
     email: "kureckova@zsmp.cz",
-    description: ["asistentka 2.tř."],
   },
   {
-    id: "vyskocilova-renata",
-    firstName: "Renata",
-    lastName: "Vyskočilová",
-    labels: ["Asistentky učitelů"],
-    email: "vyskocilova@zsmp.cz",
-    description: ["asistentka 4.tř."],
+    id: "studnickova-haxton-marketa",
+    firstName: "Markéta",
+    lastName: "Studničková Haxton",
+    labels: ["Asistentky pedagogů"],
+    email: "haxton@zsmp.cz",
   },
   {
     id: "knihovna",
@@ -460,6 +494,12 @@ export const people: Person[] = [
     ],
   },
   {
+    id: "kminkova-renata",
+    firstName: "Renáta",
+    lastName: "Kmínková",
+    labels: ["Kuchyň"],
+  },
+  {
     id: "lekavy-radek",
     firstName: "Radek",
     lastName: "Lekavý",
@@ -469,12 +509,6 @@ export const people: Person[] = [
     id: "repikova-jana",
     firstName: "Jana",
     lastName: "Repíková",
-    labels: ["Kuchyň"],
-  },
-  {
-    id: "vrtalova-marie",
-    firstName: "Marie",
-    lastName: "Vrtalová",
     labels: ["Kuchyň"],
   },
   {
@@ -493,57 +527,6 @@ export const people: Person[] = [
     ],
   },
   {
-    id: "zezulova-jana",
-    titleBefore: "Mgr.",
-    firstName: "Jana",
-    lastName: "Zezulová",
-    labels: ["Zástupkyně ředitelky pro MŠ", "Základní informace", "Mateřská škola"],
-    position: "zástupkyně ředitelky pro MŠ",
-    email: "zezulova@zsmp.cz",
-    phones: [
-      {
-        kind: "mobile",
-        number: "739 357 820",
-      },
-    ],
-  },
-  {
-    id: "petruchova-jana",
-    firstName: "Jana",
-    lastName: "Petruchová",
-    labels: ["Hospodářka, vedoucí školní jídelny", "Základní informace"],
-    position: "hospodářka, vedoucí školní jídelny",
-    email: "petruchova@zsmp.cz",
-    phones: [
-      {
-        kind: "internal",
-        number: "111",
-      },
-      {
-        kind: "landline",
-        number: "518 698 571",
-      },
-      {
-        kind: "mobile",
-        number: "739 357 890",
-      },
-    ],
-  },
-  {
-    id: "lovecky-jaroslav",
-    firstName: "Jaroslav",
-    lastName: "Lovecký",
-    labels: ["Správní zaměstnanci", "Základní informace"],
-    position: "školník",
-    email: "lovecky.4@seznam.cz",
-    phones: [
-      {
-        kind: "mobile",
-        number: "602 723 104",
-      },
-    ],
-  },
-  {
     id: "vranova-michaela",
     firstName: "Michaela",
     lastName: "Vránová",
@@ -554,20 +537,6 @@ export const people: Person[] = [
     firstName: "Alena",
     lastName: "Šantavá",
     labels: ["Správní zaměstnanci"],
-  },
-  {
-    id: "santava-pavlina",
-    firstName: "Pavlína",
-    lastName: "Šantavá",
-    labels: ["Správní zaměstnanci", "Základní informace", "Hala"],
-    position: "správce haly",
-    email: "santava@zsmp.cz",
-    phones: [
-      {
-        kind: "mobile",
-        number: "734 141 727",
-      },
-    ],
   },
   {
     id: "materska-skola-ulice-velkomoravska-409",
@@ -609,9 +578,9 @@ export const people: Person[] = [
     email: "slavikova@zsmp.cz",
   },
   {
-    id: "vavrincova-sarka",
+    id: "sebestova-sarka",
     firstName: "Šárka",
-    lastName: "Vavrincová",
+    lastName: "Šebestová",
     labels: ["Mateřská škola"],
     position: "učitelka",
     email: "vavrincova@zsmp.cz",
@@ -639,9 +608,9 @@ export const people: Person[] = [
     position: "učitelka",
   },
   {
-    id: "matouskova-anna",
-    firstName: "Anna",
-    lastName: "Matoušková",
+    id: "chudickova-pavla",
+    firstName: "Pavla",
+    lastName: "Chudíčková",
     labels: ["Mateřská škola"],
     position: "učitelka",
   },
@@ -649,13 +618,6 @@ export const people: Person[] = [
     id: "sladkova-veronika",
     firstName: "Veronika",
     lastName: "Sládková",
-    labels: ["Mateřská škola"],
-    position: "asistentka pedagoga",
-  },
-  {
-    id: "kolajova-lucie",
-    firstName: "Lucie",
-    lastName: "Kolajová",
     labels: ["Mateřská škola"],
     position: "asistentka pedagoga",
   },
@@ -680,15 +642,25 @@ export const people: Person[] = [
     labels: ["Rada školy: zástupci rodičů"],
   },
   {
-    id: "frelichova-michaela",
-    firstName: "Michaela",
-    lastName: "Frelichová",
-    labels: ["Rada školy: zástupci rodičů"],
+    id: "janikova-barbora",
+    firstName: "Barbora",
+    lastName: "Janíková",
+    labels: ["SRPDŠ"],
+    position: "předsedkyně",
+    email: "bara.janik@seznam.cz",
   },
   {
-    id: "puckova-michaela",
-    firstName: "Michaela",
-    lastName: "Půčková",
+    id: "jindrova-veronika",
+    firstName: "Veronika",
+    lastName: "Jindrová",
+    labels: ["Rada školy: zástupci rodičů", "SRPDŠ"],
+    position: "místopředsedkyně",
+    email: "Veronika.mickova@seznam.cz",
+  },
+  {
+    id: "pavlickova-zuzana",
+    firstName: "Zuzana",
+    lastName: "Pavlíčková",
     labels: ["Rada školy: zástupci rodičů"],
   },
   {
@@ -706,17 +678,10 @@ export const people: Person[] = [
     labels: ["Rada školy: zástupci zřizovatele"],
   },
   {
-    id: "souckova-hana",
-    firstName: "Hana",
-    lastName: "Součková",
+    id: "tyzner-petr",
+    firstName: "Petr",
+    lastName: "Týzner",
     labels: ["Rada školy: zástupci zřizovatele"],
-  },
-  {
-    id: "huvarova-jitka",
-    firstName: "Jitka",
-    lastName: "Huvarová",
-    labels: ["SRPDŠ"],
-    position: "předsedkyně",
   },
   {
     id: "lovecka-dagmar",

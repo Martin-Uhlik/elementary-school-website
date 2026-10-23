@@ -14,7 +14,7 @@ const quickLinks = [
   { href: "/uredni-deska", label: "Úřední deska", Icon: LuScrollText },
   { href: "/jidelna", label: "Jídelna", Icon: LuUtensils },
   { href: "/organizace/prubeh-skolniho-roku", label: "Školní rok", Icon: LuCalendarDays },
-  { href: "/foto-video", label: "Foto a video", Icon: LuImages },
+  { href: "/foto-video", label: "Galerie", Icon: LuImages },
   { href: "/kontakty", label: "Kontakty", Icon: LuPhone },
 ];
 

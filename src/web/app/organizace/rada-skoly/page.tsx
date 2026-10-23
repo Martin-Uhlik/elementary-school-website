@@ -1,7 +1,10 @@
+import LinkList from "@/components/content/LinkList";
+import { getLinkGroup } from "@/lib/content/links";
 import { getPeople, personName } from "@/lib/content/people";
 
 // Ported from html/organizace/rada-skoly.html
 const OrganizaceRadaSkolyPage = async () => {
+  const documents = await getLinkGroup("organizace-rada-skoly");
   const groups = await Promise.all(
     ["školy", "rodičů", "zřizovatele"].map(async (group) => ({
       group,
@@ -14,6 +17,7 @@ const OrganizaceRadaSkolyPage = async () => {
         <div className="article">
           <div className="article__section">
             <h1>Rada školy</h1>
+            <LinkList links={documents.links} />
             <span>
               Školská rada se zřizuje podle zákona č.561/2004 Sb. při základních, středních a vyšších odborných školách.
             </span>
@@ -35,10 +39,17 @@ const OrganizaceRadaSkolyPage = async () => {
                 projednává návrh rozpočtu na další rok, vyjadřuje se k rozboru hospodaření a navrhuje opatření ke
                 zlepšení hospodaření
               </li>
-              <li>projednává inspekční zprávy České školní inspekce</li>
+              <li>projednává inspekční zprávy, protokoly o kontrole a výsledky šetření České školní inspekce</li>
               <li>
-                podává podněty a oznámení řediteli školy, zřizovateli, orgánům vykonávajícím státní správu ve školství a
+                projednává podněty, oznámení a stížnosti týkající se zejména vzdělávání a poskytování školských služeb a
+                podává podněty, oznámení řediteli školy, zřizovateli, orgánům vykonávajícím státní správu ve školství a
                 dalším orgánům státní správy
+              </li>
+              <li>uděluje předchozí souhlas se jmenováním ředitele školy podle § 166 odst. 10 písm. b)</li>
+              <li>uděluje předchozí souhlas s kombinovanou výukou podle § 25a ve škole</li>
+              <li>
+                odvolává souhlas s kombinovanou výukou podle § 25a ve škole; kombinovaná výuka končí ke dni určenému
+                školskou radou
               </li>
             </ul>
             <span>

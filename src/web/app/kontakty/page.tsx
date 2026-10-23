@@ -4,9 +4,11 @@ import { getPeople } from "@/lib/content/people";
 // the page's sections, each one a label in data/people.ts
 const SECTIONS = [
   "Učitelé",
-  "Asistentky učitelů",
+  "Školní družiny",
+  "Asistentky pedagogů",
   "Knihovna",
-  "Hospodářka, vedoucí školní jídelny",
+  "Vedoucí školní jídelny",
+  "Hospodářka",
   "Kuchyň",
   "Správní zaměstnanci",
   "Zástupkyně ředitelky pro MŠ",
