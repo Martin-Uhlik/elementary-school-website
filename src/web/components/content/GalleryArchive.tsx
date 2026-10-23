@@ -11,7 +11,7 @@ const GalleryArchive = async ({ unit, title }: { unit: Unit; title: string }) =>
   return (
     <div className="body gallery-archive">
       <div className="article">
-        <div className="article__section article__section--plain">
+        <div className="article__section">
           <h1>{title}</h1>
           <YearNav years={years.map((y) => y.year)} />
           {years.map(({ year, galleries }) => (

@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { getPeople, personName } from "@/lib/content/people";
 
 // Ported from html/organizace/rada-skoly.html
@@ -46,21 +45,23 @@ const OrganizaceRadaSkolyPage = async () => {
               Třetinu členů školské rady jmenuje zřizovatel, třetinu volí zákonní zástupci nezletilých žáků a třetinu
               volí pedagogičtí pracovníci školy. Členem školské rady nemůže být ředitel školy.
             </span>
-            <div className="semi_table">
-              {groups.map(({ group, members }, i) => (
-                <Fragment key={group}>
-                  {i > 0 && <hr className="semi_table__line" />}
-                  <div className="semi_table__cell">
-                    <span>Zástupci {group}:</span>
-                  </div>
-                  <div className="semi_table__cell">
-                    {members.map((person) => (
-                      <span key={person.id}>{personName(person)} </span>
-                    ))}
-                  </div>
-                </Fragment>
-              ))}
-            </div>
+            <table className="data-table">
+              <caption>Členové školské rady</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Zástupci</th>
+                  <th scope="col">Členové</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groups.map(({ group, members }) => (
+                  <tr key={group}>
+                    <th scope="row">{group}</th>
+                    <td>{members.map(personName).join(", ")}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

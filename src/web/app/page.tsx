@@ -21,41 +21,46 @@ const HomePage = async () => {
       <div className="body body--home">
         <div className="home-grid">
           <section className="article__section">
-            <h1>Základní informace</h1>
-            <div className="persons persons--single">
-              {people.map((person) => (
-                <PersonCard key={person.id} person={person} variant="short" />
-              ))}
-            </div>
+            <h1>Aktuální informace</h1>
+            {news.links.length === 0 ? (
+              <p className="empty-note">V současné době zde nejsou žádné aktuality.</p>
+            ) : (
+              <LinkList links={news.links} columns={1} />
+            )}
           </section>
 
-          <div className="home-grid__side">
-            <section className="article__section">
-              <h1>Aktuální informace</h1>
-              {news.links.length === 0 ? (
-                <p className="empty-note">V současné době zde nejsou žádné aktuality.</p>
-              ) : (
-                <LinkList links={news.links} columns={1} />
-              )}
-            </section>
-
-            <section className="article__section">
-              <h1>Oznámení</h1>
-              <LinkList links={announcements.links} columns={1} />
-            </section>
-          </div>
+          <section className="article__section">
+            <h1>Oznámení</h1>
+            <LinkList links={announcements.links} />
+          </section>
         </div>
+
+        <section className="article__section">
+          <h1>Základní informace</h1>
+          <div className="persons">
+            {people.map((person) => (
+              <PersonCard key={person.id} person={person} variant="short" />
+            ))}
+          </div>
+        </section>
 
         <section className="article__section main-tour">
           <h1>Videoprohlídka školy</h1>
           <VideoTour />
         </section>
 
-        <div className="sponsors">
-          {sponsors.map((sponsor) => (
-            <img key={sponsor.id} src={sponsor.logo} alt={`Logo ${sponsor.name}`} />
-          ))}
-        </div>
+        <section className="sponsors" aria-labelledby="sponsors-title">
+          <h2 id="sponsors-title" className="sponsors__title">
+            Podporují nás
+          </h2>
+          <ul className="sponsors__logos">
+            {sponsors.map((sponsor) => (
+              <li key={sponsor.id}>
+                <img src={sponsor.logo} alt={`Logo ${sponsor.name}`} />
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </>
   );

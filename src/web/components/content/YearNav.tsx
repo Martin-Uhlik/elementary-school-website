@@ -9,6 +9,7 @@ const YearNav = ({ years }: { years: number[] }) => {
   const bar = useRef<HTMLElement>(null);
   const [current, setCurrent] = useState(years[0]);
   const [top, setTop] = useState(0);
+  const [stuck, setStuck] = useState(false);
 
   // stick right under the fixed header, whose height changes on scroll and with the viewport;
   // the sections scroll to just below the bar (scroll-margin-top in styles.css)
@@ -25,10 +26,13 @@ const YearNav = ({ years }: { years: number[] }) => {
     return () => observer.disconnect();
   }, []);
 
-  // the year in view is the last section whose heading has scrolled up to the bar
+  // the year in view is the last section whose heading has scrolled up to the bar;
+  // the bar is stuck once it has reached its sticky offset under the header
   useEffect(() => {
     const update = () => {
-      const line = (bar.current?.getBoundingClientRect().bottom ?? 0) + 32;
+      const rect = bar.current?.getBoundingClientRect();
+      const line = (rect?.bottom ?? 0) + 32;
+      setStuck(!!bar.current && !!rect && rect.top <= parseFloat(getComputedStyle(bar.current).top) + 1);
       let inView = years[0];
       for (const year of years) {
         const section = document.getElementById(yearAnchor(year));
@@ -50,7 +54,7 @@ const YearNav = ({ years }: { years: number[] }) => {
   const newer = years[index - 1];
 
   return (
-    <nav className="year-nav" ref={bar} style={{ top }} aria-label="Roky">
+    <nav className={`year-nav${stuck ? " is-stuck" : ""}`} ref={bar} style={{ top }} aria-label="Roky">
       <Link href="/foto-video" className="year-nav__back">
         <span aria-hidden="true">←</span> <span className="year-nav__back-text">Foto a video</span>
       </Link>

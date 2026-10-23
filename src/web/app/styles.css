@@ -254,6 +254,14 @@ a {
   text-transform: uppercase;
 }
 
+.person-card__note {
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: var(--surface);
+  font-size: 0.9rem;
+}
+
 .person-card__contacts {
   display: flex;
   flex-direction: column;
@@ -340,21 +348,6 @@ a {
   padding: 1rem;
 }
 
-.sponsors {
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 3rem 0;
-  flex-wrap: wrap;
-  gap: 1rem;
-  max-width: 95vw;
-}
-
-.sponsors img {
-  max-width: 80vw;
-}
-
 .footer-text {
   font-size: smaller;
   white-space: nowrap;
@@ -421,43 +414,8 @@ a {
   z-index: -100;
 }
 
-.semi_table {
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 1rem;
-  padding: 1rem 0 4rem;
-  align-items: center;
-}
-
-.semi_table__line {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  width: 100%;
-}
-
-.semi_table__cell {
-  display: flex;
-  flex-direction: column;
-}
-
 .dropdown-menu {
   box-shadow: var(--shadow-small);
-}
-
-.link_huge {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  margin: auto;
-  align-items: center;
-  gap: 1rem;
-  font-size: large;
-  padding: 1.5rem 0;
-}
-
-.link_huge img {
-  height: 3rem;
 }
 
 .citation {
@@ -490,39 +448,7 @@ a {
   height: 2.5rem;
 }
 
-.icon--blue {
-  filter: invert(25%) sepia(82%) saturate(2536%) hue-rotate(211deg) brightness(105%) contrast(98%);
-}
 /* inf */
-
-/* table */
-.table {
-  width: 100%;
-}
-
-.table th {
-  background-color: var(--bg-primary);
-  color: white;
-  padding: 0.5rem;
-}
-
-.table tr {
-  min-height: 3rem;
-}
-
-.table tr:nth-child(2n) {
-  background-color: var(--row-alt-bg);
-}
-
-.table td {
-  padding: 1rem 1rem;
-  width: 50%;
-  vertical-align: middle;
-}
-
-.table td:nth-child(2n) {
-  width: 1%;
-}
 
 /* article */
 .article {
@@ -760,22 +686,9 @@ a {
     flex-direction: row;
   }
 
-  .table td:nth-child(2n) {
-    text-align: left;
-    width: 50%;
-  }
-
   .img_circle {
     max-width: 20rem;
     max-height: 20rem;
-  }
-
-  .link_huge {
-    font-size: x-large;
-  }
-
-  .link_huge img {
-    height: 4rem;
   }
 
   /* article */
@@ -1017,7 +930,15 @@ a {
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: 0.75rem;
-  background: var(--surface);
+  background: var(--surface-muted);
+  transition:
+    border-radius 0.2s,
+    box-shadow 0.2s;
+}
+
+/* stuck under the header: square top corners and a shadow over the cards below */
+.year-nav.is-stuck {
+  border-radius: 0 0 0.75rem 0.75rem;
   box-shadow: var(--card-shadow);
 }
 
@@ -1037,6 +958,11 @@ a {
   border-radius: 0.5rem;
   text-align: center;
   text-decoration: none;
+}
+
+.year-nav__back,
+.year-nav__step {
+  color: var(--link-on-row-alt);
 }
 
 .year-nav__step:hover {
@@ -1090,17 +1016,18 @@ a {
   overflow: hidden;
   border-radius: 0.75rem;
   color: var(--bs-body-color);
-  background: var(--surface);
+  background: var(--surface-muted);
   text-decoration: none;
-  box-shadow: var(--card-shadow);
   transition:
     transform 0.25s,
-    box-shadow 0.25s;
+    box-shadow 0.25s,
+    background-color 0.25s;
 }
 
 .gallery-card:hover,
 .gallery-card:focus-visible {
   color: var(--bs-body-color);
+  background: var(--surface);
   transform: translateY(-0.25rem);
   box-shadow: var(--card-shadow-hover);
 }
@@ -1263,12 +1190,7 @@ a {
   height: 100%;
 }
 
-/* link colours with at least 4.5:1 contrast on the grey rows and the dark footer */
-.inf a,
-.table a {
-  color: var(--link-on-row-alt);
-}
-
+/* link colour with at least 4.5:1 contrast on the dark footer */
 .footer a {
   color: #9ec5fe;
 }
@@ -1318,6 +1240,30 @@ img.background-elem-wide {
 
 .mysak__hint {
   color: var(--text-placeholder);
+}
+
+/* the exercise itself sits in the middle of the card */
+.mysak__stage {
+  display: flex;
+  justify-content: center;
+}
+
+.mysak__stage > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 60rem;
+}
+
+.mysak__stage .mysak-stats,
+.mysak__stage .mysak-toolbar,
+.mysak__stage .skladanka__photos {
+  justify-content: center;
+}
+
+.mysak__stage legend {
+  text-align: center;
 }
 
 .mysak-stats {
@@ -1730,18 +1676,12 @@ body {
   padding: 0;
 }
 
-/* a section is a card with its heading inside; --plain sections hold cards themselves */
+/* a section is a card with its heading inside */
 .article__section {
   padding: 1.5rem;
   border-radius: var(--card-radius);
   background: var(--surface);
   box-shadow: var(--card-shadow);
-}
-
-.article__section--plain {
-  padding: 0;
-  background: none;
-  box-shadow: none;
 }
 
 .article__section > h1 {
@@ -1767,6 +1707,78 @@ body {
 
 .article__body > h2 {
   margin-bottom: 0.75rem;
+}
+
+/* every h2 starts a new block, so it gets more room above than the lines inside a block */
+.article__section > .article__body:not(:nth-child(2)),
+.article__section > h2:not(:nth-child(2)) {
+  margin-top: 1.5rem;
+}
+
+/* tables: a rounded grey block like the link tiles, with a line between rows; stacked in .data-tables */
+.data-tables {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* only as wide as the content, in the middle of the card */
+.data-table {
+  width: auto;
+  min-width: min(26rem, 100%);
+  margin-inline: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+  font-size: 0.95rem;
+}
+
+.data-table caption {
+  caption-side: top;
+  padding: 0 0 0.5rem;
+  color: var(--bs-body-color);
+  font-weight: 600;
+}
+
+.data-table thead th {
+  color: var(--bs-secondary-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.6rem 1rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.data-table tbody > tr > * {
+  border-top: 1px solid var(--bs-border-color-translucent);
+}
+
+.data-table tbody tr:hover > * {
+  background: var(--bs-tertiary-bg);
+}
+
+.data-table tbody th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.data-table__nowrap {
+  color: var(--bs-secondary-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.data-table a {
+  color: var(--link-on-row-alt);
 }
 
 .empty-note {
@@ -1802,12 +1814,6 @@ body {
     transform 0.2s,
     box-shadow 0.2s,
     background-color 0.2s;
-}
-
-/* on the page background (not inside a card) the tiles are cards themselves */
-.article__section--plain .link-tile {
-  background: var(--surface);
-  box-shadow: var(--card-shadow);
 }
 
 a.link-tile:hover,
@@ -1906,16 +1912,6 @@ a.link-tile:focus-visible {
   gap: 2rem;
 }
 
-.home-grid__side {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.persons--single {
-  grid-template-columns: 1fr;
-}
-
 .main-tour {
   align-items: center;
 }
@@ -1929,12 +1925,53 @@ a.link-tile:focus-visible {
   max-width: 100%;
 }
 
+/* sponsor logos sit right on the page background (transparent PNGs) */
 .sponsors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   max-width: 100%;
-  padding: 1.5rem;
-  border-radius: var(--card-radius);
-  background: #fff;
-  box-shadow: var(--card-shadow);
+  padding: 1rem 0 0;
+}
+
+.sponsors__title {
+  margin: 0;
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sponsors__logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sponsors__logos img {
+  max-width: min(80vw, 22rem);
+  max-height: 4.5rem;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.sponsors__logos img:hover {
+  opacity: 1;
+}
+
+/* the logos have dark text, so in the dark theme each sits on a light chip */
+[data-bs-theme="dark"] .sponsors__logos img {
+  box-sizing: content-box;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  background: #e9edf2;
 }
 
 @media (min-width: 992px) {
@@ -1943,7 +1980,7 @@ a.link-tile:focus-visible {
   }
 
   .home-grid {
-    grid-template-columns: minmax(18rem, 2fr) 3fr;
+    grid-template-columns: minmax(18rem, 1fr) 2fr;
     align-items: start;
   }
 }
@@ -2186,4 +2223,222 @@ a.link-tile:focus-visible {
 /* darker blue so links keep 4.5:1 on the grey card */
 .person-card__contact {
   color: var(--link-on-row-alt);
+}
+
+/* Průběh školního roku: a vertical timeline, a calendar leaf on the line and a card next to it */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.75rem;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--bs-primary-bg-subtle);
+}
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  align-items: start;
+  gap: 1rem;
+}
+
+.timeline__leaf {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  line-height: 1;
+  text-align: center;
+}
+
+.timeline__month {
+  width: 100%;
+  padding: 0.25rem 0;
+  color: #fff;
+  background: var(--bs-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timeline__day {
+  padding: 0.35rem 0 0.45rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.timeline__item--holiday .timeline__month {
+  background: var(--bs-success);
+}
+
+.timeline__card {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+}
+
+.timeline__item--holiday .timeline__card {
+  background: var(--bs-success-bg-subtle);
+}
+
+.timeline__date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  margin: 0 0 0.25rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.timeline__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
+  color: var(--bs-success-text-emphasis);
+  background: var(--surface);
+  font-size: 0.75rem;
+}
+
+.timeline__text {
+  margin: 0;
+}
+
+/* wider screens: the line in the middle, cards alternating left and right */
+@media (min-width: 768px) {
+  .timeline {
+    gap: 1.75rem;
+  }
+
+  .timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .timeline__item {
+    grid-template-columns: 1fr 4rem 1fr;
+    gap: 1.25rem;
+  }
+
+  .timeline__leaf {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .timeline__card {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  .timeline__item:nth-child(even) .timeline__card {
+    grid-column: 1;
+    text-align: right;
+  }
+
+  .timeline__item:nth-child(even) .timeline__date {
+    justify-content: flex-end;
+  }
+}
+
+/* a large tile for a key link (lunch orders, the kindergarten website) */
+.feature-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--card-radius);
+  color: var(--bs-body-color);
+  background: var(--surface-muted);
+  text-decoration: none;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background-color 0.2s;
+}
+
+.feature-link:hover,
+.feature-link:focus-visible {
+  color: var(--bs-body-color);
+  background: var(--surface);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.feature-link:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.feature-link__icon {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  color: #fff;
+  background: var(--bs-primary);
+  font-size: 1.75rem;
+}
+
+.feature-link__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.feature-link__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.feature-link:hover .feature-link__title {
+  color: var(--bs-link-hover-color);
+}
+
+.feature-link__description {
+  font-size: 0.95rem;
+}
+
+.feature-link__domain {
+  color: var(--bs-secondary-color);
+  font-size: 0.8rem;
+}
+
+.feature-link__arrow {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--bs-secondary-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-link {
+    transition: none;
+  }
 }

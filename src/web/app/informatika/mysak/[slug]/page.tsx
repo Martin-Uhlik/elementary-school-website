@@ -49,7 +49,9 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
             {exercise.hint && <span className="mysak__hint"> {exercise.hint}</span>}
           </p>
 
-          <Exercise photos={await getPhotos()} />
+          <div className="mysak__stage">
+            <Exercise photos={await getPhotos()} />
+          </div>
 
           <details className="mysak__info">
             <summary>Informace o cvičení</summary>

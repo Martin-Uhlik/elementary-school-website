@@ -95,7 +95,7 @@ const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) =
       </div>
       <div className="body gallery-body">
         <div className="article">
-          <div className="article__section article__section--plain">
+          <div className="article__section">
             <h1>{title}</h1>
             <div className={`article__body gallery${dense ? " gallery--dense" : ""}`} id="gallery">
               {images.map((image, i) => (

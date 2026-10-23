@@ -1,3 +1,5 @@
+import { LuSun } from "react-icons/lu";
+import FeatureLink from "@/components/content/FeatureLink";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroup } from "@/lib/content/links";
 import PersonCard from "@/components/content/PersonCard";
@@ -13,12 +15,7 @@ const OrganizaceMaterskaSkolaPage = async () => {
         <div className="article">
           <div className="article__section">
             <h1>Mateřská škola</h1>
-            <div className="link_huge">
-              <a href="https://msmp1.webnode.cz/" target="_blank">
-                Vlastní webové stránky mateřské školy
-              </a>{" "}
-              <img className="icon--blue" src="/data/images/icons/weather-sunny.svg" alt="" />
-            </div>
+            <FeatureLink href="https://msmp1.webnode.cz/" title="Vlastní webové stránky mateřské školy" Icon={LuSun} />
             <div>
               <span>
                 Mateřská škola se nachází uprostřed obce v prostorné zahradě. Má tři smíšené třídy s kapacitou 48 dětí.

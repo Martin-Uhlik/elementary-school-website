@@ -65,6 +65,12 @@ export type CalendarEvent = {
   id: string;
   // e.g. "2023/2024"
   schoolYear: string;
+  // first day, YYYY-MM-DD
+  date: string;
+  // last day of an event longer than one day
+  endDate?: string;
+  // holidays are marked in the timeline
+  holiday?: boolean;
   text: string;
 };
 

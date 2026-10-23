@@ -6,12 +6,13 @@ export const getSponsors = async () => sponsors;
 
 export const getPhotos = async () => photos;
 
-// The newest school year and its lines
+// The newest school year and its events by date
 export const getSchoolYear = async () => {
   const schoolYear =
     calendarEvents
       .map((e) => e.schoolYear)
       .sort()
       .at(-1) ?? "";
-  return { schoolYear, events: calendarEvents.filter((e) => e.schoolYear === schoolYear) };
+  const events = calendarEvents.filter((e) => e.schoolYear === schoolYear).sort((a, b) => a.date.localeCompare(b.date));
+  return { schoolYear, events };
 };

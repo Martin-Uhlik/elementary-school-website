@@ -1,3 +1,5 @@
+import { LuCarrot, LuUtensils } from "react-icons/lu";
+import FeatureLink from "@/components/content/FeatureLink";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroup } from "@/lib/content/links";
 
@@ -13,25 +15,25 @@ const JidelnaPage = async () => {
             <div className="zig_zag">
               <div className="zig_zag__line-left">
                 <div className="article__body">
-                  <span className="link_huge">
-                    <a href="https://www.strava.cz/Strava/Stravnik/Prihlaseni?zarizeni=2176" target="_blank">
-                      Přihlášení - odhlášení stravy
-                    </a>{" "}
-                    <img className="icon--blue" src="/data/images/icons/silverware.svg" alt="" />
-                  </span>{" "}
-                  <span>Stravu na další den lze přihlásit - odhlásit do 14.30 hodin.</span>
+                  <FeatureLink
+                    href="https://www.strava.cz/Strava/Stravnik/Prihlaseni?zarizeni=2176"
+                    title="Přihlášení - odhlášení stravy"
+                    description="Stravu na další den lze přihlásit - odhlásit do 14.30 hodin."
+                    Icon={LuUtensils}
+                  />
                 </div>
                 <img className="img_circle" src="/data/images/jidelna/jidelna_1.jpg" alt="Fotografie jídelny" />
               </div>
 
               <div className="zig_zag__line-right">
                 <img className="img_circle" src="/data/images/jidelna/jidelna_2.jpg" alt="Fotografie jídelny" />{" "}
-                <span className="link_huge">
-                  <a href="https://www.strava.cz/strava5/Jidelnicky?zarizeni=2176" target="_blank">
-                    Jídelní lístek
-                  </a>{" "}
-                  <img className="icon--blue" src="/data/images/icons/carrot.svg" alt="" />
-                </span>
+                <div className="article__body">
+                  <FeatureLink
+                    href="https://www.strava.cz/strava5/Jidelnicky?zarizeni=2176"
+                    title="Jídelní lístek"
+                    Icon={LuCarrot}
+                  />
+                </div>
               </div>
 
               <div className="zig_zag__line-left">

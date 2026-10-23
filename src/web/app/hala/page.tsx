@@ -16,13 +16,13 @@ const HalaPage = async () => {
             <div className="zig_zag">
               <div className="zig_zag__line-left">
                 <div className="article__body">
-                  <span>Kontaktujte prosím správce haly telefonicky nebo emailem.</span>
-                  <div>
-                    <br />
-                  </div>
-
                   {manager.map((person) => (
-                    <PersonCard key={person.id} person={person} variant="short" />
+                    <PersonCard
+                      key={person.id}
+                      person={person}
+                      variant="short"
+                      note="Kontaktujte prosím správce haly telefonicky nebo e-mailem."
+                    />
                   ))}
                 </div>
                 <img className="img_circle" src="/data/images/hala/hala_1.jpg" alt="Fotografie venkovního hřiště" />

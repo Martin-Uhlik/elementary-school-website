@@ -1,4 +1,82 @@
 // Ported from html/organizace/historie.html
+
+// name, years in office
+type Director = [string, string];
+
+const obecnaSkola: Director[] = [
+  ["Jan Hoffman", "1825 - 1847"],
+  ["Václav Vincenc", "1847 - 1868"],
+  ["Antonín Kraus", "11. - 12. - 1868"],
+  ["Šimon Janča", "1. 1. 1869 - 27. 4. 1906"],
+  ["zast. Josef Marák", "28. 4. 1906 - 31. 8. 1906"],
+  ["Jar. Vodička", "1. 9. 1906 - 30. 11. 1915"],
+  ["Fr. Šulcová", "1. 12. 1915 - 31. 3. 1918"],
+  ["Karel Krčma", "1. 4. 1918 - 15. 5. 1919"],
+  ["Karel Sudek", "16. 5. 1919 - 28. 2. 1920"],
+  ["Jar. Vodička", "1. 3. 1920 - 20. 4. 1923"],
+  ["zast. Jar. Adamík", "21. 4. 1923 - 31. 8. 1924"],
+  ["Leopold Ginter", "1. 9. 1924 - 10. 4. 1937"],
+  ["Jar. Adamík", "14. 4. 1937 - 30. 8. 1940"],
+  ["Julie Přikrylová", "1. 9. 1940 - 30. 11. 1940"],
+  ["Julie Přikrylová", "10. 2. 1941 - 31. 7. 1943"],
+  ["František Pátík", "1. 8. 1943 - 30. 8. 1950"],
+  ["Josef Pospíšil", "1. 9. 1950 - 31. 8. 1954"],
+];
+
+const mestanskaSkola: Director[] = [
+  ["Josef Vlk", "6. 9. 1937 - 30. 1. 1940"],
+  ["Mil. Beránek", "1. 2. 1940 - 6/1945"],
+  ["Vlad. Čagánek", "přechodně"],
+  ["František Lapčík", "20. 9. 1945 - 31. 3. 1948"],
+  ["Sylv. Butkovský", "16. 4. 1948 - 31. 8. 1949"],
+  ["Rud. Lukeš", "1. 9. 1949 - 31. 8. 1950"],
+  ["Lud. Smaženková", "1. 9. 1950 - 31. 8. 1954"],
+];
+
+const osmiletaSkola: Director[] = [
+  ["Lud. Smaženková", "1. 9. 1954 - 31. 8. 1955"],
+  ["Miroslav Čech", "1. 9. 1955 - 31. 8. 1962"],
+  ["František Bajgar", "1. 9. 1962 - 31. 8. 1970"],
+  ["Marie Doležalová", "1. 9. 1970 - 31. 8. 1983"],
+  ["Alena Černochová", "1. 9. 1983 - 30. 6. 1990"],
+  ["Svatopluk Zakopal", "1. 7. 1990 - 30. 10. 1999"],
+  ["František Havlíček", "1. 11. 1999 - 31. 7. 2012"],
+  ["Ivana Uhlíková", "1. 8. 2012 -"],
+];
+
+const materskaSkola: Director[] = [
+  ["František Pátík", "1947 - 1950"],
+  ["Josef Pospíšil", "1950 -1952"],
+  ["Marie Čechová", "1952 - 1953"],
+  ["Jaroslava Studničková", "1953 -1954"],
+  ["Žofie Zemková", "1954 - 1956"],
+  ["Marie Čechová", "1956 -1961"],
+  ["Olga Herůdková", "1961 - 1968"],
+  ["Růžena Dobřická", "1968 - 1974"],
+  ["Zdena Vyoralová", "1974 - 1992"],
+  ["Ladislava Cahová", "1992 - 2001"],
+];
+
+const DirectorTable = ({ directors, caption }: { directors: Director[]; caption?: string }) => (
+  <table className="data-table">
+    {caption && <caption>{caption}</caption>}
+    <thead>
+      <tr>
+        <th scope="col">Jméno</th>
+        <th scope="col">Období</th>
+      </tr>
+    </thead>
+    <tbody>
+      {directors.map(([name, years], i) => (
+        <tr key={i}>
+          <td>{name}</td>
+          <td className="data-table__nowrap">{years}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
 const OrganizaceHistoriePage = () => {
   return (
     <>
@@ -168,38 +246,10 @@ const OrganizaceHistoriePage = () => {
 
             <div className="article__body">
               <h2>Ředitelé školy v Moravském Písku:</h2>
-              <h3 className="centered">Obecná škola:</h3>
-              <div className="semi_table">
-                <span>Jan Hoffman</span> <span>1825 - 1847</span> <span>Václav Vincenc</span> <span>1847 - 1868</span>{" "}
-                <span>Antonín Kraus</span> <span>11. - 12. - 1868</span> <span>Šimon Janča</span>{" "}
-                <span>1. 1. 1869 - 27. 4. 1906</span> <span>zast. Josef Marák</span>{" "}
-                <span>28. 4. 1906 - 31. 8. 1906</span> <span>Jar. Vodička</span> <span>1. 9. 1906 - 30. 11. 1915</span>{" "}
-                <span>Fr. Šulcová</span> <span>1. 12. 1915 - 31. 3. 1918</span> <span>Karel Krčma</span>{" "}
-                <span>1. 4. 1918 - 15. 5. 1919</span> <span>Karel Sudek</span> <span>16. 5. 1919 - 28. 2. 1920</span>{" "}
-                <span>Jar. Vodička</span> <span>1. 3. 1920 - 20. 4. 1923</span> <span>zast. Jar. Adamík</span>{" "}
-                <span>21. 4. 1923 - 31. 8. 1924</span> <span>Leopold Ginter</span> <span>1. 9. 1924 - 10. 4. 1937</span>{" "}
-                <span>Jar. Adamík</span> <span>14. 4. 1937 - 30. 8. 1940</span> <span>Julie Přikrylová</span>{" "}
-                <span>1. 9. 1940 - 30. 11. 1940</span> <span>Julie Přikrylová</span>{" "}
-                <span>10. 2. 1941 - 31. 7. 1943</span> <span>František Pátík</span>{" "}
-                <span>1. 8. 1943 - 30. 8. 1950</span> <span>Josef Pospíšil</span> <span>1. 9. 1950 - 31. 8. 1954</span>
-              </div>
-              <h3 className="centered">Měšťanská škola:</h3>
-              <div className="semi_table">
-                <span>Josef Vlk</span> <span>6. 9. 1937 - 30. 1. 1940</span> <span>Mil. Beránek</span>{" "}
-                <span>1. 2. 1940 - 6/1945</span> <span>Vlad. Čagánek</span> <span>přechodně</span>{" "}
-                <span>František Lapčík</span> <span>20. 9. 1945 - 31. 3. 1948</span> <span>Sylv. Butkovský</span>{" "}
-                <span>16. 4. 1948 - 31. 8. 1949</span> <span>Rud. Lukeš</span> <span>1. 9. 1949 - 31. 8. 1950</span>{" "}
-                <span>Lud. Smaženková</span> <span>1. 9. 1950 - 31. 8. 1954</span>
-              </div>
-              <h3 className="centered">Od 1. 9. 1954 - osmiletá (devítiletá) škola:</h3>
-              <div className="semi_table">
-                <span>Lud. Smaženková</span> <span>1. 9. 1954 - 31. 8. 1955</span> <span>Miroslav Čech</span>{" "}
-                <span>1. 9. 1955 - 31. 8. 1962</span> <span>František Bajgar</span>{" "}
-                <span>1. 9. 1962 - 31. 8. 1970</span> <span>Marie Doležalová</span>{" "}
-                <span>1. 9. 1970 - 31. 8. 1983</span> <span>Alena Černochová</span>{" "}
-                <span>1. 9. 1983 - 30. 6. 1990</span> <span>Svatopluk Zakopal</span>{" "}
-                <span>1. 7. 1990 - 30. 10. 1999</span> <span>František Havlíček</span>{" "}
-                <span>1. 11. 1999 - 31. 7. 2012</span> <span>Ivana Uhlíková</span> <span>1. 8. 2012 -</span>
+              <div className="data-tables">
+                <DirectorTable caption="Obecná škola" directors={obecnaSkola} />
+                <DirectorTable caption="Měšťanská škola" directors={mestanskaSkola} />
+                <DirectorTable caption="Od 1. 9. 1954 - osmiletá (devítiletá) škola" directors={osmiletaSkola} />
               </div>
             </div>
 
@@ -238,14 +288,8 @@ const OrganizaceHistoriePage = () => {
 
             <div className="article__body">
               <h2>Ředitelé mateřské školy:</h2>
-              <div className="semi_table">
-                <span>František Pátík</span> <span>1947 - 1950</span> <span>Josef Pospíšil</span>{" "}
-                <span>1950 -1952</span> <span>Marie Čechová</span> <span>1952 - 1953</span>{" "}
-                <span>Jaroslava Studničková</span> <span>1953 -1954</span> <span>Žofie Zemková</span>{" "}
-                <span>1954 - 1956</span> <span>Marie Čechová</span> <span>1956 -1961</span> <span>Olga Herůdková</span>{" "}
-                <span>1961 - 1968</span> <span>Růžena Dobřická</span> <span>1968 - 1974</span>{" "}
-                <span>Zdena Vyoralová</span> <span>1974 - 1992</span> <span>Ladislava Cahová</span>{" "}
-                <span>1992 - 2001</span>
+              <div className="data-tables">
+                <DirectorTable directors={materskaSkola} />
               </div>
             </div>
           </div>

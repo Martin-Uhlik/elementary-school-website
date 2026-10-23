@@ -8,6 +8,8 @@ type Props = {
   variant?: "full" | "short";
   // heading level of the name, 3 where the card sits under a section heading
   level?: 2 | 3;
+  // a line shown under the name, e.g. how to reach the person
+  note?: string;
 };
 
 const PhoneIcon = ({ kind }: { kind: "landline" | "mobile" }) => {
@@ -48,7 +50,7 @@ export const PersonPhones = ({ person, withInternal }: { person: Person; withInt
   );
 };
 
-const PersonCard = ({ person, variant = "full", level = 2 }: Props) => {
+const PersonCard = ({ person, variant = "full", level = 2, note }: Props) => {
   const Heading = level === 3 ? "h3" : "h2";
   const full = variant === "full";
   const { initials, tone } = avatar(person);
@@ -63,6 +65,7 @@ const PersonCard = ({ person, variant = "full", level = 2 }: Props) => {
           {person.position && <p className="person-card__position">{person.position}</p>}
         </div>
       </header>
+      {note && <p className="person-card__note">{note}</p>}
       <ul className="person-card__contacts">
         {person.email && (
           <li>
