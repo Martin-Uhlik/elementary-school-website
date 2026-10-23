@@ -6,9 +6,7 @@ import LinkList from "@/components/content/LinkList";
 import PersonCard from "@/components/content/PersonCard";
 import { getLinkGroup } from "@/lib/content/links";
 import { getPhotos, getSponsors } from "@/lib/content/misc";
-import { getPeople, personName } from "@/lib/content/people";
-
-const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+import { getPeople } from "@/lib/content/people";
 
 const HomePage = async () => {
   const people = await getPeople("Základní informace");
@@ -26,16 +24,13 @@ const HomePage = async () => {
         <div className="text-subsection">
           <div className="d-flex flex-row">
             <hr className="article__line" />
-            <div className="persons">
+            <div className="flex-grow-1">
               <h1>Základní informace</h1>
-              {people.map((person) => (
-                <PersonCard
-                  key={person.id}
-                  person={person}
-                  variant="short"
-                  heading={`${capitalize(person.position ?? "")}: ${personName(person)}`}
-                />
-              ))}
+              <div className="persons mt-4">
+                {people.map((person) => (
+                  <PersonCard key={person.id} person={person} variant="short" />
+                ))}
+              </div>
             </div>
           </div>
         </div>

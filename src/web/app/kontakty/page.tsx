@@ -1,4 +1,4 @@
-import PersonCard, { PersonPhones } from "@/components/content/PersonCard";
+import PersonCard, { ContactCard } from "@/components/content/PersonCard";
 import { getPeople, isContact } from "@/lib/content/people";
 
 // the page's sections, each one a label in data/people.ts
@@ -27,7 +27,7 @@ const KontaktyPage = async () => {
               <div className="persons">
                 {/* the section's own phone number comes first, then the people */}
                 {people.filter(isContact).map((contact) => (
-                  <PersonPhones key={contact.id} person={contact} withKinds />
+                  <ContactCard key={contact.id} contact={contact} />
                 ))}
                 {people
                   .filter((person) => !isContact(person))
