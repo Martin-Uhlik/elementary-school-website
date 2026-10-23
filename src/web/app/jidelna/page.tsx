@@ -1,6 +1,7 @@
 import { LuCarrot, LuUtensils } from "react-icons/lu";
 import FeatureLink from "@/components/content/FeatureLink";
 import LinkList from "@/components/content/LinkList";
+import ZigZagPath from "@/components/content/ZigZagPath";
 import { getLinkGroup } from "@/lib/content/links";
 
 // Ported from html/jidelna.html
@@ -13,6 +14,7 @@ const JidelnaPage = async () => {
           <div className="article__section">
             <h1>Školní jídelna</h1>
             <div className="zig_zag">
+              <ZigZagPath />
               <div className="zig_zag__line-left">
                 <div className="article__body">
                   <FeatureLink

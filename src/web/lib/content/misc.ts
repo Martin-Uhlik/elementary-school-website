@@ -1,10 +1,12 @@
 import { calendarEvents } from "@/data/calendar";
-import { photos } from "@/data/photos";
+import { photos, puzzlePictures } from "@/data/photos";
 import { sponsors } from "@/data/sponsors";
 
 export const getSponsors = async () => sponsors;
 
 export const getPhotos = async () => photos;
+
+export const getPuzzlePictures = async () => puzzlePictures;
 
 // The newest school year and its events by date
 export const getSchoolYear = async () => {

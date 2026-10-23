@@ -495,10 +495,37 @@ a {
 /* zig zag */
 /* text and a photo side by side, the photo switching sides on every row; photo on top on phones */
 .zig_zag {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .zig_zag {
+    gap: 6rem;
+  }
+}
+
+/* dashed line joining the photos (ZigZagPath), behind them; only where the photos alternate sides */
+.zig_zag__path {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.zig_zag__path path {
+  fill: none;
+  stroke: var(--bs-primary);
+  stroke-width: 3;
+  stroke-dasharray: 12 10;
+  stroke-linecap: round;
+  opacity: 0.6;
 }
 
 .zig_zag__line-left,
@@ -512,15 +539,19 @@ a {
   order: -1;
 }
 
-/* the photos are 500×500, so they stay at most 24rem wide to stay sharp */
+/* blob-shaped photos, a different blob on each side; the files are 500×500, so they stay at most 24rem wide */
 .zig_zag__photo {
+  position: relative;
   justify-self: center;
   width: 100%;
   max-width: 24rem;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--card-radius);
-  box-shadow: var(--card-shadow);
+  border-radius: 62% 38% 46% 54% / 48% 58% 42% 52%;
+}
+
+.zig_zag__line-right .zig_zag__photo {
+  border-radius: 42% 58% 60% 40% / 55% 45% 55% 45%;
 }
 
 @media (min-width: 768px) {
@@ -536,6 +567,10 @@ a {
 
   .zig_zag__line-left > .zig_zag__photo {
     order: 0;
+  }
+
+  .zig_zag__path {
+    display: block;
   }
 }
 

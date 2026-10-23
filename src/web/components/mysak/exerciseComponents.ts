@@ -9,7 +9,7 @@ import SkladaniSlov from "./SkladaniSlov";
 import Skladanka from "./Skladanka";
 import ZnakyKlavesnice from "./ZnakyKlavesnice";
 
-// Content an exercise may use; the page loads it on the server
+// Content an exercise may use; the page loads it on the server (photos = the puzzle pictures)
 export type ExerciseProps = { photos: Photo[] };
 
 // Exercises that are already ported, by slug

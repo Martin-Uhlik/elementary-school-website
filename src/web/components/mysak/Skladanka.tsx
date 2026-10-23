@@ -15,7 +15,7 @@ const isSolved = (order: number[]) => order.every((piece, slot) => piece === slo
 // order[slot] = piece that currently sits in that slot
 const createOrder = (count: number) => shuffleChanged(Array.from({ length: count }, (_, i) => i));
 
-// the puzzle pictures are the school photos from data/photos.ts
+// the puzzle pictures are the illustrations from data/photos.ts (puzzlePictures)
 const Skladanka = ({ photos }: ExerciseProps) => {
   const [cols, setCols] = useState(3);
   const [rows, setRows] = useState(3);

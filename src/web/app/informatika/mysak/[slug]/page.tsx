@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Collapsible from "@/components/content/Collapsible";
 import { exerciseComponents } from "@/components/mysak/exerciseComponents";
-import { getPhotos } from "@/lib/content/misc";
+import { getPuzzlePictures } from "@/lib/content/misc";
 import { exercises, getExercise } from "@/lib/mysak/exercises";
 
 export const dynamicParams = false;
@@ -51,7 +51,7 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
           </p>
 
           <div className="mysak__stage">
-            <Exercise photos={await getPhotos()} />
+            <Exercise photos={await getPuzzlePictures()} />
           </div>
 
           <Collapsible title="Informace o cvičení" className="mysak__info">

@@ -9,3 +9,24 @@ export const photos: Photo[] = [
   { id: "carousel-6", src: "/data/images/carousel_6.jpg", alt: "Tělocvična" },
   { id: "carousel-7", src: "/data/images/carousel_7.jpg", alt: "Šatny" },
 ];
+
+// Pictures for the Skládanka puzzle (informatika/mysak): our own illustrations, free to use
+export const puzzlePictures: Photo[] = [
+  { id: "puzzle-louka", src: "/data/images/puzzle/louka.svg", alt: "Obrázek: louka s domečkem, sluníčkem a beruškou" },
+  {
+    id: "puzzle-more",
+    src: "/data/images/puzzle/more-dno.svg",
+    alt: "Obrázek: mořské dno s rybkami, chobotnicí a krabem",
+  },
+  {
+    id: "puzzle-vesmir",
+    src: "/data/images/puzzle/vesmir.svg",
+    alt: "Obrázek: vesmír s raketou, planetami a létajícím talířem",
+  },
+  {
+    id: "puzzle-statek",
+    src: "/data/images/puzzle/statek.svg",
+    alt: "Obrázek: statek s kravičkou, slepičkou a prasátkem",
+  },
+  { id: "puzzle-zima", src: "/data/images/puzzle/zima.svg", alt: "Obrázek: zimní krajina se sněhulákem a chaloupkou" },
+];

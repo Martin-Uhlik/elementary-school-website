@@ -1,4 +1,5 @@
 import LinkList from "@/components/content/LinkList";
+import ZigZagPath from "@/components/content/ZigZagPath";
 import { getLinkGroup } from "@/lib/content/links";
 import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
@@ -14,6 +15,7 @@ const HalaPage = async () => {
           <div className="article__section">
             <h1>Pronájem tělocvičny a venkovního víceúčelového hřiště</h1>
             <div className="zig_zag">
+              <ZigZagPath />
               <div className="zig_zag__line-left">
                 <div className="article__body">
                   {manager.map((person) => (
