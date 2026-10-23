@@ -268,29 +268,6 @@ a {
   align-items: center;
 }
 
-.video-js {
-  width: min(4rem * 16, 95vw);
-  height: min(4rem * 9, 95vw * 9/16);
-  box-shadow: var(--shadow-small);
-  margin: 3rem 0;
-}
-
-.video-js .vjs-picture-in-picture-control {
-  display: none;
-}
-
-.video-js .vjs-big-play-button {
-  background-color: rgba(43, 51, 63, 0.125);
-  border-radius: 1em;
-  margin-left: -0.7em;
-  width: 1.6em;
-  line-height: 1.6em;
-}
-
-.video-js .vjs-big-play-button {
-  font-size: 4em;
-}
-
 .footer {
   display: flex;
   flex-direction: column;
@@ -946,14 +923,53 @@ a {
     padding: 0;
   }
 }
-/* Next.js port: native video player replacing video.js */
-video.video-js {
+/* Next.js port: native video player with the quality select overlaid on it */
+.video-player {
+  position: relative;
+  margin: 3rem 0;
+  box-shadow: var(--shadow-small);
+}
+
+.video-player video {
+  display: block;
+  width: min(4rem * 16, 95vw);
+  height: min(4rem * 9, 95vw * 9/16);
   background-color: black;
-  margin-bottom: 0.5rem;
 }
 
 .video-quality {
-  margin-bottom: 3rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+/* like the native controls: hidden while playing, shown on hover, focus, pause or with the menu open */
+.video-player.is-playing:not(:hover) .video-quality:not(:focus-within, :has(.show)) {
+  opacity: 0;
+}
+
+/* Bootstrap dropdown, same as the theme switch; only the toggle is styled to sit on the video */
+.video-quality__toggle {
+  padding: 0.2rem 0.6rem;
+  border: 0;
+  border-radius: 0.4rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.65);
+  font-size: 0.9rem;
+}
+
+.video-quality__toggle:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.video-quality__toggle:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.video-quality .dropdown-menu {
+  min-width: 0;
 }
 
 /* Accessibility */
