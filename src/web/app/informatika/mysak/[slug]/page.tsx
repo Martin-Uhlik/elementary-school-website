@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Collapsible from "@/components/content/Collapsible";
 import { exerciseComponents } from "@/components/mysak/exerciseComponents";
 import { getPhotos } from "@/lib/content/misc";
 import { exercises, getExercise } from "@/lib/mysak/exercises";
@@ -53,10 +54,9 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
             <Exercise photos={await getPhotos()} />
           </div>
 
-          <details className="mysak__info">
-            <summary>Informace o cvičení</summary>
+          <Collapsible title="Informace o cvičení" className="mysak__info">
             <p>{exercise.info}</p>
-          </details>
+          </Collapsible>
 
           <nav aria-label="Další cvičení" className="mysak__pager">
             {prev ? (
