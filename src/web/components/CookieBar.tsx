@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LuCookie } from "react-icons/lu";
 
 const STORAGE_KEY = "cookiesConfirm";
 
@@ -26,15 +27,17 @@ const CookieBar = () => {
 
   return (
     <aside className={`cookies-bar${hidden ? " cookie-bar--hidden" : ""}`} id="cookieBar" aria-label="Cookies">
-      <span className="cookies-bar__text">
-        Tento web používá pouze funkční cookies a úložiště prohlížeče nezbytné pro jeho provoz (např. uložení zvoleného
-        barevného motivu). Analytické ani reklamní cookies nepoužíváme.
-      </span>
-      <div className="cookies-bar__buttons">
-        <button type="button" className="cookies-bar__button btn btn-primary" onClick={confirm}>
-          OK
-        </button>
+      <LuCookie className="cookies-bar__icon" aria-hidden="true" />
+      <div className="cookies-bar__text">
+        <p className="cookies-bar__title">Používáme jen nezbytné cookies</p>
+        <p className="cookies-bar__details">
+          Web ukládá ve vašem prohlížeči pouze funkční údaje nezbytné pro svůj provoz (např. zvolený barevný motiv).
+          Analytické ani reklamní cookies nepoužíváme.
+        </p>
       </div>
+      <button type="button" className="cookies-bar__button btn btn-primary" onClick={confirm}>
+        Rozumím
+      </button>
     </aside>
   );
 };
