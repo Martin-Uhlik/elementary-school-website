@@ -11,7 +11,7 @@ export const generateMetadata = async ({ params }: PageProps<"/galerie/[id]">): 
 const GalleryPage = async ({ params }: PageProps<"/galerie/[id]">) => {
   const gallery = await getGallery((await params).id);
   if (!gallery) notFound();
-  return <Gallery title={gallery.title} images={gallery.images} />;
+  return <Gallery title={gallery.title} back={gallery.back} images={gallery.images} />;
 };
 
 export default GalleryPage;

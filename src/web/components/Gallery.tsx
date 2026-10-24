@@ -1,32 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, type CSSProperties } from "react";
+import { LuChevronLeft } from "react-icons/lu";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
 import type { GalleryImage } from "@/lib/galleries";
 
-const LAYOUT_KEY = "galleryLayout";
+type Props = { title: string; back: string; images: GalleryImage[] };
 
-const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) => {
-  const router = useRouter();
-  const [dense, setDense] = useState(false);
-
-  // restore the layout (4 or 9 per screen) the visitor picked last time
-  useEffect(() => {
-    try {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is only readable after mount
-      setDense(localStorage.getItem(LAYOUT_KEY) === "9");
-    } catch {}
-  }, []);
-
-  const setLayout = (size: "4" | "9") => {
-    setDense(size === "9");
-    try {
-      localStorage.setItem(LAYOUT_KEY, size);
-    } catch {}
-  };
-
+// Photos of one gallery: square previews or whole photos in rows (the grid / rows switch in the header),
+// a click opens them full size in PhotoSwipe
+const Gallery = ({ title, back, images }: Props) => {
   useEffect(() => {
     const lightbox = new PhotoSwipeLightbox({
       gallery: "#gallery",
@@ -61,64 +46,38 @@ const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) =
   }, []);
 
   return (
-    <>
-      <div className="gallery-navigation">
-        <button
-          type="button"
-          className="gallery-navigation__back-arrow gallery-navigation__button"
-          aria-label="Zpět"
-          onClick={() => router.back()}
-        >
-          <img src="/data/images/icons/arrow-left.svg" alt="" className="gallery-navigation__icon" />
-        </button>
-        <div className="gallery-navigation__layout-switch" role="group" aria-label="Rozložení galerie">
-          <button
-            type="button"
-            className="gallery-navigation__button"
-            aria-label="Velké náhledy"
-            aria-pressed={!dense}
-            onClick={() => setLayout("4")}
-          >
-            <img src="/data/images/icons/view-grid-4.svg" alt="" className="gallery-navigation__icon" />
-          </button>
-          <button
-            type="button"
-            className="gallery-navigation__button"
-            aria-label="Malé náhledy"
-            aria-pressed={dense}
-            onClick={() => setLayout("9")}
-          >
-            <img src="/data/images/icons/view-grid-9.svg" alt="" className="gallery-navigation__icon" />
-          </button>
-        </div>
-      </div>
-      <div className="body gallery-body">
-        <div className="article">
-          <div className="article__section">
+    <div className="body">
+      <div className="article">
+        <div className="article__section">
+          {/* the whole heading leads back to the archive */}
+          <Link href={back} className="gallery-heading" title="Zpět na archiv">
+            <LuChevronLeft className="gallery-heading__chevron" aria-hidden="true" />
             <h1>{title}</h1>
-            <div className={`article__body gallery${dense ? " gallery--dense" : ""}`} id="gallery">
-              {images.map((image, i) => (
-                <a
-                  key={image.src}
-                  className="gallery__image-wrapper"
-                  href={image.src}
-                  data-pswp-width={image.width}
-                  data-pswp-height={image.height}
-                  target="_blank"
-                >
-                  <img
-                    className="gallery__image"
-                    src={image.thumb}
-                    loading="lazy"
-                    alt={`Fotografie ${i + 1} z ${images.length}`}
-                  />
-                </a>
-              ))}
-            </div>
+            <span className="visually-hidden">(zpět na archiv)</span>
+          </Link>
+          <div className="gallery" id="gallery">
+            {images.map((image, i) => (
+              <a
+                key={image.src}
+                className="gallery__image-wrapper"
+                href={image.src}
+                data-pswp-width={image.width}
+                data-pswp-height={image.height}
+                target="_blank"
+                style={{ "--ratio": (image.width / image.height).toFixed(4) } as CSSProperties}
+              >
+                <img
+                  className="gallery__image"
+                  src={image.thumb}
+                  loading="lazy"
+                  alt={`Fotografie ${i + 1} z ${images.length}`}
+                />
+              </a>
+            ))}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

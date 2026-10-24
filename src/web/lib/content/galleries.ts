@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import type { Gallery as GalleryRow } from "@/lib/generated/prisma/client";
-import { galleryLabel } from "@/lib/content/format";
+import { galleryLabel, yearAnchor } from "@/lib/content/format";
 import type { Gallery, GallerySection, Unit } from "@/lib/content/types";
 
 export const toGallery = (row: GalleryRow): Gallery => ({
@@ -38,12 +38,16 @@ export const getGalleryArchive = async (unit: Unit) => {
   return [...years].map(([year, items]) => ({ year, galleries: items }));
 };
 
-// Title for a photo folder that has no meta.json
-export const getGalleryTitle = async (folder: string) => {
-  const row = await (
-    await db()
-  ).gallery.findFirst({
+// Title of a photo folder (when it has no meta.json) and the year of its archive page to go back to
+export const getGalleryEntry = async (folder: string) => {
+  const client = await db();
+  const row = await client.gallery.findFirst({
     where: { OR: [{ folder }, { id: folder, folder: null }], url: null },
   });
-  return row ? galleryLabel(toGallery(row)) : undefined;
+  if (!row) return undefined;
+  const section = await client.gallerySection.findUnique({ where: { unit: row.unit } });
+  return {
+    title: galleryLabel(toGallery(row)),
+    back: section ? `${section.href}#${yearAnchor(row.year)}` : undefined,
+  };
 };

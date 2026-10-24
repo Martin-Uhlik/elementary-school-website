@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { connection } from "next/server";
 import { imageSizeFromFile } from "image-size/fromFile";
-import { getGalleryTitle } from "@/lib/content/galleries";
+import { getGalleryEntry } from "@/lib/content/galleries";
 import { GALLERY_DIR, THUMBNAIL_FOLDER } from "@/lib/media";
 
 // Galleries live in galerie/<folder>/ of the media folder: the photos, their previews in thumbnails/ and an optional
@@ -11,7 +11,8 @@ const IMAGE_EXT = /\.(jpe?g|png|webp)$/i;
 
 // src = the full photo, thumb = its preview (the full photo when there is none)
 export type GalleryImage = { src: string; thumb: string; width: number; height: number };
-export type Gallery = { id: string; title: string; images: GalleryImage[] };
+// back = the archive page (and year) the gallery is listed on
+export type Gallery = { id: string; title: string; back: string; images: GalleryImage[] };
 
 const url = (folder: string, ...parts: string[]) => `/galerie/${[folder, ...parts].map(encodeURIComponent).join("/")}`;
 
@@ -39,7 +40,8 @@ export const getGallery = async (id: string): Promise<Gallery | null> => {
   const dir = path.join(GALLERY_DIR, id);
 
   // meta.json wins, then the title from the database, then the folder name
-  let title = (await getGalleryTitle(id)) ?? id;
+  const entry = await getGalleryEntry(id);
+  let title = entry?.title ?? id;
   try {
     title = JSON.parse(await fs.readFile(path.join(dir, "meta.json"), "utf-8")).title ?? title;
   } catch {}
@@ -52,7 +54,7 @@ export const getGallery = async (id: string): Promise<Gallery | null> => {
       return { src, thumb: thumbs.has(file) ? url(id, THUMBNAIL_FOLDER, file) : src, width, height };
     }),
   );
-  return { id, title, images };
+  return { id, title, back: entry?.back ?? "/foto-video", images };
 };
 
 // A few previews per folder for the hover effect on the archive cards
