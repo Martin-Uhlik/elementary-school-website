@@ -79,7 +79,11 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       {item.children.map((child) => (
                         <li key={child.href}>
-                          <Link className="dropdown-item" href={child.href}>
+                          <Link
+                            className={`dropdown-item${isActive(pathname, child) ? " active" : ""}`}
+                            href={child.href}
+                            aria-current={isActive(pathname, child) ? "page" : undefined}
+                          >
                             {child.label}
                           </Link>
                         </li>
