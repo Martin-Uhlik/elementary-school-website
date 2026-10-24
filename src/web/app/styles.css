@@ -168,7 +168,8 @@ a {
   }
 }
 
-.cookie-bar--hidden {
+/* set before the first paint once confirmed, see lib/cookies.ts */
+[data-cookies="confirmed"] .cookies-bar {
   display: none;
 }
 
@@ -2266,6 +2267,19 @@ body:has(.body--home) {
   height: 100%;
   overflow: visible;
   pointer-events: none;
+  /* fades in once drawn (after the fonts load), so it never shows in a half-measured state */
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.home-trail--ready {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-trail {
+    transition: none;
+  }
 }
 
 .home-trail path {

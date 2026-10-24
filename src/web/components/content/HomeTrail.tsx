@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 type Point = [number, number];
 type Trail = { path: string; rings: Point[]; end: Point | null };
@@ -35,8 +35,10 @@ const through = (points: Point[]) =>
 const HomeTrail = () => {
   const svg = useRef<SVGSVGElement>(null);
   const [trail, setTrail] = useState<Trail>({ path: "", rings: [], end: null });
+  const [ready, setReady] = useState(false);
 
-  useEffect(() => {
+  // a layout effect draws before the browser paints, so the line never shows where it was a frame ago
+  useLayoutEffect(() => {
     const box = svg.current?.parentElement;
     if (!box) return;
     const update = () => {
@@ -109,11 +111,21 @@ const HomeTrail = () => {
     update();
     const observer = new ResizeObserver(update);
     observer.observe(box);
-    return () => observer.disconnect();
+    // the web font changes the heights of the sections, so the line fades in only once it has loaded
+    let active = true;
+    document.fonts.ready.then(() => {
+      if (!active) return;
+      update();
+      setReady(true);
+    });
+    return () => {
+      active = false;
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <svg ref={svg} className="home-trail" aria-hidden="true" focusable="false">
+    <svg ref={svg} className={`home-trail${ready ? " home-trail--ready" : ""}`} aria-hidden="true" focusable="false">
       <path d={trail.path} />
       {trail.rings.map(([x, y]) => (
         <circle key={`${x} ${y}`} className="home-trail__ring" cx={x} cy={y} r={10} />

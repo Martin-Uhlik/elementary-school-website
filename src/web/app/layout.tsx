@@ -5,12 +5,13 @@ import "./styles.css";
 import BootstrapClient from "@/components/BootstrapClient";
 import InlineScript from "@/components/InlineScript";
 import { backgroundScript } from "@/lib/background";
+import { cookiesScript } from "@/lib/cookies";
 import { layoutScript } from "@/lib/layout";
 import { themeScript } from "@/lib/theme";
 import { viewportScript } from "@/lib/viewport";
 
 // joined with ";" so one script ending without a semicolon cannot break the next one
-const prePaintScript = [themeScript, layoutScript, backgroundScript, viewportScript].join(";");
+const prePaintScript = [themeScript, layoutScript, backgroundScript, viewportScript, cookiesScript].join(";");
 
 const montserrat = Montserrat({
   weight: "500",
@@ -26,7 +27,7 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="cs" className={montserrat.variable} data-bs-theme="light" data-layout="grid" suppressHydrationWarning>
       <head>
-        {/* theme, list layout, seasonal background and viewport size, applied before the first paint so nothing flashes */}
+        {/* theme, list layout, seasonal background, viewport size and the cookie notice, applied before the first paint so nothing flashes */}
         <InlineScript code={prePaintScript} />
       </head>
       <body>
