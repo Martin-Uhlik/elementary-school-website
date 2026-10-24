@@ -2,43 +2,41 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { yearAnchor } from "@/lib/content/format";
+import { LuChevronDown, LuChevronLeft, LuChevronUp } from "react-icons/lu";
+import { galleriesLabel, yearAnchor } from "@/lib/content/format";
 
-// Sticky bar on an archive page: back to Galerie, the year in view, arrows to the neighbouring years and a year picker
-const YearNav = ({ years }: { years: number[] }) => {
-  const bar = useRef<HTMLElement>(null);
-  const [current, setCurrent] = useState(years[0]);
-  const [top, setTop] = useState(0);
+type Props = { years: { year: number; count: number }[] };
+
+// The one sticky bar of an archive page: a back arrow to Galerie, the year in view with its number of galleries, and a year
+// select between arrows to the newer (up) and older (down) year. It stands in place of the first
+// year's heading; the other headings look the same and slide under it. The year in view is kept in
+// the URL hash, so coming back from a gallery lands on the same year.
+const YearNav = ({ years }: Props) => {
+  const bar = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(years[0].year);
   const [stuck, setStuck] = useState(false);
 
-  // stick right under the fixed header, whose height changes on scroll and with the viewport;
-  // the sections scroll to just below the bar (scroll-margin-top in styles.css)
-  useEffect(() => {
-    const header = document.querySelector<HTMLElement>(".header");
-    if (!header || !bar.current) return;
-    const nav = bar.current;
-    const observer = new ResizeObserver(() => {
-      setTop(header.offsetHeight);
-      document.documentElement.style.setProperty("--year-nav-bottom", `${header.offsetHeight + nav.offsetHeight}px`);
-    });
-    observer.observe(header);
-    observer.observe(nav);
-    return () => observer.disconnect();
-  }, []);
-
-  // the year in view is the last section whose heading has scrolled up to the bar;
-  // the bar is stuck once it has reached its sticky offset under the header
   useEffect(() => {
     const update = () => {
-      const rect = bar.current?.getBoundingClientRect();
-      const line = (rect?.bottom ?? 0) + 32;
-      setStuck(!!bar.current && !!rect && rect.top <= parseFloat(getComputedStyle(bar.current).top) + 1);
-      let inView = years[0];
-      for (const year of years) {
+      const nav = bar.current;
+      if (!nav) return;
+      const top = nav.getBoundingClientRect().top;
+      // stuck = held under the header while the years have already scrolled above it
+      setStuck((nav.parentElement?.getBoundingClientRect().top ?? top) < top - 1);
+      // a year is in view once its heading has slid fully under the bar (the first one from the start)
+      let inView = years[0].year;
+      for (const { year } of years.slice(1)) {
         const section = document.getElementById(yearAnchor(year));
-        if (section && section.getBoundingClientRect().top <= line) inView = year;
+        if (section && section.getBoundingClientRect().top <= top + 4) inView = year;
       }
       setCurrent(inView);
+      // the first year stays without a hash while the page is at its top, so a reload stays there
+      const first = document.getElementById(yearAnchor(years[0].year));
+      const atTop =
+        inView === years[0].year && (first?.getBoundingClientRect().top ?? 0) > nav.getBoundingClientRect().bottom;
+      const hash = atTop ? "" : `#${yearAnchor(inView)}`;
+      if (location.hash !== hash)
+        history.replaceState(history.state, "", `${location.pathname}${location.search}${hash}`);
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -49,56 +47,57 @@ const YearNav = ({ years }: { years: number[] }) => {
     };
   }, [years]);
 
-  const index = years.indexOf(current);
-  const older = years[index + 1];
-  const newer = years[index - 1];
+  // scrollIntoView instead of links: no history entry for every jump, smooth via the CSS scroll-behavior
+  const go = (year: number | undefined) => {
+    if (year) document.getElementById(yearAnchor(year))?.scrollIntoView();
+  };
+
+  const index = years.findIndex((y) => y.year === current);
+  const newer = years[index - 1]?.year;
+  const older = years[index + 1]?.year;
 
   return (
-    <nav className={`year-nav${stuck ? " is-stuck" : ""}`} ref={bar} style={{ top }} aria-label="Roky">
-      <Link href="/foto-video" className="year-nav__back">
-        <span aria-hidden="true">←</span> <span className="year-nav__back-text">Galerie</span>
+    <div className={`year-nav${stuck ? " is-stuck" : ""}`} ref={bar}>
+      <Link href="/foto-video" className="year-nav__back" aria-label="Zpět na Galerii" title="Zpět na Galerii">
+        <LuChevronLeft aria-hidden="true" />
+        <span className="year-heading__year">{current}</span>
       </Link>
-      <div className="year-nav__years">
-        {older ? (
-          <a href={`#${yearAnchor(older)}`} className="year-nav__step" aria-label={`Starší rok ${older}`}>
-            <span aria-hidden="true">‹</span> {older}
-          </a>
-        ) : (
-          <span className="year-nav__step year-nav__step--empty" />
-        )}
-        <div className="dropdown">
-          <button
-            type="button"
-            className="year-nav__current dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            aria-label={`Vybrat rok, nyní ${current}`}
-          >
-            {current}
-          </button>
-          <ul className="dropdown-menu dropdown-menu-end year-nav__menu">
-            {years.map((year) => (
-              <li key={year}>
-                <a
-                  href={`#${yearAnchor(year)}`}
-                  className={`dropdown-item${year === current ? " active" : ""}`}
-                  aria-current={year === current ? "true" : undefined}
-                >
-                  {year}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {newer ? (
-          <a href={`#${yearAnchor(newer)}`} className="year-nav__step" aria-label={`Novější rok ${newer}`}>
-            {newer} <span aria-hidden="true">›</span>
-          </a>
-        ) : (
-          <span className="year-nav__step year-nav__step--empty" />
-        )}
-      </div>
-    </nav>
+      <span className="year-heading__count" aria-hidden="true">
+        {years[index] && galleriesLabel(years[index].count)}
+      </span>
+      <nav className="year-nav__controls" aria-label="Roky">
+        <button
+          type="button"
+          className="year-nav__step"
+          onClick={() => go(newer)}
+          disabled={!newer}
+          aria-label={newer ? `Novější rok ${newer}` : "Novější rok"}
+        >
+          <LuChevronUp aria-hidden="true" />
+        </button>
+        <select
+          className="form-select year-nav__select"
+          value={current}
+          onChange={(e) => go(Number(e.target.value))}
+          aria-label="Přejít na rok"
+        >
+          {years.map(({ year }) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          className="year-nav__step"
+          onClick={() => go(older)}
+          disabled={!older}
+          aria-label={older ? `Starší rok ${older}` : "Starší rok"}
+        >
+          <LuChevronDown aria-hidden="true" />
+        </button>
+      </nav>
+    </div>
   );
 };
 

@@ -36,3 +36,6 @@ export const galleryDay = (gallery: Gallery) => {
   const id = galleryFolder(gallery).match(/^\d{4}(\d{2})(\d{2})/);
   return id ? `${Number(id[2])}. ${Number(id[1])}.` : undefined;
 };
+
+// 1 galerie, 2–4 galerie, 5+ galerií
+export const galleriesLabel = (count: number) => `${count} ${count >= 1 && count <= 4 ? "galerie" : "galerií"}`;
