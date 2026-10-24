@@ -48,3 +48,49 @@ export const deleteEvent = async (id: string) => {
   await logActivity(user, "kalendar", `Smazána událost ${label} (${event.schoolYear})`);
   revalidatePath("/", "layout");
 };
+
+const nextYear = (iso: string) => {
+  const [year, month, day] = iso.split("-").map(Number);
+  // 29 February becomes 28 February
+  return new Date(Date.UTC(year + 1, month - 1, Math.min(day, month === 2 ? 28 : 31)));
+};
+
+// A new school year: empty (then the first event is added), or a copy of another year with every date a year later
+export const createYear = async (data: FormData): Promise<ActionState> => {
+  const user = await requireUser({ section: "kalendar" });
+  const schoolYear = text(data, "schoolYear");
+  const copyFrom = optional(data, "copyFrom");
+  const [first, second] = schoolYear.split("/").map(Number);
+  if (!/^\d{4}\/\d{4}$/.test(schoolYear) || second !== first + 1)
+    return { error: "Školní rok zadejte jako 2026/2027." };
+  if (await prisma.calendarEvent.count({ where: { schoolYear } })) return { error: `Rok ${schoolYear} už existuje.` };
+  if (!copyFrom) redirect(`/auth/prubeh-roku/nova?rok=${encodeURIComponent(schoolYear)}`);
+
+  const events = await prisma.calendarEvent.findMany({ where: { schoolYear: copyFrom } });
+  const shift = first - Number(copyFrom.slice(0, 4));
+  const move = (date: Date) => {
+    let moved = date;
+    for (let i = 0; i < shift; i++) moved = nextYear(moved.toISOString().slice(0, 10));
+    return moved;
+  };
+  await prisma.calendarEvent.createMany({
+    data: events.map(({ date, endDate, holiday, text: eventText }) => ({
+      schoolYear,
+      date: move(date),
+      endDate: endDate ? move(endDate) : null,
+      holiday,
+      text: eventText,
+    })),
+  });
+  await logActivity(user, "kalendar", `Přidán školní rok ${schoolYear} (kopie ${copyFrom}, ${events.length} událostí)`);
+  revalidatePath("/", "layout");
+  redirect(`/auth/prubeh-roku?rok=${encodeURIComponent(schoolYear)}`);
+};
+
+export const deleteYear = async (schoolYear: string) => {
+  const user = await requireUser({ section: "kalendar" });
+  const { count } = await prisma.calendarEvent.deleteMany({ where: { schoolYear } });
+  await logActivity(user, "kalendar", `Smazán školní rok ${schoolYear} (${count} událostí)`);
+  revalidatePath("/", "layout");
+  redirect("/auth/prubeh-roku");
+};

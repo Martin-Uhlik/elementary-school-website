@@ -5,13 +5,22 @@ import ActionForm, { type ActionState } from "./ActionForm";
 import { schoolYearOf } from "@/lib/content/format";
 
 type Event = { schoolYear: string; date: string; endDate?: string; holiday?: boolean; text: string };
-type Props = { action: (data: FormData) => Promise<ActionState>; event?: Event; years: string[] };
+type Props = {
+  action: (data: FormData) => Promise<ActionState>;
+  event?: Event;
+  years: string[];
+  schoolYear?: string;
+  newYear?: boolean;
+};
 
 // An event of Průběh školního roku; the school year follows the date until it is changed by hand
-const CalendarEventForm = ({ action, event, years }: Props) => {
-  const [date, setDate] = useState(event?.date ?? new Date().toISOString().slice(0, 10));
-  const [schoolYear, setSchoolYear] = useState(event?.schoolYear ?? schoolYearOf(date));
-  const [ownYear, setOwnYear] = useState(Boolean(event));
+const CalendarEventForm = ({ action, event, years, schoolYear: presetYear, newYear }: Props) => {
+  // a new school year starts on 1 September
+  const [date, setDate] = useState(
+    event?.date ?? (newYear && presetYear ? `${presetYear.slice(0, 4)}-09-01` : new Date().toISOString().slice(0, 10)),
+  );
+  const [schoolYear, setSchoolYear] = useState(event?.schoolYear ?? presetYear ?? schoolYearOf(date));
+  const [ownYear, setOwnYear] = useState(Boolean(event ?? presetYear));
 
   return (
     <ActionForm action={action} submitLabel="Uložit">

@@ -26,7 +26,7 @@ The site is then on http://localhost:3000.
 
 - **Access:** each user gets the sections they may edit (Aktuality, Lidé, Dokumenty, Galerie); *Správce* (admin) can do everything, including Uživatelé and Logy. Real names of users are visible only to admins. Every user changes their own sign-in name and password under *Můj účet* (`/auth/ucet`).
 - **Logs:** sign-ins, sign-outs, wrong passwords and account changes (with IP address and browser) and every change made in the admin are stored in the database. Admins see them under *Logy* (`/auth/logy`), filtered by user and date; each user sees their own recent sign-ins on the start page.
-- **Time limits** (`src/web/lib/auth/config.ts`, overridable in `.env`): sign-out after 5 minutes without activity (the timer in the header; the server ends the session too, even with the tab closed), a sign-in lasts at most 8 hours, and 5 wrong passwords lock the account for 10 minutes (an admin can unlock it under Uživatelé).
+- **Time limits** (`src/web/lib/auth/config.ts`, overridable in `.env`): sign-out after 30 minutes without activity (the timer in the header; the server ends the session too, even with the tab closed), a sign-in lasts at most 8 hours, and 5 wrong passwords lock the account for 10 minutes (an admin can unlock it under Uživatelé).
 
 The sign-in cookie only travels over HTTPS (IIS). To try the admin over plain http, e.g. http://192.168.100.10:3000, set `COOKIE_SECURE=false` in `.env` for that time.
 

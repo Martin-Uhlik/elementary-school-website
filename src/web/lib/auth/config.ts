@@ -6,7 +6,7 @@ const minutes = (name: string, fallback: number) => {
 
 export const authConfig = {
   // sign out after this long without a click or a key press (the timer in the header counts it down)
-  inactivityMinutes: minutes("AUTH_INACTIVITY_MINUTES", 5),
+  inactivityMinutes: minutes("AUTH_INACTIVITY_MINUTES", 30),
   // a sign-in never lasts longer than this, even when the user keeps working
   sessionMaxMinutes: minutes("AUTH_SESSION_MAX_MINUTES", 8 * 60),
   // this many wrong passwords in a row lock the account ...
