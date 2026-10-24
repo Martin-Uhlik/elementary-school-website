@@ -13,7 +13,6 @@ const SECTIONS = [
   "Správní zaměstnanci",
   "Zástupkyně ředitelky pro MŠ",
   "Mateřská škola - ulice Velkomoravská 409",
-  "Mateřská škola - ulice Sokolská",
 ];
 
 const KontaktyPage = async () => {

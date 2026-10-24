@@ -900,17 +900,14 @@ INSERT INTO people (id, title_before, first_name, last_name, title_after, name, 
   ('vranova-michaela', NULL, 'Michaela', 'Vránová', NULL, NULL, ARRAY['Správní zaměstnanci'], NULL, NULL, '{}', 35),
   ('santava-alena', NULL, 'Alena', 'Šantavá', NULL, NULL, ARRAY['Správní zaměstnanci'], NULL, NULL, '{}', 36),
   ('materska-skola-ulice-velkomoravska-409', NULL, NULL, NULL, NULL, 'Mateřská škola - ulice Velkomoravská 409', ARRAY['Kontakt', 'Mateřská škola - ulice Velkomoravská 409'], NULL, NULL, '{}', 37),
-  ('materska-skola-ulice-sokolska', NULL, NULL, NULL, NULL, 'Mateřská škola - ulice Sokolská', ARRAY['Kontakt', 'Mateřská škola - ulice Sokolská'], NULL, NULL, '{}', 38),
   ('lidmanova-bronislava', NULL, 'Bronislava', 'Lidmanová', NULL, NULL, ARRAY['Mateřská škola'], 'učitelka', 'lidmanova@zsmp.cz', '{}', 39),
   ('slavikova-veronika', 'Bc.', 'Veronika', 'Slavíková', NULL, NULL, ARRAY['Mateřská škola'], 'RD', 'slavikova@zsmp.cz', '{}', 40),
   ('sebestova-sarka', NULL, 'Šárka', 'Šebestová', NULL, NULL, ARRAY['Mateřská škola'], 'učitelka', 'vavrincova@zsmp.cz', '{}', 41),
   ('zabelkova-marcela', NULL, 'Marcela', 'Zábelková', NULL, NULL, ARRAY['Mateřská škola'], 'učitelka', 'zabelkova@zsmp.cz', '{}', 42),
   ('placha-miroslava', NULL, 'Miroslava', 'Plachá', NULL, NULL, ARRAY['Mateřská škola'], 'provozní pracovnice', NULL, '{}', 43),
   ('podraska-alzbeta', NULL, 'Alžběta', 'Podráská', NULL, NULL, ARRAY['Mateřská škola'], 'učitelka', NULL, '{}', 44),
-  ('chudickova-pavla', NULL, 'Pavla', 'Chudíčková', NULL, NULL, ARRAY['Mateřská škola'], 'učitelka', NULL, '{}', 45),
   ('sladkova-veronika', NULL, 'Veronika', 'Sládková', NULL, NULL, ARRAY['Mateřská škola'], 'asistentka pedagoga', NULL, '{}', 46),
   ('koluchova-jana', NULL, 'Jana', 'Kolúchová', NULL, NULL, ARRAY['Mateřská škola'], 'asistentka pedagoga', NULL, '{}', 47),
-  ('jochova-marie', NULL, 'Marie', 'Jochová', NULL, NULL, ARRAY['Mateřská škola'], 'provozní pracovnice', NULL, '{}', 48),
   ('cahova-pavlina', NULL, 'Pavlína', 'Cahová', NULL, NULL, ARRAY['Rada školy: zástupci rodičů'], NULL, NULL, '{}', 49),
   ('janikova-barbora', NULL, 'Barbora', 'Janíková', NULL, NULL, ARRAY['SRPDŠ'], 'předsedkyně', 'bara.janik@seznam.cz', '{}', 50),
   ('jindrova-veronika', NULL, 'Veronika', 'Jindrová', NULL, NULL, ARRAY['Rada školy: zástupci rodičů', 'SRPDŠ'], 'místopředsedkyně', 'Veronika.mickova@seznam.cz', '{}', 51),
@@ -972,8 +969,7 @@ INSERT INTO phones (person_id, kind, number, sort_order) VALUES
   ('kuchyn', 'landline', '518 698 581', 1),
   ('spravni-zamestnanci', 'internal', '123', 0),
   ('spravni-zamestnanci', 'landline', '518 698 583', 1),
-  ('materska-skola-ulice-velkomoravska-409', 'mobile', '737 008 186', 0),
-  ('materska-skola-ulice-sokolska', 'mobile', '739 826 607', 0);
+  ('materska-skola-ulice-velkomoravska-409', 'mobile', '737 008 186', 0);
 
 INSERT INTO calendar_events (id, school_year, date, end_date, holiday, text) VALUES
   ('2025-2026-1', '2025/2026', '2026-06-26', NULL, false, 'Vyučování ve druhém pololetí bude ukončeno **v pátek 26. června 2026**.'),
