@@ -23,7 +23,7 @@ const HomePage = async () => {
       {/* shows a random photo from the first paint, see lib/carousel.ts */}
       <InlineScript code={carouselStartScript} />
 
-      <div className="body body--home">
+      <div className="page page--home">
         <HomeTrail />
         {/* white bar that overlaps the bottom edge of the photos */}
         <div className="home-title">
@@ -36,8 +36,8 @@ const HomePage = async () => {
 
         <div className="home-row home-row--right">
           <div className="home-row__side" />
-          <section className="article__section">
-            <h1>Základní informace</h1>
+          <section className="article__section article__section--bare">
+            <h1 className="article__title">Základní informace</h1>
             <div className="persons">
               {people.map((person) => (
                 <PersonCard key={person.id} person={person} variant="short" />
@@ -48,8 +48,8 @@ const HomePage = async () => {
 
         <div className="home-row home-row--left">
           <div className="home-row__side" />
-          <section className="article__section">
-            <h1>Aktuální informace</h1>
+          <section className="article__section article__section--bare">
+            <h1 className="article__title">Aktuální informace</h1>
             {news.length === 0 ? (
               <p className="empty-note">V současné době zde nejsou žádné aktuality.</p>
             ) : (
@@ -60,14 +60,14 @@ const HomePage = async () => {
 
         <div className="home-row home-row--right">
           <div className="home-row__side" />
-          <section className="article__section">
-            <h1>Oznámení</h1>
+          <section className="article__section article__section--bare">
+            <h1 className="article__title">Oznámení</h1>
             <LinkList links={announcements.links} />
           </section>
         </div>
 
-        <section className="article__section main-tour">
-          <h1>Videoprohlídka školy</h1>
+        <section className="article__section article__section--bare main-tour">
+          <h1 className="article__title main-tour__title">Videoprohlídka školy</h1>
           <VideoTour />
         </section>
 
@@ -78,7 +78,7 @@ const HomePage = async () => {
           <ul className="sponsors__logos">
             {sponsors.map((sponsor) => (
               <li key={sponsor.id}>
-                <img src={sponsor.logo} alt={`Logo ${sponsor.name}`} />
+                <img className="sponsors__logo" src={sponsor.logo} alt={`Logo ${sponsor.name}`} />
               </li>
             ))}
           </ul>

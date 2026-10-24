@@ -56,7 +56,7 @@ const RozhazenyText = () => {
   };
 
   return (
-    <div className="rozhazeny-text">
+    <div className="rozhazeny-text mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Čas", value: formatTime(stopwatch.seconds) },

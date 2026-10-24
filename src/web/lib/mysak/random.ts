@@ -24,7 +24,7 @@ export const randomItem = <T>(items: readonly T[]) => items[randomInt(items.leng
 export const randomColor = () => "#" + Array.from({ length: 6 }, () => "0123456789ABCDEF"[randomInt(16)]).join("");
 
 // Character groups of the original exercises
-export const CHAR_SETS = [
+const CHAR_SETS = [
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
   "žščřďťňľáéíóůúŽŠČŘĎŤŇĽÁÉÍÓŮÚ",
   "äëöüÄËÖÜ",

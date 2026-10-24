@@ -22,7 +22,7 @@ const AuthLayout = async ({ children }: LayoutProps<"/auth">) => {
         Přeskočit na obsah
       </a>
       <header className="admin-header">
-        <nav className="navbar navbar-dark bg-primary" aria-label="Menu správy webu">
+        <nav className="navbar navbar-dark bg-primary admin-header__navbar" aria-label="Menu správy webu">
           <div className="container-fluid column-gap-4 row-gap-2">
             <Link className="navbar-brand" href="/auth">
               Správa webu

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// A dashed line behind a .zig_zag that leads from each photo in a wavy curve down into the next one
+// A dashed line behind a .zig-zag that leads from each photo in a wavy curve down into the next one
 const ZigZagPath = () => {
   const svg = useRef<SVGSVGElement>(null);
   const [path, setPath] = useState("");
@@ -12,7 +12,7 @@ const ZigZagPath = () => {
     if (!box) return;
     const update = () => {
       const origin = box.getBoundingClientRect();
-      const photos = [...box.querySelectorAll<HTMLElement>(".zig_zag__photo")].map((photo) => {
+      const photos = [...box.querySelectorAll<HTMLElement>(".zig-zag__photo")].map((photo) => {
         const rect = photo.getBoundingClientRect();
         return {
           x: rect.left + rect.width / 2 - origin.left,
@@ -59,8 +59,8 @@ const ZigZagPath = () => {
   }, []);
 
   return (
-    <svg ref={svg} className="zig_zag__path" aria-hidden="true" focusable="false">
-      <path d={path} />
+    <svg ref={svg} className="zig-zag__path" aria-hidden="true" focusable="false">
+      <path className="zig-zag__line" d={path} />
     </svg>
   );
 };

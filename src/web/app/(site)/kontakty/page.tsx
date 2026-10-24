@@ -18,7 +18,7 @@ const SECTIONS = [
 const KontaktyPage = async () => {
   const sections = await Promise.all(SECTIONS.map(async (label) => ({ label, people: await getPeople(label) })));
   return (
-    <div className="body">
+    <div className="page">
       <ContactDirectory sections={sections} />
     </div>
   );

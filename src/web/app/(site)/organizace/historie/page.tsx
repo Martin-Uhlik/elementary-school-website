@@ -87,10 +87,10 @@ const DirectorTable = ({ directors, caption }: { directors: Director[]; caption?
 const OrganizaceHistoriePage = () => {
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Historie školy a obce</h1>
+            <h1 className="article__title">Historie školy a obce</h1>
             <span className="citation">
               citace z knihy DĚJINY OBCE MORAVSKÝ PÍSEK autorky Věry Benedíkové
               <br /> (vydáno MNV Moravský Písek v roce 1982)
@@ -125,7 +125,7 @@ const OrganizaceHistoriePage = () => {
             </span>
 
             <div className="article__body">
-              <h2>Škola:</h2>
+              <h2 className="article__heading">Škola:</h2>
               <p>
                 Slovo vyvolávající vzpomínky nejmilejší, slovo, které nás přenáší do doby dětství, do doby
                 bezstarostných her i prvních trpkých zklamání, které ale časem dozrály jako vzácné ovoce a po trpkosti
@@ -252,7 +252,7 @@ const OrganizaceHistoriePage = () => {
             </div>
 
             <div className="article__body">
-              <h2>Ředitelé školy v Moravském Písku:</h2>
+              <h2 className="article__heading">Ředitelé školy v Moravském Písku:</h2>
               <div className="data-tables">
                 <DirectorTable caption="Obecná škola" directors={obecnaSkola} />
                 <DirectorTable caption="Měšťanská škola" directors={mestanskaSkola} />
@@ -261,7 +261,7 @@ const OrganizaceHistoriePage = () => {
             </div>
 
             <div className="article__body">
-              <h2>Mateřská škola:</h2>
+              <h2 className="article__heading">Mateřská škola:</h2>
               <p>
                 Zvyšující zaměstnanost žen po 2. světové válce v naší republice vyvolala potřebu zřizovat mateřské školy
                 (MŠ). Zemská školní rada v Brně zřídila v Moravském Písku MŠ s platností od 1. 1. 1947. Správcem MŠ byl
@@ -294,7 +294,7 @@ const OrganizaceHistoriePage = () => {
             </div>
 
             <div className="article__body">
-              <h2>Ředitelé mateřské školy:</h2>
+              <h2 className="article__heading">Ředitelé mateřské školy:</h2>
               <div className="data-tables">
                 <DirectorTable directors={materskaSkola} />
               </div>

@@ -5,13 +5,13 @@ const RodiceOdkazyPage = async () => {
   const groups = await getLinkGroups("/rodice/odkazy");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Odkazy na weby</h1>
+            <h1 className="article__title">Odkazy na weby</h1>
             {groups.map((group) => (
               <div className="article__body" key={group.id}>
-                <h2>{group.title}</h2>
+                <h2 className="article__heading">{group.title}</h2>
                 <LinkList links={group.links} />
               </div>
             ))}

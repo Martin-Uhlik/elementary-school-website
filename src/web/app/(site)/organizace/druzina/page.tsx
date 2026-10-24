@@ -10,17 +10,17 @@ const OrganizaceDruzinaPage = async () => {
   const dotaznik = await getLinkGroup("organizace-druzina-dotaznik");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Družina</h1>
+            <h1 className="article__title">Družina</h1>
             <div className="article__body">
-              <h2>Dokumenty</h2>
+              <h2 className="article__heading">Dokumenty</h2>
               <LinkList links={druzinaDokumenty.links} />
             </div>
 
             <div className="article__body">
-              <h2>Personální podmínky</h2>
+              <h2 className="article__heading">Personální podmínky</h2>
               <div className="persons">
                 {educators.map((person) => (
                   <PersonCard key={person.id} person={person} variant="short" />
@@ -29,7 +29,7 @@ const OrganizaceDruzinaPage = async () => {
             </div>
 
             <div className="article__body">
-              <h2>Dotazník</h2>
+              <h2 className="article__heading">Dotazník</h2>
               <p>
                 Vážení rodiče, děkujeme Vám za ochotu vyplnit dotazník. Zpět do našich rukou se dostalo 30 dotazníků,
                 připomínkami se budeme dále zabývat. Výsledky naleznete v níže uvedeném dokumentu.

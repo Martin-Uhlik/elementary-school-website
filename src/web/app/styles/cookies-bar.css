@@ -1,0 +1,72 @@
+/* Cookie notice (CookieBar.tsx): a floating card with a short headline and small details */
+.cookies-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 10;
+  padding: 1rem 1.25rem;
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  color: var(--bs-body-color);
+  box-shadow: var(--card-shadow-hover), var(--shadow-normal);
+}
+
+/* set before the first paint once confirmed, see lib/cookies.ts */
+[data-cookies="confirmed"] .cookies-bar {
+  display: none;
+}
+
+.cookies-bar__icon {
+  flex-shrink: 0;
+  font-size: 1.75rem;
+  color: var(--bs-primary);
+}
+
+.cookies-bar__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cookies-bar__title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.cookies-bar__details {
+  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--bs-secondary-color);
+}
+
+.cookies-bar__button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 575.98px) {
+  .cookies-bar {
+    flex-wrap: wrap;
+  }
+
+  .cookies-bar__icon {
+    display: none;
+  }
+
+  .cookies-bar__button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .cookies-bar {
+    right: 2rem;
+    bottom: 2rem;
+    left: auto;
+    max-width: 34rem;
+  }
+}

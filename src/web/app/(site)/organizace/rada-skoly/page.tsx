@@ -14,10 +14,10 @@ const OrganizaceRadaSkolyPage = async () => {
   );
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Rada školy</h1>
+            <h1 className="article__title">Rada školy</h1>
             <LinkList links={documents.links} />
             <span>
               Školská rada se zřizuje podle zákona č.561/2004 Sb. při základních, středních a vyšších odborných školách.

@@ -7,7 +7,8 @@ type Props = { events: LoginEvent[]; caption: string; showUser?: boolean };
 
 // Sign-ins and account changes: time, (user,) what happened, address and browser
 const LoginEventsTable = ({ events, caption, showUser = false }: Props) => (
-  <div className="table-responsive">
+  // on phones the table scrolls sideways, so it can take the focus for the arrow keys
+  <div className="table-responsive" role="region" aria-label={caption} tabIndex={0}>
     <table className="table admin-table mb-0">
       <caption className="visually-hidden">{caption}</caption>
       <thead>
@@ -26,7 +27,7 @@ const LoginEventsTable = ({ events, caption, showUser = false }: Props) => (
             {showUser && <td>{event.username}</td>}
             <td>{LOGIN_EVENT_LABELS[event.kind]}</td>
             <td>{event.ip || "–"}</td>
-            <td className="agent">
+            <td className="admin-table__agent">
               <span title={event.userAgent}>{describeAgent(event.userAgent)}</span>
               <div className="small text-body-secondary text-break">{event.userAgent}</div>
             </td>

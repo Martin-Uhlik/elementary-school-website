@@ -16,8 +16,8 @@ const ExerciseStatus = ({ stats, done = false, doneText, onRestart }: Props) => 
       <dl className="mysak-stats">
         {stats.map((stat) => (
           <div key={stat.label} className="mysak-stats__item">
-            <dt>{stat.label}</dt>
-            <dd>{stat.value}</dd>
+            <dt className="mysak-stats__label">{stat.label}</dt>
+            <dd className="mysak-stats__value">{stat.value}</dd>
           </div>
         ))}
       </dl>

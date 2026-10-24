@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
       "@next/next/no-img-element": "off",
       // ported Czech text uses plain quotes
       "react/no-unescaped-entities": "off",
+      // tables that scroll sideways on phones are focusable regions, so keyboard users can scroll them too
+      "jsx-a11y/no-noninteractive-tabindex": ["error", { roles: ["tabpanel", "region"] }],
     },
   },
   // Override default ignores of eslint-config-next.

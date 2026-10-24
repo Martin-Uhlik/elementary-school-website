@@ -35,7 +35,13 @@ const GalleryCard = ({ gallery, href, day, previews }: Props) => {
       <span className="gallery-card__preview">
         {previews.length > 0 ? (
           previews.map((src, i) => (
-            <img key={src} src={src} alt="" loading="lazy" className={i === shown ? "is-shown" : undefined} />
+            <img
+              key={src}
+              src={src}
+              alt=""
+              loading="lazy"
+              className={`gallery-card__photo${i === shown ? " is-shown" : ""}`}
+            />
           ))
         ) : (
           <span className="gallery-card__placeholder" aria-hidden="true">
@@ -43,7 +49,7 @@ const GalleryCard = ({ gallery, href, day, previews }: Props) => {
               "▶"
             ) : (
               <>
-                <LuCamera focusable="false" />
+                <LuCamera className="gallery-card__placeholder-icon" focusable="false" />
                 {day ?? gallery.year}
               </>
             )}

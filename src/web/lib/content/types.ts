@@ -75,8 +75,6 @@ export type CalendarEvent = {
   text: string;
 };
 
-export type Sponsor = { id: string; name: string; logo: string };
-
 // A photo of the school, used by the home page carousel and the Skládanka puzzle (all 1920×1080)
 export type Photo = { id: string; src: string; alt: string };
 export type GallerySection = { unit: Unit; title: string; href: string; cover: string };

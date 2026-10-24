@@ -32,14 +32,14 @@ const Header = () => {
   }, [pathname]);
 
   return (
-    <header className={`header${sticky ? " sticky" : ""}`} id="myHeader">
-      <nav className="navbar navbar-expand-xxl navbar-dark bg-primary" aria-label="Hlavní menu">
+    <header className={`header${sticky ? " header--sticky" : ""}`} id="myHeader">
+      <nav className="navbar navbar-expand-xxl navbar-dark bg-primary header__navbar" aria-label="Hlavní menu">
         <div className="container-fluid align-center">
           <Link className="navbar-brand" href="/">
             ZŠMP
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler header__toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -50,14 +50,14 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent" ref={collapseRef}>
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav header__menu me-auto mb-2 mb-lg-0">
               {navigation.map((item) => {
                 const active = isActive(pathname, item) ? " active" : "";
                 if (!("children" in item)) {
                   return (
                     <li className="nav-item" key={item.href}>
                       <Link
-                        className={`nav-link${active}${item.label.length > 20 ? " nav-link--long" : ""}`}
+                        className={`nav-link header__link${active}${item.label.length > 20 ? " header__link--long" : ""}`}
                         href={item.href}
                         aria-current={active ? "page" : undefined}
                       >
@@ -70,7 +70,7 @@ const Header = () => {
                   <li className="nav-item dropdown" key={item.label}>
                     <button
                       type="button"
-                      className={`nav-link dropdown-toggle${active}`}
+                      className={`nav-link header__link dropdown-toggle${active}`}
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >

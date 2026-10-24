@@ -27,14 +27,16 @@ const meta = (type: LinkType, href: string) => {
   return LINK_TYPE_LABELS[type];
 };
 
-// A link as a tile: a coloured square with its type (PDF, DOC, ↗ ...), the title and the type or address under it
-const LinkItem = ({ link }: { link: Link }) => {
+// A link as a tile: a coloured square with its type (PDF, DOC, ↗ ...), the title and the type or address under it;
+// withDetails leaves room for the (i) button next to it
+const LinkItem = ({ link, withDetails = false }: { link: Link; withDetails?: boolean }) => {
   const type = link.href ? getLinkType(link.href) : undefined;
+  const className = `link-tile${withDetails ? " link-tile--with-details" : ""}`;
   const Badge = type ? BADGES[type] : LuMinus;
   const content = (
     <>
       <span className={`link-tile__badge link-tile__badge--${type ?? "none"}`} aria-hidden="true">
-        <Badge focusable="false" />
+        <Badge className="link-tile__icon" focusable="false" />
       </span>
       <span className="link-tile__text">
         <span className="link-tile__title">{link.title}</span>
@@ -53,16 +55,16 @@ const LinkItem = ({ link }: { link: Link }) => {
     </>
   );
 
-  if (!link.href || !type) return <span className="link-tile link-tile--disabled">{content}</span>;
+  if (!link.href || !type) return <span className={`${className} link-tile--disabled`}>{content}</span>;
   if (type === "page")
     return (
-      <NextLink href={link.href} className="link-tile">
+      <NextLink href={link.href} className={className}>
         {content}
       </NextLink>
     );
   const href = /^https?:/.test(link.href) ? link.href : encodeURI(link.href);
   return (
-    <a href={href} target="_blank" className="link-tile">
+    <a href={href} target="_blank" className={className}>
       {content}
     </a>
   );

@@ -8,10 +8,10 @@ const OrganizaceMaterskaSkolaPage = async () => {
   const staff = await getPeople("Mateřská škola");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Mateřská škola</h1>
+            <h1 className="article__title">Mateřská škola</h1>
             <FeatureLink href="https://msmp1.webnode.cz/" title="Vlastní webové stránky mateřské školy" Icon={LuSun} />
             <div>
               <span>
@@ -30,7 +30,7 @@ const OrganizaceMaterskaSkolaPage = async () => {
         </div>
         <div className="article">
           <div className="article__section">
-            <h1>Kontakty</h1>
+            <h1 className="article__title">Kontakty</h1>
             <div className="persons">
               {staff.map((person) => (
                 <PersonCard key={person.id} person={person} variant="short" />

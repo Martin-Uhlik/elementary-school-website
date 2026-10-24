@@ -26,6 +26,7 @@ Photos and documents are read from `media/` in the repository root (or `MEDIA_DI
 - `lib/content/` what the pages read (one function per need); `lib/content/format.ts` holds the helpers without database access.
 - `lib/admin/` helpers of the admin: document and photo uploads, ordering.
 - `prisma/schema.prisma` the tables; `prisma/migrations/` their history; `prisma/seed.ts` + `seed/content.sql` the first content.
+- `app/styles.css` imports the styles, one file per block in `app/styles/` (BEM: `.block__element--modifier`; the rules are at the top of `styles.css`); `app/admin.css` is the admin's.
 - `public/` static files: `data/images`, `informatika/` (Scratch projects, PDFs).
 
 ## Changing the database
@@ -34,4 +35,4 @@ Edit `prisma/schema.prisma`, then `npx prisma migrate dev --name <what-changed>`
 
 ## Galleries
 
-A gallery is a row in `galleries` plus a folder `media/galerie/<folder>/` with the photos. Uploading in the admin keeps the full photo (turned upright when the phone stored it rotated) and makes a preview with its shorter side 256 px in `thumbnails/`, as `gallery_generators/*.py` did. The gallery page shows the previews and opens the full photos. An optional `meta.json` in the folder overrides the heading.
+A gallery is a row in `galleries` plus a folder `media/galerie/<folder>/` with the photos. Uploading in the admin keeps the full photo (turned upright when the phone stored it rotated) and makes a preview with its shorter side 256 px in `thumbnails/`. The gallery page shows the previews and opens the full photos. An optional `meta.json` in the folder overrides the heading.

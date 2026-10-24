@@ -36,11 +36,11 @@ const LayoutSwitch = () => {
   }, [layout]);
 
   return (
-    <ul className="navbar-nav header-switch">
+    <ul className="navbar-nav header__menu">
       <li className="nav-item dropdown">
         <button
           type="button"
-          className="nav-link dropdown-toggle"
+          className="nav-link header__link header__link--switch dropdown-toggle"
           data-bs-toggle="dropdown"
           aria-expanded="false"
           aria-label={`Zobrazení seznamů: ${current.label}`}

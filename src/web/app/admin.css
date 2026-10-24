@@ -36,17 +36,32 @@
   flex-shrink: 0;
 }
 
-.admin-header .navbar {
+.admin-header__navbar {
   --bs-primary-rgb: 10, 88, 202;
+  --bs-navbar-color: rgba(255, 255, 255, 0.8);
+  --bs-navbar-hover-color: rgba(255, 255, 255, 0.8);
+  --bs-navbar-active-color: white;
   border-radius: 0 0 var(--card-radius) var(--card-radius);
   box-shadow: var(--shadow-normal);
 }
 
-.admin-header .navbar-brand {
-  color: #fff;
+/* dimmed links like the site menu (.header__link); the current section is underlined */
+.admin-header__link {
+  transition: color 0.15s;
 }
 
-.admin-header .nav-link.active {
+.admin-header__link:focus-visible,
+.admin-header__link:active {
+  color: white;
+}
+
+@media (hover: hover) {
+  .admin-header__link:hover {
+    color: white;
+  }
+}
+
+.admin-header__link.active {
   text-decoration: underline;
   text-underline-offset: 0.35em;
 }
@@ -70,9 +85,9 @@
   gap: 1.5rem;
 }
 
-.admin-main h1 {
-  font-size: 1.75rem;
+.admin-main__title {
   margin: 0;
+  font-size: 1.75rem;
 }
 
 .admin-title {
@@ -83,12 +98,13 @@
   justify-content: space-between;
 }
 
-.admin-table td,
-.admin-table th {
+/* the cells are plain <th> and <td>; Bootstrap puts the head row at the bottom, so it is set on the cells */
+.admin-table th,
+.admin-table td {
   vertical-align: middle;
 }
 
-.admin-table .actions {
+.admin-table__actions {
   white-space: nowrap;
   text-align: end;
 }
@@ -127,18 +143,18 @@
   padding: 0;
 }
 
-.admin-photos li {
+.admin-photos__item {
   position: relative;
 }
 
-.admin-photos img {
+.admin-photos__photo {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 0.5rem;
 }
 
-.admin-photos form {
+.admin-photos__delete {
   position: absolute;
   top: 0.35rem;
   right: 0.35rem;
@@ -156,8 +172,11 @@
   background: var(--surface-muted);
 }
 
-/* Bootstrap's blue is too light for text on the tinted page background (WCAG AA); a darker blue in the light theme */
+/* Bootstrap's blue is too light for text on the tinted page background (WCAG AA); a darker blue in the light theme.
+   Bootstrap's buttons only take their colours from variables set on the button itself, hence the longer selectors. */
 [data-bs-theme="light"] .admin-main {
+  --bs-link-color: #0a58ca;
+  --bs-link-hover-color: #084298;
   --bs-link-color-rgb: 10, 88, 202;
   --bs-link-hover-color-rgb: 8, 66, 152;
 }
@@ -190,7 +209,7 @@
 }
 
 /* the user agent wraps inside its column; on phones the table scrolls sideways instead of squeezing it */
-.admin-table .agent {
+.admin-table__agent {
   min-width: 16rem;
   max-width: 22rem;
 }
@@ -218,12 +237,12 @@
 }
 
 @media (hover: hover) {
-  .admin-back:hover .admin-back__icon {
-    transform: translateX(-0.2rem);
-  }
-
   .admin-back:hover {
     text-decoration: underline;
     text-underline-offset: 0.2em;
+  }
+
+  .admin-back:hover .admin-back__icon {
+    transform: translateX(-0.2rem);
   }
 }

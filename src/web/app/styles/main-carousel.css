@@ -1,0 +1,125 @@
+/* Photos on the home page (HomeCarousel.tsx). Bootstrap's carousel parts are changed with Bootstrap's own
+   selectors, since that is the only way to outweigh them; they are used only here. */
+.main-carousel {
+  margin-top: 3.5rem;
+  max-height: calc(var(--VH) - 3.5rem);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+}
+
+/* white arrows and bars in both themes (Bootstrap turns them black in the dark one with [data-bs-theme] .carousel) */
+.carousel.main-carousel {
+  --bs-carousel-control-icon-filter: none;
+  --bs-carousel-indicator-active-bg: #fff;
+}
+
+/* phones: the photos take at most 30 % of the screen height */
+.carousel-inner {
+  height: calc(var(--VH) * 0.3);
+}
+
+.carousel-indicators {
+  display: none;
+}
+
+.carousel-item {
+  height: 100%;
+  overflow: hidden;
+}
+
+.main-carousel__image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: var(--VW);
+  height: 101%;
+  overflow: hidden;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  opacity: 0.9;
+}
+
+/* arrows sit in a dark round button so they show on light photos too */
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.45);
+  background-size: 1.25rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 992px) {
+  .main-carousel,
+  .carousel-inner {
+    display: flex;
+    align-items: center;
+    height: calc(var(--VH) * 0.62);
+    min-height: calc(var(--VH) * 0.62);
+    max-height: calc(var(--VH) * 0.62);
+    margin-top: 0;
+  }
+
+  /* the header (3rem from the top) overlaps the top of the photos by half, like the name bar at the bottom */
+  .main-carousel {
+    margin-top: calc(3rem + 1.875rem);
+  }
+
+  /* dark blue strip with the footer's dashed wave fills the gap above the photos */
+  .main-carousel::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    z-index: 1;
+    height: calc(3rem + 1.875rem);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='16'%3E%3Cpath d='M0 8C14.7 1 29.3 1 44 8S73.3 15 88 8' fill='none' stroke='%236ea8fe' stroke-width='3' stroke-dasharray='12 10' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E")
+      repeat-x left 0 bottom 6px;
+    background-color: #0b2a5b;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.4);
+  }
+
+  [data-bs-theme="dark"] .main-carousel::before {
+    background-color: #081d40;
+  }
+
+  .carousel-indicators {
+    display: flex;
+    bottom: 3.5rem;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    width: 2.5rem;
+    height: 5px;
+    border-radius: 3px;
+    /* a shadow keeps them visible on light photos (box-shadow would outline Bootstrap's transparent click area) */
+    opacity: 0.7;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9));
+  }
+
+  .carousel-indicators .active {
+    opacity: 1;
+  }
+
+  .carousel-item {
+    min-height: calc(var(--VH) * 0.62);
+    max-height: calc(var(--VH) * 0.62);
+  }
+
+  .main-carousel__image {
+    height: unset;
+    min-height: calc(var(--VH) * 0.62);
+  }
+
+  .carousel-control-next-icon,
+  .carousel-control-prev-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-size: 1.5rem;
+  }
+}

@@ -30,7 +30,7 @@ const avatar = (person: Person) => {
 const telHref = (number: string) => `tel:+420${number.replace(/\s/g, "")}`;
 
 // Dialable numbers as links; the internal extension only as text, it only works inside the school
-export const PersonPhones = ({ person, withInternal }: { person: Person; withInternal: boolean }) => {
+const PersonPhones = ({ person, withInternal }: { person: Person; withInternal: boolean }) => {
   const phones = person.phones ?? [];
   const internal = phones.find((phone) => phone.kind === "internal");
   const outside = phones.filter((phone): phone is Phone & { kind: "landline" | "mobile" } => phone.kind !== "internal");
@@ -61,7 +61,9 @@ const PersonCard = ({ person, variant = "full", level = 2, note }: Props) => {
           {initials}
         </span>
         <div>
-          <Heading className="person-card__name">{personName(person)}</Heading>
+          <Heading className={level === 3 ? "person-card__name" : "person-card__name person-card__name--large"}>
+            {personName(person)}
+          </Heading>
           {person.position && <p className="person-card__position">{person.position}</p>}
         </div>
       </header>
@@ -79,8 +81,13 @@ const PersonCard = ({ person, variant = "full", level = 2, note }: Props) => {
       </ul>
       {((full && person.description) || note) && (
         <div className="person-card__description">
-          {full && person.description?.map((line) => <p key={line}>{line}</p>)}
-          {note && <p>{note}</p>}
+          {full &&
+            person.description?.map((line) => (
+              <p key={line} className="person-card__paragraph">
+                {line}
+              </p>
+            ))}
+          {note && <p className="person-card__paragraph">{note}</p>}
         </div>
       )}
     </article>

@@ -58,11 +58,12 @@ const YearNav = ({ years }: Props) => {
 
   return (
     <div className={`year-nav${stuck ? " is-stuck" : ""}`} ref={bar}>
-      <Link href="/foto-video" className="year-nav__back" aria-label="Zpět na Galerii" title="Zpět na Galerii">
-        <LuChevronLeft aria-hidden="true" />
-        <span className="year-heading__year">{current}</span>
+      <Link href="/foto-video" className="year-nav__back" title="Zpět na Galerii">
+        <LuChevronLeft className="year-nav__back-icon" aria-hidden="true" />
+        <span className="visually-hidden">Zpět na Galerii, rok </span>
+        <span className="year-nav__year">{current}</span>
       </Link>
-      <span className="year-heading__count" aria-hidden="true">
+      <span className="year-nav__count" aria-hidden="true">
         {years[index] && galleriesLabel(years[index].count)}
       </span>
       <nav className="year-nav__controls" aria-label="Roky">
@@ -82,7 +83,7 @@ const YearNav = ({ years }: Props) => {
           aria-label="Přejít na rok"
         >
           {years.map(({ year }) => (
-            <option key={year} value={year}>
+            <option key={year} value={year} className="year-nav__option">
               {year}
             </option>
           ))}

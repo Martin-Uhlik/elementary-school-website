@@ -10,14 +10,14 @@ const HalaPage = async () => {
   const hala = await getLinkGroup("hala");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Pronájem tělocvičny a venkovního víceúčelového hřiště</h1>
-            <div className="zig_zag">
+            <h1 className="article__title">Pronájem tělocvičny a venkovního víceúčelového hřiště</h1>
+            <div className="zig-zag">
               <ZigZagPath />
-              <div className="zig_zag__line-left">
-                <div className="article__body">
+              <div className="zig-zag__row zig-zag__row--left">
+                <div className="zig-zag__text">
                   {manager.map((person) => (
                     <PersonCard
                       key={person.id}
@@ -27,11 +27,11 @@ const HalaPage = async () => {
                     />
                   ))}
                 </div>
-                <img className="zig_zag__photo" src="/data/images/hala/hala_1.jpg" alt="Fotografie venkovního hřiště" />
+                <img className="zig-zag__photo" src="/data/images/hala/hala_1.jpg" alt="Fotografie venkovního hřiště" />
               </div>
-              <div className="zig_zag__line-right">
-                <img className="zig_zag__photo" src="/data/images/hala/hala_2.jpg" alt="Fotografie tělocvičny" />
-                <div className="article__body">
+              <div className="zig-zag__row zig-zag__row--right">
+                <img className="zig-zag__photo" src="/data/images/hala/hala_2.jpg" alt="Fotografie tělocvičny" />
+                <div className="zig-zag__text">
                   <LinkList links={hala.links} />
                 </div>
               </div>
@@ -40,11 +40,11 @@ const HalaPage = async () => {
         </div>
         <div className="article">
           <div className="article__section">
-            <h1>
+            <h1 className="article__title">
               Provozní řád sportovní haly - tělocvičny a venkovního víceúčelového hřiště při ZŠ a MŠ Moravský Písek
             </h1>
             <div className="article__body">
-              <h2>Základní ustanovení – vymezení účelu</h2>
+              <h2 className="article__heading">Základní ustanovení – vymezení účelu</h2>
               <p>
                 Majitelem – zřizovatelem sportovní haly – tělocvičny a venkovního víceúčelového hřiště (dále sportovních
                 zařízení) je Obec Moravský Písek. Tato sportovní zařízení slouží především pro potřeby pravidelné výuky
@@ -66,7 +66,7 @@ const HalaPage = async () => {
               <p>Všechny obecné a jiné související zákonné normy zůstávají nedotčeny.</p>
             </div>
             <div className="article__body">
-              <h2>Další ustanovení – vymezení podmínek užívání</h2>
+              <h2 className="article__heading">Další ustanovení – vymezení podmínek užívání</h2>
               <p>
                 S provozovatelem lze dojednat pravidelné nebo občasné využití sportovních zařízení, a to za dále
                 stanovených podmínek a za poplatek dle platného ceníku.
@@ -150,7 +150,7 @@ const HalaPage = async () => {
               </ol>
             </div>
             <div className="article__body">
-              <h2>Ceník</h2>
+              <h2 className="article__heading">Ceník</h2>
               <ol>
                 <li>
                   Základní poplatek, který platí všichni uživatelé haly, pokud nejsou dále výslovně uvedeni, činí 360,-

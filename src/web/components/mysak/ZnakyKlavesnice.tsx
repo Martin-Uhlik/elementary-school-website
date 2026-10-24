@@ -96,7 +96,7 @@ const ZnakyKlavesnice = () => {
   };
 
   return (
-    <div className="znaky">
+    <div className="znaky mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Čas", value: formatTime(stopwatch.seconds) },

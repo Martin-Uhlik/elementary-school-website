@@ -1,0 +1,61 @@
+/* 12. Jak rychle píšeš: a character to type and the answer next to it */
+.rychlost__settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0 2rem;
+  width: min(100%, 50rem);
+  max-width: 50rem;
+}
+
+.rychlost__board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 30rem;
+  margin: 1rem 0;
+}
+
+.rychlost__cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  background: var(--mysak-surface);
+  color: var(--mysak-text);
+  font-family: var(--bs-font-monospace);
+  font-size: clamp(4rem, calc(var(--VW) * 0.18), 8rem);
+  line-height: 1;
+}
+
+.rychlost__cell.is-right {
+  color: #fff;
+  background: var(--bs-success);
+}
+
+.rychlost__cell.is-wrong {
+  color: #fff;
+  background: var(--bs-danger);
+}
+
+.rychlost__char {
+  animation: rychlost-in 0.2s ease-out;
+}
+
+@keyframes rychlost-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rychlost__char {
+    animation: none;
+  }
+}
+
+.rychlost__input {
+  max-width: 30rem;
+}

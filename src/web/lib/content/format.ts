@@ -2,7 +2,7 @@
 import type { CalendarEvent, Gallery, Person, Phone } from "@/lib/content/types";
 
 // marks an entry that is a phone number of a place, not a person
-export const CONTACT_LABEL = "Kontakt";
+const CONTACT_LABEL = "Kontakt";
 
 export const isContact = (person: Person) => person.labels.includes(CONTACT_LABEL);
 

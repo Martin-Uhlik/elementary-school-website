@@ -126,7 +126,7 @@ const HomeTrail = () => {
 
   return (
     <svg ref={svg} className={`home-trail${ready ? " home-trail--ready" : ""}`} aria-hidden="true" focusable="false">
-      <path d={trail.path} />
+      <path className="home-trail__line" d={trail.path} />
       {trail.rings.map(([x, y]) => (
         <circle key={`${x} ${y}`} className="home-trail__ring" cx={x} cy={y} r={10} />
       ))}

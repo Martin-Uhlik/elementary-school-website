@@ -162,7 +162,7 @@ const SkladaniSlov = () => {
   };
 
   return (
-    <div className="slova">
+    <div className="slova mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Složeno", value: right },

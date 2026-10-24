@@ -1,4 +1,5 @@
 import "server-only";
+import { authConfig } from "@/lib/auth/config";
 import { requestInfo } from "@/lib/auth/request";
 import { prisma } from "@/lib/db";
 import type { LoginEventKind, Permission } from "@/lib/generated/prisma/client";
@@ -16,4 +17,14 @@ export const logLogin = async (user: Who, kind: LoginEventKind) => {
 export const logActivity = async (user: { id: number; username: string }, section: Permission, text: string) => {
   const { ip } = await requestInfo();
   await prisma.activity.create({ data: { userId: user.id, username: user.username, section, text, ip } });
+};
+
+// Old log entries hold personal data (IP addresses, browsers), so they are deleted after LOG_RETENTION_DAYS;
+// runs on each sign-in, like the clean-up of expired sessions
+export const deleteOldLogs = async () => {
+  const before = new Date(Date.now() - authConfig.logRetentionDays * 24 * 60 * 60 * 1000);
+  await prisma.$transaction([
+    prisma.loginEvent.deleteMany({ where: { createdAt: { lt: before } } }),
+    prisma.activity.deleteMany({ where: { createdAt: { lt: before } } }),
+  ]);
 };

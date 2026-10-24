@@ -1,0 +1,155 @@
+/* People (PersonCard.tsx): initials, name and job title, then e-mail and phones as links.
+   Grey like the link tiles, inside the white section card. */
+.persons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
+  gap: 1.25rem;
+}
+
+.person-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--surface-muted);
+}
+
+.person-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.person-card__avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.person-card__name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.person-card__name--large {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.person-card__position {
+  margin: 0;
+  color: var(--bs-secondary-color);
+}
+
+.person-card__position::first-letter {
+  text-transform: uppercase;
+}
+
+.person-card__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* darker blue so the links keep 4.5:1 on the grey card */
+.person-card__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  max-width: 100%;
+  color: var(--link-on-row-alt);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.person-card__contact:active {
+  text-decoration: underline;
+}
+
+@media (hover: hover) {
+  .person-card__contact:hover {
+    text-decoration: underline;
+  }
+}
+
+.person-card__icon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+.person-card__internal {
+  padding-left: 1.625rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+}
+
+.person-card__description {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--bs-border-color);
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+}
+
+.person-card__paragraph {
+  margin: 0;
+}
+
+.person-card__paragraph + .person-card__paragraph {
+  margin-top: 0.375rem;
+}
+
+/* the phone of a place spans the whole row above the people of its section */
+.person-card--contact {
+  flex-direction: row;
+  align-items: center;
+  grid-column: 1 / -1;
+  padding: 0.875rem 1.25rem;
+}
+
+.person-card--contact .person-card__contacts {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 1.5rem;
+}
+
+.person-card--contact .person-card__internal {
+  padding-left: 0;
+}
+
+/* "Řádky" layout from the header switch (data-layout on <html>, see lib/layout.ts) */
+[data-layout="rows"] .persons {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  [data-layout="rows"] .person-card {
+    display: grid;
+    grid-template-columns: minmax(15rem, 1fr) minmax(13rem, 1fr) 2fr;
+    align-items: start;
+    gap: 1.25rem;
+  }
+
+  [data-layout="rows"] .person-card__description {
+    padding-top: 0;
+    padding-left: 1.25rem;
+    border-top: 0;
+    border-left: 1px solid var(--bs-border-color);
+  }
+
+  [data-layout="rows"] .person-card--contact {
+    display: flex;
+  }
+}

@@ -1,0 +1,56 @@
+/* 2. Klik a dvojklik: a grid of cells to click (purple) or double-click (yellow) */
+:root {
+  --klik-off-0: #ced4da;
+  --klik-off-1: #ddd0ea;
+  --klik-off-2: #ece3b4;
+}
+
+[data-bs-theme="dark"] {
+  --klik-off-0: #6c757d;
+  --klik-off-1: #4b2a63;
+  --klik-off-2: #5c5320;
+}
+
+.klik__board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  width: min(100%, 32rem);
+  margin: 1rem 0;
+  padding: 4px;
+  background: var(--mysak-surface);
+  user-select: none;
+}
+
+.klik__cell {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  touch-action: manipulation;
+}
+
+.klik__cell:focus-visible {
+  outline: 3px solid var(--bs-emphasis-color);
+  outline-offset: -3px;
+}
+
+.klik__cell--0 {
+  background: var(--klik-off-0);
+}
+
+.klik__cell--1 {
+  background: var(--klik-off-1);
+}
+
+.klik__cell--2 {
+  background: var(--klik-off-2);
+}
+
+.klik__cell--1.is-lit {
+  background: #b25dff;
+}
+
+.klik__cell--2.is-lit {
+  background: #ffe135;
+}

@@ -33,7 +33,7 @@ const NewsAdminPage = async () => {
                 <th scope="col">Datum</th>
                 <th scope="col">Nadpis</th>
                 <th scope="col">Na webu</th>
-                <th scope="col" className="actions">
+                <th scope="col" className="admin-table__actions">
                   <span className="visually-hidden">Akce</span>
                 </th>
               </tr>
@@ -44,7 +44,7 @@ const NewsAdminPage = async () => {
                   <td>{formatDate(isoDate(item.date))}</td>
                   <td>{item.title}</td>
                   <td>{item.published ? "ano" : "skrytá"}</td>
-                  <td className="actions">
+                  <td className="admin-table__actions">
                     <Link
                       href={`/auth/aktuality/${item.id}`}
                       className="btn btn-sm btn-outline-primary me-2"

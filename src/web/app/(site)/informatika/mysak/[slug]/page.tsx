@@ -29,11 +29,11 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
   const next = available[index + 1];
 
   return (
-    <div className="body">
+    <div className="page">
       <div className="article">
         <div className="article__section mysak">
           <nav aria-label="Drobečková navigace">
-            <ol className="breadcrumb">
+            <ol className="breadcrumb mysak__breadcrumb">
               <li className="breadcrumb-item">
                 <Link href="/informatika">Informatika</Link>
               </li>
@@ -43,7 +43,7 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
               </li>
             </ol>
           </nav>
-          <h1>
+          <h1 className="article__title">
             {exercise.number}. {exercise.title}
           </h1>
           <p className="mysak__task">
@@ -55,7 +55,7 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
           </p>
           {exercise.keyboard && (
             <p className="alert alert-info mysak__keyboard-note">
-              <LuKeyboard aria-hidden="true" />
+              <LuKeyboard className="mysak__keyboard-icon" aria-hidden="true" />
               <span>
                 Toto cvičení je určené pro počítač s klávesnicí. Na telefonu nebo tabletu nemusí fungovat dobře, zkus
                 raději cvičení s myší, která jdou ovládat i prstem.
@@ -73,14 +73,17 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
 
           <nav aria-label="Další cvičení" className="mysak__pager">
             {prev ? (
-              <Link href={`/informatika/mysak/${prev.slug}`} className="btn btn-outline-secondary">
+              <Link href={`/informatika/mysak/${prev.slug}`} className="btn btn-outline-secondary mysak__pager-button">
                 <span aria-hidden="true">←</span> {prev.title}
               </Link>
             ) : (
               <span />
             )}
             {next && (
-              <Link href={`/informatika/mysak/${next.slug}`} className="btn btn-outline-secondary">
+              <Link
+                href={`/informatika/mysak/${next.slug}`}
+                className={`btn btn-outline-secondary mysak__pager-button${prev ? " mysak__pager-button--end" : ""}`}
+              >
                 {next.title} <span aria-hidden="true">→</span>
               </Link>
             )}

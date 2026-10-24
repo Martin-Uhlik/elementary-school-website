@@ -6,10 +6,10 @@ const RodiceZapisPage = async () => {
   const zapis = await getLinkGroup("rodice-zapis");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Zápis žáků 1. třídy do školního roku 2023/2024</h1>
+            <h1 className="article__title">Zápis žáků 1. třídy do školního roku 2023/2024</h1>
             <LinkList links={zapis.links} />
           </div>
         </div>

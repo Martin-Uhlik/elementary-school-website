@@ -68,7 +68,7 @@ const Skladanka = ({ photos }: ExerciseProps) => {
   const image = photos[photo];
 
   return (
-    <div className="skladanka">
+    <div className="skladanka mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Čas", value: formatTime(stopwatch.seconds) },
@@ -140,19 +140,19 @@ const Skladanka = ({ photos }: ExerciseProps) => {
       </div>
 
       <fieldset className="skladanka__photos">
-        <legend className="form-label fs-6">Obrázek</legend>
+        <legend className="form-label fs-6 skladanka__legend">Obrázek</legend>
         {photos.map((p, i) => (
           <button
             key={p.src}
             type="button"
             aria-pressed={photo === i}
-            className={photo === i ? "is-selected" : ""}
+            className={`skladanka__photo-button${photo === i ? " is-selected" : ""}`}
             onClick={() => {
               setPhoto(i);
               restart();
             }}
           >
-            <img src={p.src} alt={p.alt} width={160} height={90} loading="lazy" />
+            <img className="skladanka__photo" src={p.src} alt={p.alt} width={160} height={90} loading="lazy" />
           </button>
         ))}
       </fieldset>

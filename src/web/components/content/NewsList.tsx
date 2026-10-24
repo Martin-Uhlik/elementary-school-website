@@ -11,7 +11,7 @@ const NewsList = ({ news }: { news: NewsItem[] }) => (
   <ul className="news">
     {news.map((item) => (
       <li key={item.id} className="news__item">
-        <article aria-labelledby={`news-${item.id}`}>
+        <article className="news__article" aria-labelledby={`news-${item.id}`}>
           <time className="news__date" dateTime={item.date}>
             {formatDate(item.date)}
           </time>

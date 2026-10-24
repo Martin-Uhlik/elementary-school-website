@@ -1,0 +1,56 @@
+/* The video tour (VideoTour.tsx): a native player with the quality select in its corner */
+.video-player {
+  position: relative;
+  width: min(100%, 64rem);
+  box-shadow: var(--shadow-small);
+}
+
+.video-player__video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background-color: black;
+  border-radius: .75rem;
+}
+
+.video-player__quality {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+/* like the native controls: hidden while playing, shown on hover, focus, pause or with the menu open */
+.video-player.is-playing:not(:hover) .video-player__quality:not(:focus-within, :has(.show)) {
+  opacity: 0;
+}
+
+/* a Bootstrap dropdown like the theme switch; only the toggle is styled to sit on the video */
+.video-player__quality-toggle {
+  padding: 0.2rem 0.6rem;
+  border: 0;
+  border-radius: 0.4rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.65);
+  font-size: 0.9rem;
+}
+
+.video-player__quality-toggle:active {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+@media (hover: hover) {
+  .video-player__quality-toggle:hover {
+    background: rgba(0, 0, 0, 0.85);
+  }
+}
+
+.video-player__quality-toggle:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.video-player__quality-menu {
+  min-width: 0;
+}

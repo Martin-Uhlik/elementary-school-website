@@ -12,11 +12,11 @@ const OrganizacePrubehSkolnihoRokuPage = async () => {
   const years = await getSchoolYears();
   return (
     <>
-      <div className="body">
+      <div className="page">
         {years.map(({ schoolYear, events }) => (
           <div key={schoolYear} className="article">
             <div className="article__section">
-              <h1>Průběh školního roku {schoolYear}</h1>
+              <h1 className="article__title">Průběh školního roku {schoolYear}</h1>
               <ol className="timeline">
                 {events.map((event) => (
                   <li key={event.id} className={`timeline__item${event.holiday ? " timeline__item--holiday" : ""}`}>

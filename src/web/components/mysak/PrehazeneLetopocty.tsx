@@ -97,7 +97,7 @@ const PrehazeneLetopocty = () => {
   };
 
   return (
-    <div className="letopocty">
+    <div className="letopocty mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Čas", value: formatTime(stopwatch.seconds) },

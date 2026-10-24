@@ -44,7 +44,7 @@ const GroupAdminPage = async ({ params }: PageProps<"/auth/dokumenty/[group]">) 
               <tr>
                 <th scope="col">Název</th>
                 <th scope="col">Soubor nebo adresa</th>
-                <th scope="col" className="actions">
+                <th scope="col" className="admin-table__actions">
                   <span className="visually-hidden">Akce</span>
                 </th>
               </tr>
@@ -60,7 +60,7 @@ const GroupAdminPage = async ({ params }: PageProps<"/auth/dokumenty/[group]">) 
                       </a>
                     )}
                   </td>
-                  <td className="actions">
+                  <td className="admin-table__actions">
                     <MoveButtons
                       up={moveLink.bind(null, group.id, link.id, "up")}
                       down={moveLink.bind(null, group.id, link.id, "down")}

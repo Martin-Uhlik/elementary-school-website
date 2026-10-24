@@ -42,12 +42,12 @@ const ContactDirectory = ({ sections }: { sections: Section[] }) => {
     <>
       <div className="article">
         <div className="article__section contact-search">
-          <h1>Kontakty</h1>
+          <h1 className="article__title">Kontakty</h1>
           <div className="contact-search__field">
-            <LuSearch aria-hidden="true" focusable="false" />
+            <LuSearch className="contact-search__icon" aria-hidden="true" focusable="false" />
             <input
               type="search"
-              className="form-control"
+              className="form-control contact-search__input"
               placeholder="Hledat jméno, předmět, e-mail nebo telefon"
               aria-label="Hledat v kontaktech"
               value={query}

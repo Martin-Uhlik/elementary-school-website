@@ -17,7 +17,7 @@ const AdminNav = ({ permissions }: { permissions: Permission[] }) => {
           <li key={href} className="nav-item">
             <Link
               href={href}
-              className={`nav-link${active ? " active" : ""}`}
+              className={`nav-link admin-header__link${active ? " active" : ""}`}
               aria-current={active ? "page" : undefined}
             >
               {label}

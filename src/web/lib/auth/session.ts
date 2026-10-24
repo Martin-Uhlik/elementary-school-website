@@ -72,8 +72,6 @@ export const getCurrentUser = cache(async () => {
   return { id, username, mustChangePassword, permissions, isAdmin: permissions.includes("admin") };
 });
 
-export type CurrentUser = NonNullable<Awaited<ReturnType<typeof getCurrentUser>>>;
-
 // Every /auth page and every admin action starts with this. Until the default password is changed,
 // the only reachable page is Můj účet; a section the user has no access to sends them to the start page.
 export const requireUser = async ({

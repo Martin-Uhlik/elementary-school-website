@@ -12,11 +12,11 @@ const GalleryArchive = async ({ unit, title }: { unit: Unit; title: string }) =>
   const years = await getGalleryArchive(unit);
   const previews = await getGalleryPreviews(years.flatMap((y) => y.galleries.map((g) => galleryFolder(g))));
   return (
-    <div className="body gallery-archive">
+    <div className="page gallery-archive">
       <div className="article">
         <div className="article__section">
           <HeaderOffset />
-          <h1>{title}</h1>
+          <h1 className="article__title">{title}</h1>
           <div className="gallery-years">
             {years.length > 0 && <YearNav years={years.map((y) => ({ year: y.year, count: y.galleries.length }))} />}
             {years.map(({ year, galleries }, i) => (

@@ -1,0 +1,153 @@
+/* Archive pages (GalleryArchive.tsx): one sticky bar under the header with the year in view (YearNav.tsx),
+   and a heading for each year (YearHeading.tsx) that looks the same and slides under it
+   (the first heading is hidden, the bar is in its place) */
+.gallery-year {
+  padding-bottom: 5rem;
+  scroll-margin-top: var(--sticky-top, 4rem);
+}
+
+.gallery-year:first-of-type {
+  scroll-margin-top: calc(var(--sticky-top, 4rem) + 4.75rem);
+}
+
+.gallery-year:last-child {
+  padding-bottom: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.year-heading) {
+    scroll-behavior: smooth;
+  }
+}
+
+.year-heading,
+.year-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 3.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--bs-border-color);
+  background: var(--surface);
+}
+
+.year-heading__year,
+.year-nav__year {
+  margin: 0;
+  color: var(--link-on-row-alt);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.year-heading__count,
+.year-nav__count {
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+}
+
+.year-nav {
+  position: sticky;
+  top: var(--sticky-top, 4rem);
+  z-index: 5;
+  transition: box-shadow 0.2s;
+}
+
+/* stuck under the header: a soft shadow under the line, over the cards sliding beneath */
+.year-nav.is-stuck {
+  box-shadow: 0 10px 12px -10px rgb(0 0 0 / 0.25);
+}
+
+/* back to Galerie: the chevron and the year are one link, the chevron sits in the card padding */
+.year-nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  margin-left: -0.625rem;
+  padding: 0.25rem 0.625rem 0.25rem 0.25rem;
+  border-radius: 0.5rem;
+  color: var(--link-on-row-alt);
+  font-size: 1.75rem;
+  text-decoration: none;
+}
+
+.year-nav__back:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.year-nav__back-icon {
+  stroke-width: 3;
+}
+
+.year-nav__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+.year-nav__select {
+  width: auto;
+  padding-block: 0.3rem;
+  border: 0;
+  color: white;
+  background-color: var(--bs-primary);
+  /* Bootstrap's dark chevron, drawn white */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.year-nav__select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.35);
+}
+
+.year-nav__option {
+  color: var(--bs-body-color);
+  background: var(--bs-body-bg);
+}
+
+.year-nav__step {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  color: var(--link-on-row-alt);
+  background: none;
+  font-size: 1.5rem;
+}
+
+.year-nav__step:disabled {
+  opacity: 0.3;
+}
+
+.year-nav__step:not(:disabled):active {
+  background: var(--bs-tertiary-bg);
+}
+
+@media (hover: hover) {
+  .year-nav__step:not(:disabled):hover {
+    background: var(--bs-tertiary-bg);
+  }
+}
+
+.year-nav__step:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 575.98px) {
+  .gallery-year {
+    padding-bottom: 4rem;
+  }
+
+  /* no room for the count next to the back arrow and the controls */
+  .year-nav__count {
+    display: none;
+  }
+}

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import type { ActionState } from "@/components/admin/ActionForm";
 import { formatTime } from "@/lib/admin/time";
 import { authConfig } from "@/lib/auth/config";
-import { logLogin } from "@/lib/auth/log";
+import { deleteOldLogs, logLogin } from "@/lib/auth/log";
 import { verifyPassword } from "@/lib/auth/password";
 import { createSession, deleteSession, getCurrentUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
@@ -45,6 +45,7 @@ export const login = async (data: FormData): Promise<ActionState> => {
   await prisma.user.update({ where: { id: user.id }, data: { failedLogins: 0, lockedUntil: null } });
   await createSession(user.id);
   await logLogin(user, "login");
+  await deleteOldLogs();
   redirect(user.mustChangePassword ? "/auth/ucet" : "/auth");
 };
 

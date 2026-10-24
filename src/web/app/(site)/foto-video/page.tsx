@@ -7,10 +7,10 @@ const galleryCount = (count: number) => (count > 0 && count < 5 ? "galerie" : "g
 const FotoVideoPage = async () => {
   const sections = await getGallerySections();
   return (
-    <div className="body">
+    <div className="page">
       <div className="article">
         <div className="article__section">
-          <h1>Galerie</h1>
+          <h1 className="article__title">Galerie</h1>
           <ul className="gallery-sections">
             {sections.map((section) => (
               <li key={section.unit}>

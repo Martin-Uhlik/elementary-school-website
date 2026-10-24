@@ -2,6 +2,7 @@ import Link from "next/link";
 import FilterForm from "@/components/admin/FilterForm";
 import LoginEventsTable from "@/components/admin/LoginEventsTable";
 import { formatDateTime, startOfPragueDay } from "@/lib/admin/time";
+import { authConfig } from "@/lib/auth/config";
 import { PERMISSION_LABELS } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
@@ -53,6 +54,7 @@ const LogsPage = async ({ searchParams }: PageProps<"/auth/logy">) => {
       <PageTitle back="/auth" backLabel="Přehled">
         Logy
       </PageTitle>
+      <p className="mb-0">Záznamy starší než {authConfig.logRetentionDays} dní se automaticky mažou.</p>
       <ul className="nav nav-tabs">
         {Object.entries(KINDS).map(([value, label]) => (
           <li key={value} className="nav-item">
@@ -106,7 +108,7 @@ const LogsPage = async ({ searchParams }: PageProps<"/auth/logy">) => {
         ) : kind === "prihlaseni" ? (
           <LoginEventsTable events={events.slice(0, PAGE_SIZE)} caption="Přihlášení a změny účtů" showUser />
         ) : (
-          <div className="table-responsive">
+          <div className="table-responsive" role="region" aria-label="Změny ve správě webu" tabIndex={0}>
             <table className="table admin-table mb-0">
               <caption className="visually-hidden">Změny ve správě webu</caption>
               <thead>

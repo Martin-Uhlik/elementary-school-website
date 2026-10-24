@@ -6,10 +6,10 @@ const UredniDeskaPage = async () => {
   const deska = await getLinkGroup("uredni-deska");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Úřední deska</h1>
+            <h1 className="article__title">Úřední deska</h1>
             <LinkList links={deska.links} />
           </div>
         </div>

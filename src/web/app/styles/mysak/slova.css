@@ -1,0 +1,59 @@
+/* 4. Skládání slov: letters to put in order. On phones the letters shrink to keep the word on one line;
+   long words wrap rather than get too small to tap (--letters = their count) */
+.slova {
+  container-type: inline-size;
+}
+
+.slova__letters {
+  --gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 575.98px) {
+  .slova__letters {
+    --gap: 0.25rem;
+  }
+}
+
+.slova__letter {
+  --size: clamp(2.25rem, calc((100cqi - (var(--letters) - 1) * var(--gap)) / var(--letters)), 3.5rem);
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--size) * 0.15);
+  background: var(--mysak-surface);
+  color: var(--mysak-text);
+  font-size: calc(var(--size) * 0.55);
+  font-weight: 600;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.slova__letter.is-hinted {
+  background: var(--bs-primary);
+}
+
+.slova__letter.is-selected,
+.slova__letter:focus-visible {
+  outline: 3px solid var(--bs-warning);
+  outline-offset: 2px;
+}
+
+.slova__letter.is-dragging {
+  position: relative;
+  z-index: 10;
+  cursor: grabbing;
+}
+
+.slova__letters.is-solved .slova__letter {
+  background: var(--bs-success);
+  cursor: default;
+}

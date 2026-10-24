@@ -1,6 +1,6 @@
 export type LayoutPreference = "grid" | "rows";
 
-export const LAYOUT_STORAGE_KEY = "layout";
+const LAYOUT_STORAGE_KEY = "layout";
 export const LAYOUT_CHANGE_EVENT = "layoutchange";
 
 // Runs inline in <head> like the theme script, so lists render in the stored layout from the first paint.

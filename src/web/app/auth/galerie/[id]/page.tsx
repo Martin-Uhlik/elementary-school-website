@@ -53,15 +53,16 @@ const GalleryAdminPage = async ({ params }: PageProps<"/auth/galerie/[id]">) => 
             {photos.images.map((image) => {
               const file = decodeURIComponent(image.src.split("/").pop() ?? "");
               return (
-                <li key={image.src}>
+                <li key={image.src} className="admin-photos__item">
                   <a href={image.src} target="_blank" rel="noreferrer">
-                    <img src={image.thumb} alt={file} loading="lazy" />
+                    <img className="admin-photos__photo" src={image.thumb} alt={file} loading="lazy" />
                   </a>
                   <ConfirmButton
                     action={removePhoto.bind(null, gallery.id, file)}
                     question={`Smazat fotku ${file}?`}
                     label={`Smazat fotku ${file}`}
                     className="btn btn-sm btn-danger"
+                    formClassName="d-inline admin-photos__delete"
                   >
                     <LuTrash2 aria-hidden="true" />
                   </ConfirmButton>

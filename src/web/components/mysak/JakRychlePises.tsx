@@ -92,7 +92,7 @@ const JakRychlePises = () => {
   const percent = shown ? Math.round((right / shown) * 100) : 0;
 
   return (
-    <div className="rychlost">
+    <div className="rychlost mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Znaků", value: shown },

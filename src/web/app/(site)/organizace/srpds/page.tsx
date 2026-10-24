@@ -6,16 +6,16 @@ const OrganizaceSrpdsPage = async () => {
   const board = await getPeople("SRPDŠ");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Sdružení rodičů a přátel dětí školy</h1>
+            <h1 className="article__title">Sdružení rodičů a přátel dětí školy</h1>
             <span>
               SRPDŠ je registrované občanské sdružení u Ministerstva vnitra ČR dne 9. 7. 1992, č. j. VSC/1-12387/92-RS.
               S účinností od 1. 1. 1993 je registrováno u FÚ Veselí nad Moravou, přiděleno DIČ: CZ47375868.
             </span>
             <div className="article__body">
-              <h2>Rada</h2>
+              <h2 className="article__heading">Rada</h2>
               <div className="persons">
                 {board.map((person) => (
                   <PersonCard key={person.id} person={person} variant="short" level={3} />
@@ -23,7 +23,7 @@ const OrganizaceSrpdsPage = async () => {
               </div>
               <p className="mt-3">+ zástupci jednotlivých tříd</p>
             </div>
-            <h2>Stanovy</h2>
+            <h2 className="article__heading article__heading--section">Stanovy</h2>
             <h3>1. Činnost spolku</h3>
             <ul>
               <li>

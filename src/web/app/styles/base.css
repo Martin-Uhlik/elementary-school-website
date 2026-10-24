@@ -1,0 +1,110 @@
+/* Colours, shadows and sizes used by every block, page defaults and the few changes to Bootstrap's own components */
+:root {
+  --bg-primary: #2d3436;
+  --text-secondary: white;
+  --text-placeholder: #767676; /* darkest grey with 4.5:1 contrast on white */
+  --link-on-row-alt: #0a58ca;
+  --background-elem-opacity: 1;
+
+  --shadow-normal: 0 0.25rem 1rem #00000040;
+  --shadow-small: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
+
+  /* card design: white cards on a tinted page; the dark theme turns it around (see below) */
+  --page-bg: #e9edf2;
+  --surface: #ffffff;
+  --surface-muted: #f3f5f8;
+  --card-shadow: 0 0.5rem 1.5rem rgba(16, 24, 40, 0.08), 0 0.125rem 0.375rem rgba(16, 24, 40, 0.08);
+  --card-shadow-hover: 0 0.75rem 2rem rgba(16, 24, 40, 0.14), 0 0.25rem 0.5rem rgba(16, 24, 40, 0.1);
+  --card-radius: 1rem;
+  --home-trail: #6ea8fe;
+
+  /* viewport size; --VH is measured by lib/viewport.ts (real visible height on phones); use these instead of vw/vh */
+  --VW: 100vw;
+  --VH: 100vh;
+}
+
+/* Dark theme: Bootstrap switches its own colours with data-bs-theme, these cover the site's custom ones */
+[data-bs-theme="dark"] {
+  --bg-primary: #1b1f22;
+  --text-placeholder: #adb5bd;
+  --link-on-row-alt: var(--bs-link-color);
+  --background-elem-opacity: 0.06;
+  --shadow-normal: 0 0.25rem 1rem #00000080;
+
+  /* darker cards on a lighter page, with light shadows */
+  --page-bg: #2b3035;
+  --surface: #1a1d21;
+  --surface-muted: #23272c;
+  --home-trail: #4a86e0;
+  --card-shadow: 0 0.125rem 0.375rem rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --card-shadow-hover: 0 0.25rem 0.625rem rgba(255, 255, 255, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* browser differences are already evened out by Bootstrap's Reboot (loaded before this file) */
+
+/* nothing may scroll sideways; clip (unlike hidden) keeps position: sticky working */
+html {
+  overflow-x: clip;
+}
+
+/* the page is always as wide as the window and the scrollbar sits over its right edge,
+   so it never shifts when a scrollbar appears */
+body {
+  display: flex;
+  flex-direction: column;
+  width: var(--VW);
+  max-width: var(--VW);
+  min-height: var(--VH);
+  overflow-x: clip;
+  background-color: var(--page-bg);
+  font-family: var(--font-montserrat), "Montserrat", sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+a {
+  text-align: start;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.5rem 1rem;
+  background: var(--bs-body-bg);
+  box-shadow: var(--shadow-small);
+}
+
+.empty-note {
+  margin: 0;
+  color: var(--bs-secondary-color);
+}
+
+/* Bootstrap components, everywhere they are used */
+.dropdown-menu {
+  box-shadow: var(--shadow-small);
+}
+
+/* Bootstrap's blue and grey outline buttons are too dark on the dark page background */
+[data-bs-theme="dark"] .btn-outline-primary {
+  --bs-btn-color: #6ea8fe;
+  --bs-btn-border-color: #6ea8fe;
+  --bs-btn-disabled-color: #6ea8fe;
+  --bs-btn-disabled-border-color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+  --bs-btn-color: #ced4da;
+  --bs-btn-border-color: #adb5bd;
+  --bs-btn-disabled-color: #ced4da;
+}
+
+[data-bs-theme="dark"] .btn-outline-danger {
+  --bs-btn-color: #ea868f;
+  --bs-btn-border-color: #ea868f;
+}

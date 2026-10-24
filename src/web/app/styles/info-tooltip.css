@@ -1,0 +1,56 @@
+/* (i) button next to a link tile (InfoTooltip.tsx) with a longer note above it */
+.info-tooltip {
+  position: absolute;
+  top: 50%;
+  right: 0.625rem;
+  transform: translateY(-50%);
+}
+
+.info-tooltip__button {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--bs-primary-text-emphasis);
+  background: var(--bs-primary-bg-subtle);
+  font-size: 1.1rem;
+}
+
+.info-tooltip__button:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.info-tooltip__text {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.5rem);
+  z-index: 20;
+  display: none;
+  width: min(26rem, calc(var(--VW) * 0.8));
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  color: #fff;
+  background: #212529;
+  box-shadow: var(--shadow-normal);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+[data-bs-theme="dark"] .info-tooltip__text {
+  color: #212529;
+  background: #f8f9fa;
+}
+
+.info-tooltip.is-open .info-tooltip__text {
+  display: block;
+}
+
+@media (hover: hover) {
+  .info-tooltip:hover:not(.is-dismissed) .info-tooltip__text {
+    display: block;
+  }
+}

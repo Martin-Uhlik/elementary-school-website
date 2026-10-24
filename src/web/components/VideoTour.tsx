@@ -30,6 +30,7 @@ const VideoTour = () => {
     <div className={`video-player${playing ? " is-playing" : ""}`}>
       <video
         id="video-tour"
+        className="video-player__video"
         ref={ref}
         controls
         preload="none"
@@ -42,17 +43,17 @@ const VideoTour = () => {
         <track kind="captions" src="/data/videos/zsmp.cs.vtt" srcLang="cs" label="Čeština" />
         Pro přehrání videa je potřeba prohlížeč s podporou HTML5 videa.
       </video>
-      <div className="video-quality dropdown">
+      <div className="video-player__quality dropdown">
         <button
           type="button"
-          className="video-quality__toggle dropdown-toggle"
+          className="video-player__quality-toggle dropdown-toggle"
           data-bs-toggle="dropdown"
           aria-expanded="false"
           aria-label={`Kvalita videa: ${quality.label}p`}
         >
           {quality.label}p
         </button>
-        <ul className="dropdown-menu dropdown-menu-end">
+        <ul className="dropdown-menu dropdown-menu-end video-player__quality-menu">
           {sources.map((s) => (
             <li key={s.label}>
               <button

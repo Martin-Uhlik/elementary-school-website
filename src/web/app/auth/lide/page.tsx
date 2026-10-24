@@ -61,7 +61,7 @@ const PeopleAdminPage = async ({ searchParams }: PageProps<"/auth/lide">) => {
               <th scope="col">Jméno</th>
               <th scope="col">Funkce</th>
               <th scope="col">Sekce</th>
-              <th scope="col" className="actions">
+              <th scope="col" className="admin-table__actions">
                 <span className="visually-hidden">Akce</span>
               </th>
             </tr>
@@ -74,7 +74,7 @@ const PeopleAdminPage = async ({ searchParams }: PageProps<"/auth/lide">) => {
                   <td>{name}</td>
                   <td>{person.position}</td>
                   <td className="small">{person.labels.join(", ")}</td>
-                  <td className="actions">
+                  <td className="admin-table__actions">
                     <MoveButtons
                       up={movePerson.bind(null, person.id, label, "up")}
                       down={movePerson.bind(null, person.id, label, "down")}

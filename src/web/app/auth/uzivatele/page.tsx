@@ -30,7 +30,7 @@ const UsersPage = async () => {
               <th scope="col">Skutečné jméno</th>
               <th scope="col">Přístup</th>
               <th scope="col">Stav</th>
-              <th scope="col" className="actions">
+              <th scope="col" className="admin-table__actions">
                 <span className="visually-hidden">Akce</span>
               </th>
             </tr>
@@ -54,7 +54,7 @@ const UsersPage = async () => {
                         ? "čeká na změnu hesla"
                         : "aktivní"}
                   </td>
-                  <td className="actions">
+                  <td className="admin-table__actions">
                     {locked && (
                       <form action={unlockUser.bind(null, user.id)} className="d-inline">
                         <button

@@ -1,0 +1,98 @@
+/* Site menu (Header.tsx): a blue bar fixed on top on phones; from 992px it floats 3rem from the top
+   with rounded corners and sticks to the top, full width, once the page is scrolled (.header--sticky) */
+.header {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  box-shadow: var(--shadow-normal);
+}
+
+.header__navbar {
+  /* a darker blue (Bootstrap's blue-600) so even the dimmed links keep 4.5:1 contrast */
+  --bs-primary-rgb: 10, 88, 202;
+  /* links are slightly dimmed; hover and the current page turn white, like the old site */
+  --bs-navbar-color: rgba(255, 255, 255, 0.8);
+  --bs-navbar-hover-color: rgba(255, 255, 255, 0.8);
+  --bs-navbar-active-color: white;
+  border-radius: 0 0 var(--card-radius) var(--card-radius);
+}
+
+.header__toggler {
+  border: none;
+}
+
+.header__toggler:focus {
+  box-shadow: none;
+}
+
+/* keep menu items on one line now that the header has two switches */
+.header__link {
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.header__link:focus-visible,
+.header__link:active {
+  color: white;
+}
+
+@media (hover: hover) {
+  .header__link:hover {
+    color: white;
+  }
+}
+
+/* the theme and layout switches: an icon next to the caret */
+.header__link--switch {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .header {
+    position: absolute;
+    padding: 3rem;
+    transition:
+      padding-left 0.125s,
+      padding-right 0.125s;
+    box-shadow: unset;
+  }
+
+  .header--sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .header__navbar {
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-normal);
+  }
+
+  .header--sticky .header__navbar {
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+  }
+}
+
+/* the full menu shows from 1400px; until 1600px it is tightened and the longest item takes two lines */
+@media (min-width: 1400px) and (max-width: 1599.98px) {
+  .header__navbar {
+    --bs-navbar-nav-link-padding-x: 0.35rem;
+  }
+
+  .header__menu {
+    align-items: center;
+  }
+
+  .header__link {
+    font-size: 0.92rem;
+  }
+
+  .header__link--long {
+    max-width: 10.5rem;
+    white-space: normal;
+    line-height: 1.15;
+    text-align: center;
+  }
+}

@@ -6,10 +6,10 @@ const RodiceOznameniFromularePage = async () => {
   const oznameniFromulare = await getLinkGroup("rodice-oznameni-fromulare");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Pro rodiče</h1>
+            <h1 className="article__title">Pro rodiče</h1>
             <LinkList links={oznameniFromulare.links} />
           </div>
         </div>

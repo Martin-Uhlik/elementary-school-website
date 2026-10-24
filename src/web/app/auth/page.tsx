@@ -53,7 +53,7 @@ const DashboardPage = async ({ searchParams }: PageProps<"/auth">) => {
   const visible = tiles.filter((tile) => can(user.permissions, tile.permission));
   return (
     <>
-      <h1>Správa webu</h1>
+      <h1 className="admin-main__title">Správa webu</h1>
       {denied && (
         <div className="alert alert-warning mb-0" role="alert">
           Do této části nemáte přístup. Požádejte správce webu.

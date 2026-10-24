@@ -1,0 +1,40 @@
+/* Kontakty (ContactDirectory.tsx): the search box on top, then a card per section */
+.contact-search {
+  gap: 1rem;
+}
+
+.contact-search__field {
+  position: relative;
+}
+
+.contact-search__icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--bs-secondary-color);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.contact-search__input,
+.contact-search__input:focus {
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--surface-muted);
+  font-size: 1.05rem;
+}
+
+.contact-search__status {
+  margin: 0;
+  min-height: 1.3em;
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+}
+
+.contact-section__title {
+  margin: 1.5rem 0 0;
+  font-weight: 700;
+  font-size: 1.5rem;
+}

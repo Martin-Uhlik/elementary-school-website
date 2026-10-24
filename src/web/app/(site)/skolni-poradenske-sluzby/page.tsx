@@ -5,10 +5,10 @@ import { getLinkGroup } from "@/lib/content/links";
 const SkolniPoradenskeSluzbyPage = async () => {
   const documents = await getLinkGroup("skolni-poradenske-sluzby");
   return (
-    <div className="body">
+    <div className="page">
       <div className="article">
         <div className="article__section">
-          <h1>Školní poradenské služby</h1>
+          <h1 className="article__title">Školní poradenské služby</h1>
           <LinkList links={documents.links} />
         </div>
       </div>

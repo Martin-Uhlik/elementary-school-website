@@ -13,6 +13,3 @@ export const startOfPragueDay = (day: string) => {
   const local = new Date(guess.toLocaleString("sv-SE", { timeZone: ZONE }).replace(" ", "T") + "Z");
   return new Date(guess.getTime() - (local.getTime() - guess.getTime()));
 };
-
-// Today's date in Czech time as YYYY-MM-DD
-export const pragueToday = () => new Date().toLocaleDateString("sv-SE", { timeZone: ZONE });

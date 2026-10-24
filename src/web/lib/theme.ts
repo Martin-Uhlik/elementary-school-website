@@ -1,6 +1,6 @@
 export type ThemePreference = "system" | "light" | "dark";
 
-export const THEME_STORAGE_KEY = "theme";
+const THEME_STORAGE_KEY = "theme";
 export const THEME_CHANGE_EVENT = "themechange";
 
 // Runs inline in <head> before the first paint, so the stored or system theme is applied without a flash.

@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
-// seasonal background; the picture is chosen in styles.css from data-background on <html> (see lib/background.ts)
+// seasonal background; the picture is chosen in styles/page.css from data-background on <html> (see lib/background.ts)
 const PageBackground = () => {
   const pathname = usePathname();
 
@@ -11,7 +11,7 @@ const PageBackground = () => {
 
   return (
     <div className="page-background" aria-hidden="true">
-      <div className="background-elem-wide" />
+      <div className="page-background__picture" />
     </div>
   );
 };

@@ -81,7 +81,7 @@ const GalleriesAdminPage = async ({ searchParams }: PageProps<"/auth/galerie">) 
                 <th scope="col">Datum</th>
                 <th scope="col">Název</th>
                 <th scope="col">Fotek</th>
-                <th scope="col" className="actions">
+                <th scope="col" className="admin-table__actions">
                   <span className="visually-hidden">Akce</span>
                 </th>
               </tr>
@@ -92,7 +92,7 @@ const GalleriesAdminPage = async ({ searchParams }: PageProps<"/auth/galerie">) 
                   <td className="text-nowrap">{gallery.dateText ?? gallery.year}</td>
                   <td>{gallery.title}</td>
                   <td>{counts[i] ?? "video"}</td>
-                  <td className="actions">
+                  <td className="admin-table__actions">
                     <Link
                       href={`/auth/galerie/${gallery.id}`}
                       className="btn btn-sm btn-outline-primary"

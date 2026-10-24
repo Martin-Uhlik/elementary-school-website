@@ -83,7 +83,7 @@ const CalendarAdminPage = async ({ searchParams }: PageProps<"/auth/prubeh-roku"
               <tr>
                 <th scope="col">Datum</th>
                 <th scope="col">Text</th>
-                <th scope="col" className="actions">
+                <th scope="col" className="admin-table__actions">
                   <span className="visually-hidden">Akce</span>
                 </th>
               </tr>
@@ -102,7 +102,7 @@ const CalendarAdminPage = async ({ searchParams }: PageProps<"/auth/prubeh-roku"
                       )}
                     </td>
                     <td>{event.text.replaceAll("**", "")}</td>
-                    <td className="actions">
+                    <td className="admin-table__actions">
                       <Link
                         href={`/auth/prubeh-roku/${event.id}`}
                         className="btn btn-sm btn-outline-primary me-1"

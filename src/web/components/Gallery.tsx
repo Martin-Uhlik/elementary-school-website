@@ -46,13 +46,13 @@ const Gallery = ({ title, back, images }: Props) => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="page">
       <div className="article">
         <div className="article__section">
           {/* the whole heading leads back to the archive */}
           <Link href={back} className="gallery-heading" title="Zpět na archiv">
             <LuChevronLeft className="gallery-heading__chevron" aria-hidden="true" />
-            <h1>{title}</h1>
+            <h1 className="article__title">{title}</h1>
             <span className="visually-hidden">(zpět na archiv)</span>
           </Link>
           <div className="gallery" id="gallery">

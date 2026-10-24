@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { freeFileName, GALLERY_DIR, resolveInside, safeFileName, THUMBNAIL_FOLDER } from "@/lib/media";
 
 const ALLOWED = /\.(jpe?g|png|webp)$/i;
-// the shorter side of a preview, as in gallery_generators/generate_gallery.py
+// the shorter side of a preview
 const THUMBNAIL_SIZE = 256;
 
 export const galleryDir = (folder: string) => {

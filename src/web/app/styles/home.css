@@ -1,0 +1,210 @@
+/* Home page: the name bar under the photos, sections alternating right and left with the dashed trail
+   on the empty side (HomeTrail.tsx), the video tour and the sponsors */
+
+/* white bar with the logo and the school name that overlaps the bottom edge of the photos */
+.home-title {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: -2rem;
+  padding: 0 1.25rem 1.25rem;
+  border-radius: var(--card-radius);
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+
+/* the round logo sticks out of the bar onto the photo */
+.home-title__logo {
+  width: 12rem;
+  height: 12rem;
+  margin-top: -8.25rem;
+  border-radius: 50%;
+  /* white in the dark theme too: the logo's lettering is dark */
+  background: #fff;
+  box-shadow: var(--card-shadow);
+}
+
+.home-title__name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.home-title__place {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--bs-secondary-color);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.home-row {
+  display: grid;
+  align-items: center;
+}
+
+.home-row__side {
+  display: none;
+}
+
+/* behind the sections */
+.home-trail {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  /* fades in once drawn (after the fonts load), so it never shows in a half-measured state */
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.home-trail--ready {
+  opacity: 1;
+}
+
+.home-trail__line {
+  fill: none;
+  stroke: var(--home-trail);
+  stroke-width: 4;
+  stroke-dasharray: 14 12;
+  stroke-linecap: round;
+}
+
+.home-trail__ring {
+  fill: var(--page-bg);
+  stroke: var(--home-trail);
+  stroke-width: 4;
+}
+
+.home-trail__end {
+  fill: var(--home-trail);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-trail {
+    transition: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .home-title {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.75rem;
+    margin-top: -3.5rem;
+    padding: 1.25rem 2.5rem;
+    text-align: start;
+  }
+
+  .home-title__logo {
+    width: 9rem;
+    height: 9rem;
+    margin: -5rem 0 -0.5rem;
+  }
+
+  .home-title__name {
+    font-size: 2rem;
+  }
+
+  .home-title__place {
+    font-size: 1.25rem;
+  }
+
+  .home-row {
+    gap: 3rem;
+  }
+
+  .home-row--right {
+    grid-template-columns: 1fr 2.5fr;
+  }
+
+  .home-row--left {
+    grid-template-columns: 2.5fr 1fr;
+  }
+
+  .home-row--left .home-row__side {
+    order: 1;
+  }
+
+  .home-row__side,
+  .home-trail {
+    display: block;
+  }
+}
+
+/* the video tour (VideoTour.tsx) in the middle of its section */
+.main-tour {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.main-tour__title {
+  align-self: flex-start;
+}
+
+/* sponsor logos sit right on the page background (transparent PNGs) */
+.sponsors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 100%;
+  padding: 1rem 0 0;
+}
+
+.sponsors__title {
+  margin: 0;
+  color: var(--bs-secondary-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sponsors__logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sponsors__logo {
+  max-width: min(calc(var(--VW) * 0.8), 22rem);
+  max-height: 4.5rem;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.sponsors__logo:active {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .sponsors__logo:hover {
+    opacity: 1;
+  }
+}
+
+/* the logos have dark text, so in the dark theme each sits on a light chip */
+[data-bs-theme="dark"] .sponsors__logo {
+  box-sizing: content-box;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  background: #e9edf2;
+}

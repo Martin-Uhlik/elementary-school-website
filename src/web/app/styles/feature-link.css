@@ -1,0 +1,94 @@
+/* A large tile for a key link (FeatureLink.tsx: lunch orders, the kindergarten website) */
+.feature-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--card-radius);
+  color: var(--bs-body-color);
+  background: var(--surface-muted);
+  text-decoration: none;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background-color 0.2s;
+}
+
+.feature-link:focus-visible,
+.feature-link:active {
+  color: var(--bs-body-color);
+  background: var(--surface);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.feature-link:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.feature-link:active .feature-link__title {
+  color: var(--bs-link-hover-color);
+}
+
+@media (hover: hover) {
+  .feature-link:hover {
+    color: var(--bs-body-color);
+    background: var(--surface);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .feature-link:hover .feature-link__title {
+    color: var(--bs-link-hover-color);
+  }
+}
+
+.feature-link__icon {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  color: #fff;
+  background: var(--bs-primary);
+  font-size: 1.75rem;
+}
+
+.feature-link__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.feature-link__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.feature-link__description {
+  font-size: 0.95rem;
+}
+
+.feature-link__domain {
+  color: var(--bs-secondary-color);
+  font-size: 0.8rem;
+}
+
+.feature-link__arrow {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--bs-secondary-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-link {
+    transition: none;
+  }
+}

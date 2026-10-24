@@ -6,12 +6,12 @@ import { Readable } from "node:stream";
 // Photos (galerie/) and documents (dokument/) live outside the app in MEDIA_DIR, so uploads from /auth survive
 // rebuilds and are served right away. Docker mounts the host folder at /app/media; on a dev machine it is media/
 // in the repository root.
-export const MEDIA_DIR = process.env.MEDIA_DIR ?? path.resolve(process.cwd(), "..", "..", "media");
+const MEDIA_DIR = process.env.MEDIA_DIR ?? path.resolve(process.cwd(), "..", "..", "media");
 
 export const GALLERY_DIR = path.join(MEDIA_DIR, "galerie");
 export const DOCUMENT_DIR = path.join(MEDIA_DIR, "dokument");
 
-// previews made by the upload (and by the old gallery_generators scripts) sit in this subfolder under the same name
+// previews made by the upload sit in this subfolder under the same name
 export const THUMBNAIL_FOLDER = "thumbnails";
 
 const CONTENT_TYPES: Record<string, string> = {

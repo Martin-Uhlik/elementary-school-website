@@ -9,14 +9,14 @@ const JidelnaPage = async () => {
   const dokumenty = await getLinkGroup("jidelna-dokumenty");
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Školní jídelna</h1>
-            <div className="zig_zag">
+            <h1 className="article__title">Školní jídelna</h1>
+            <div className="zig-zag">
               <ZigZagPath />
-              <div className="zig_zag__line-left">
-                <div className="article__body">
+              <div className="zig-zag__row zig-zag__row--left">
+                <div className="zig-zag__text">
                   <FeatureLink
                     href="https://www.strava.cz/Strava/Stravnik/Prihlaseni?zarizeni=2176"
                     title="Přihlášení - odhlášení stravy"
@@ -24,12 +24,12 @@ const JidelnaPage = async () => {
                     Icon={LuUtensils}
                   />
                 </div>
-                <img className="zig_zag__photo" src="/data/images/jidelna/jidelna_1.jpg" alt="Fotografie jídelny" />
+                <img className="zig-zag__photo" src="/data/images/jidelna/jidelna_1.jpg" alt="Fotografie jídelny" />
               </div>
 
-              <div className="zig_zag__line-right">
-                <img className="zig_zag__photo" src="/data/images/jidelna/jidelna_2.jpg" alt="Fotografie jídelny" />{" "}
-                <div className="article__body">
+              <div className="zig-zag__row zig-zag__row--right">
+                <img className="zig-zag__photo" src="/data/images/jidelna/jidelna_2.jpg" alt="Fotografie jídelny" />{" "}
+                <div className="zig-zag__text">
                   <FeatureLink
                     href="https://www.strava.cz/strava5/Jidelnicky?zarizeni=2176"
                     title="Jídelní lístek"
@@ -38,12 +38,12 @@ const JidelnaPage = async () => {
                 </div>
               </div>
 
-              <div className="zig_zag__line-left">
-                <div className="article__body">
-                  <h2>Dokumenty</h2>
+              <div className="zig-zag__row zig-zag__row--left">
+                <div className="zig-zag__text">
+                  <h2 className="article__heading">Dokumenty</h2>
                   <LinkList links={dokumenty.links} />
                 </div>
-                <img className="zig_zag__photo" src="/data/images/jidelna/jidelna_3.jpg" alt="Fotografie jídelny" />
+                <img className="zig-zag__photo" src="/data/images/jidelna/jidelna_3.jpg" alt="Fotografie jídelny" />
               </div>
             </div>
           </div>

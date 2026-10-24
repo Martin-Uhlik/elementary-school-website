@@ -87,7 +87,7 @@ const KlikADvojklik = () => {
   };
 
   return (
-    <div className="klik">
+    <div className="klik mysak__exercise">
       <ExerciseStatus
         stats={[
           { label: "Čas", value: formatTime(stopwatch.seconds) },

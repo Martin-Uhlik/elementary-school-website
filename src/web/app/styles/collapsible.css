@@ -1,0 +1,47 @@
+/* A section that opens on click (Collapsible.tsx): the panel's single grid row grows from 0fr to 1fr,
+   so the height animates to fit the content */
+.collapsible__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0;
+  border: 0;
+  color: var(--bs-body-color);
+  background: none;
+  font-weight: 600;
+}
+
+.collapsible__icon {
+  transition: transform 0.3s;
+}
+
+.collapsible.is-open .collapsible__icon {
+  transform: rotate(90deg);
+}
+
+.collapsible__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.collapsible.is-open .collapsible__panel {
+  grid-template-rows: 1fr;
+}
+
+.collapsible__content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* the content is whatever the page passes in; a margin (not padding) keeps the closed panel at zero height */
+.collapsible__content > :first-child {
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapsible__icon,
+  .collapsible__panel {
+    transition: none;
+  }
+}

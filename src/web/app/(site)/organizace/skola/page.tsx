@@ -2,10 +2,10 @@
 const OrganizaceSkolaPage = () => {
   return (
     <>
-      <div className="body">
+      <div className="page">
         <div className="article">
           <div className="article__section">
-            <h1>Škola</h1>
+            <h1 className="article__title">Škola</h1>
             <p>
               Jsme plně organizovaná základní škola. Podle záznamu v kronice byla na nynějším č.p. 168 vystavěna školní
               budova, v níž se začalo vyučovat od 1. 9. 1859. Od 1. 11. 2002 jsme příspěvkovou organizací. Vymezení
@@ -15,7 +15,7 @@ const OrganizaceSkolaPage = () => {
             </p>
 
             <div className="article__body">
-              <h2>Škola sdružuje:</h2>
+              <h2 className="article__heading">Škola sdružuje:</h2>
               <ul>
                 <li>základní školu</li>
                 <li>mateřskou školu a školní jídelnu</li>

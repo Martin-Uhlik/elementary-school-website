@@ -1,0 +1,25 @@
+/* 3. Rozházené barvy: tiles to swap until the colours run in order */
+.barvy__board {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  max-width: 960px;
+  margin: 1rem 0;
+}
+
+.barvy__tile {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  touch-action: manipulation;
+}
+
+.barvy__tile.is-selected,
+.barvy__tile:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--bs-body-color);
+  outline-offset: 1px;
+}

@@ -50,7 +50,7 @@ const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
             data-bs-interval="10000"
             suppressHydrationWarning
           >
-            <img src={slide.src} className="carousel__image" alt={slide.alt} />
+            <img src={slide.src} className="main-carousel__image" alt={slide.alt} />
           </div>
         ))}
       </div>
