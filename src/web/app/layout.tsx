@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import BootstrapClient from "@/components/BootstrapClient";
+import { backgroundScript } from "@/lib/background";
 import { layoutScript } from "@/lib/layout";
 import { themeScript } from "@/lib/theme";
 import { viewportScript } from "@/lib/viewport";
@@ -21,8 +22,10 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="cs" className={montserrat.variable} data-bs-theme="light" data-layout="grid" suppressHydrationWarning>
       <head>
-        {/* set data-bs-theme, data-layout and the viewport size before the first paint so the page never flashes */}
-        <script dangerouslySetInnerHTML={{ __html: [themeScript, layoutScript, viewportScript].join(";") }} />
+        {/* set data-bs-theme, data-layout, data-background and the viewport size before the first paint so the page never flashes */}
+        <script
+          dangerouslySetInnerHTML={{ __html: [themeScript, layoutScript, backgroundScript, viewportScript].join(";") }}
+        />
       </head>
       <body>
         {children}

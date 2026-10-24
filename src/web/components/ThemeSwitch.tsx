@@ -38,9 +38,11 @@ const ThemeSwitch = () => {
   const preference = useSyncExternalStore(subscribe, getThemePreference, () => "system" as ThemePreference);
   const current = options.find((o) => o.value === preference)!;
 
-  // re-apply after React resets <html> attributes (dev Strict Mode remount) or a change in another tab
+  // re-apply after React resets <html> attributes (dev Strict Mode remount) or a change in another tab;
+  // reads localStorage itself, because during hydration `preference` is still the server's "system"
+  // and applying that would flash the system theme before the stored one
   useLayoutEffect(() => {
-    applyTheme(preference);
+    applyTheme(getThemePreference());
   }, [preference]);
 
   return (

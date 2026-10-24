@@ -1,0 +1,3 @@
+// Runs inline right after the home carousel's HTML and marks a random slide active before the first paint,
+// so the photo is there at once instead of after hydration. HomeCarousel picks the slide up from data-start.
+export const carouselStartScript = `(()=>{const c=document.getElementById("mainCarousel");if(!c)return;const items=c.querySelectorAll(".carousel-item");const i=Math.floor(Math.random()*items.length);c.dataset.start=i;items[i]?.classList.add("active");const dot=c.querySelectorAll(".carousel-indicators button")[i];dot?.classList.add("active");dot?.setAttribute("aria-current","true")})()`;

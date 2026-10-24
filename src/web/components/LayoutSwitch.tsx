@@ -29,9 +29,10 @@ const LayoutSwitch = () => {
   const layout = useSyncExternalStore(subscribe, getLayoutPreference, () => "grid" as LayoutPreference);
   const current = options.find((o) => o.value === layout)!;
 
-  // re-apply after React resets <html> attributes or a change in another tab
+  // re-apply after React resets <html> attributes or a change in another tab;
+  // reads localStorage itself, because during hydration `layout` is still the server's "grid"
   useLayoutEffect(() => {
-    applyLayout(layout);
+    applyLayout(getLayoutPreference());
   }, [layout]);
 
   return (

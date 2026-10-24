@@ -6,6 +6,7 @@ import HomeDecoration from "@/components/content/HomeDecoration";
 import LinkList from "@/components/content/LinkList";
 import NewsList from "@/components/content/NewsList";
 import PersonCard from "@/components/content/PersonCard";
+import { carouselStartScript } from "@/lib/carousel";
 import { getLinkGroup } from "@/lib/content/links";
 import { getPhotos, getSponsors } from "@/lib/content/misc";
 import { getNews } from "@/lib/content/news";
@@ -29,6 +30,8 @@ const HomePage = async () => {
   return (
     <>
       <HomeCarousel photos={photos} />
+      {/* shows a random photo from the first paint, see lib/carousel.ts */}
+      <script dangerouslySetInnerHTML={{ __html: carouselStartScript }} />
 
       <div className="body body--home">
         <nav className="quick-bar" aria-label="Rychlé odkazy">

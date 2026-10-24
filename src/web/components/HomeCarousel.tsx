@@ -9,8 +9,10 @@ const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
   const [start, setStart] = useState<number | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- random pick must not run during SSR
-    setStart(Math.floor(Math.random() * slides.length));
+    // the inline script in the home page already picked one before the first paint (lib/carousel.ts);
+    // after a client-side navigation it doesn't run, so pick here
+    const picked = ref.current?.dataset.start;
+    setStart(picked ? Number(picked) : Math.floor(Math.random() * slides.length));
   }, [slides.length]);
 
   useEffect(() => {
@@ -23,7 +25,8 @@ const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
   }, [start]);
 
   return (
-    <div id="mainCarousel" className="carousel slide main-carousel" ref={ref}>
+    // suppressHydrationWarning: the inline start script adds data-start and "active" classes before hydration
+    <div id="mainCarousel" className="carousel slide main-carousel" ref={ref} suppressHydrationWarning>
       <div className="carousel-indicators">
         {slides.map((slide, i) => (
           <button
@@ -34,13 +37,19 @@ const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
             className={i === start ? "active" : undefined}
             aria-current={i === start ? "true" : undefined}
             aria-label={`Snímek ${i + 1}`}
+            suppressHydrationWarning
           ></button>
         ))}
       </div>
 
       <div className="carousel-inner">
         {slides.map((slide, i) => (
-          <div key={slide.src} className={`carousel-item${i === start ? " active" : ""}`} data-bs-interval="10000">
+          <div
+            key={slide.src}
+            className={`carousel-item${i === start ? " active" : ""}`}
+            data-bs-interval="10000"
+            suppressHydrationWarning
+          >
             <img src={slide.src} className="carousel__image" alt={slide.alt} />
           </div>
         ))}

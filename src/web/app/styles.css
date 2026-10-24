@@ -502,8 +502,19 @@ a {
   top: 1.75rem;
   left: 0;
   width: var(--VW);
+  aspect-ratio: 1818 / 703;
+  background: url("/data/images/background_elements/boxes.svg") center / 100% 100% no-repeat;
   transform: rotate(180deg);
   z-index: -100;
+}
+
+/* only the picture that matches is downloaded */
+[data-background="winter"] .background-elem-wide {
+  background-image: url("/data/images/background_elements/winter.svg");
+}
+
+[data-background="easter"] .background-elem-wide {
+  background-image: url("/data/images/background_elements/easter.svg");
 }
 
 .dropdown-menu {
@@ -1393,7 +1404,7 @@ a {
 }
 
 img.background-elem,
-img.background-elem-wide {
+.background-elem-wide {
   opacity: var(--background-elem-opacity);
 }
 
