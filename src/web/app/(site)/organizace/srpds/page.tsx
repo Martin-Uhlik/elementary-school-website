@@ -1,4 +1,4 @@
-import { personName } from "@/lib/content/format";
+import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
 
 // Ported from html/organizace/srpds.html
@@ -15,22 +15,15 @@ const OrganizaceSrpdsPage = async () => {
               S účinností od 1. 1. 1993 je registrováno u FÚ Veselí nad Moravou, přiděleno DIČ: CZ47375868.
             </span>
             <div className="article__body">
-              <h2>Rada:</h2>
-              <div className="d-flex flex-column gap-1">
+              <h2>Rada</h2>
+              <div className="persons">
                 {board.map((person) => (
-                  <span key={person.id}>
-                    {person.position}: {personName(person)}
-                    {person.email && (
-                      <>
-                        , e-mail: <a href={`mailto:${person.email}`}>{person.email}</a>
-                      </>
-                    )}
-                  </span>
+                  <PersonCard key={person.id} person={person} variant="short" level={3} />
                 ))}
-                <span>+ zástupci jednotlivých tříd</span>
               </div>
+              <p className="mt-3">+ zástupci jednotlivých tříd</p>
             </div>
-            <h2>Stanovy:</h2>
+            <h2>Stanovy</h2>
             <h3>1. Činnost spolku</h3>
             <ul>
               <li>
