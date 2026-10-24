@@ -972,8 +972,6 @@ INSERT INTO phones (person_id, kind, number, sort_order) VALUES
   ('materska-skola-ulice-velkomoravska-409', 'mobile', '737 008 186', 0);
 
 INSERT INTO calendar_events (id, school_year, date, end_date, holiday, text) VALUES
-  ('2025-2026-1', '2025/2026', '2026-06-26', NULL, false, 'Vyučování ve druhém pololetí bude ukončeno **v pátek 26. června 2026**.'),
-  ('2025-2026-2', '2025/2026', '2026-06-27', '2026-08-31', true, '**Hlavní prázdniny** trvají **od 27. června 2026 do 31. srpna 2026**.'),
   ('2026-2027-1', '2026/2027', '2026-09-01', NULL, false, 'Vyučování začne ve všech základních školách **v úterý 1. září 2026**.'),
   ('2026-2027-2', '2026/2027', '2026-10-29', '2026-10-30', true, '**Podzimní prázdniny** stanovuje MŠMT **na čtvrtek 29. října a pátek 30. října 2026**.'),
   ('2026-2027-3', '2026/2027', '2026-12-23', '2027-01-03', true, '**Vánoční prázdniny** začínají **ve středu 23. prosince 2026 a končí v neděli 3. ledna 2027**.'),
