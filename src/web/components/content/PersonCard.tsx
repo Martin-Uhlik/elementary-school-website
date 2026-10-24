@@ -1,6 +1,6 @@
 import { LuMail, LuPhone, LuSmartphone } from "react-icons/lu";
-import type { Person, Phone } from "@/data/types";
-import { personName, PHONE_KIND_LABELS } from "@/lib/content/people";
+import type { Person, Phone } from "@/lib/content/types";
+import { personName, PHONE_KIND_LABELS } from "@/lib/content/format";
 
 type Props = {
   person: Person;

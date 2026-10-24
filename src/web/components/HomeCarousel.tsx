@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Photo } from "@/data/types";
+import type { Photo } from "@/lib/content/types";
 
 const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
   const ref = useRef<HTMLDivElement>(null);

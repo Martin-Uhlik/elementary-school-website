@@ -11,7 +11,7 @@ A new website for an elementary school aimed at modernizing an outdated version 
 
 # Run with Docker
 
-The site runs as two containers: `web` (Next.js, `src/web`) and `db` (PostgreSQL 18, `src/db`).
+The site runs as three containers: `web` (Next.js with the admin, `src/web`), `db` (PostgreSQL 18, `src/db`) and `migrate`, which runs once on every start: it applies new database migrations and fills an empty database.
 
 ```bash
 cp .env.example .env    # then set a real POSTGRES_PASSWORD
@@ -20,25 +20,31 @@ docker compose up -d --build
 
 The site is then on http://localhost:3000.
 
+## Admin
+
+`/admin` is the sign-in page (not linked from the site, hidden from search engines). The first user is **admin / zsmp**; after signing in it has to set its own password. The admin (`/auth`) edits news, people and contacts, documents on every page, galleries and photos, and users.
+
+The sign-in cookie only travels over HTTPS (IIS). To try the admin over plain http, e.g. http://192.168.100.10:3000, set `COOKIE_SECURE=false` in `.env` for that time.
+
 ## Photos, documents and videos
 
 They are not in git or in the image. They live in a folder on the server (`MEDIA_DIR` in `.env`, default `./media`), which is mounted into the web container, so they survive rebuilds:
 
 ```
 media/
-  galerie/<id>/...       → /galerie/<id>
+  galerie/<folder>/...   → /galerie/<folder>        (photos, thumbnails/ = previews)
   dokument/...           → /dokument/...
   videos/zsmp.mp4, zsmp.cs.vtt → /data/videos/...
 ```
 
-Gallery pages read the folders on every request. New files are served after `docker compose restart web` (Next.js lists `public/` when it starts).
+The admin uploads into `galerie/` and `dokument/`, so the folder must be writable for the container's user (uid 1000): `sudo chown -R 1000:1000 media`. New files are served right away.
 
 ## Database
 
 - The data lives in the Docker volume `db-data`, which survives restarts and rebuilds. Back it up with `docker compose exec db pg_dump -U zsmp zsmp > backup.sql`.
-- `src/db/init/01-schema.sql` creates the tables, `src/db/init/02-seed.sql` fills them. Both run only on the first start, when the `db-data` volume is empty.
-- The seed is generated from `src/web/data/*.ts`: after changing that data run `npm run seed` in `src/db` (Node 22.18+, nothing to install).
-- To start the database from scratch: `docker compose down -v && docker compose up -d --build` (this deletes all data in it).
+- Prisma owns the tables: `src/web/prisma/schema.prisma` and the migrations in `src/web/prisma/migrations/`. The `migrate` service applies them on every `docker compose up`.
+- The first content (as it was in `src/web/data/*.ts`) is `src/web/prisma/seed/content.sql`; it is loaded only into an empty database. From then on the content is edited in the admin.
+- If you started the database before Prisma took over (its tables came from `src/db/init/`), either start from scratch with `docker compose down -v` (this deletes all data in it) or keep it with `docker compose run --rm migrate npx prisma migrate resolve --applied 0_init` and then `docker compose up -d`.
 - The database listens only on 127.0.0.1:5432 inside the VM. To open it in DBeaver or pgAdmin, use their SSH tunnel option to the VM.
 
 ## IIS
@@ -61,7 +67,7 @@ internet → IIS (HTTPS, port 443) → VM 192.168.100.10:3000 → web container 
    ```
 2. Create a Generation 2 VM on the `zsmp` switch (2 CPUs, 4 GB RAM, a disk with room for the photos) and install Ubuntu Server 24.04 LTS with OpenSSH. Give it the static address 192.168.100.10/24, gateway 192.168.100.1, DNS e.g. 1.1.1.1. In the VM settings, set _Automatic Start Action_ to always start.
 3. In the VM, install Docker Engine (https://docs.docker.com/engine/install/ubuntu/), clone this repo, create `.env` with `WEB_BIND=192.168.100.10`, and run `docker compose up -d --build`. The containers start again by themselves after a reboot.
-4. Put the photos, documents and videos into `media/` in the VM (e.g. with WinSCP over SSH), then `docker compose restart web`.
+4. Put the existing photos, documents and videos into `media/` in the VM (e.g. with WinSCP over SSH) and run `sudo chown -R 1000:1000 media`.
 5. In IIS, point the site at a folder holding `deploy/iis/web.config` and set up the modules as described in the IIS section above.
 
 Back up the VM (Hyper-V checkpoint or Windows Server Backup) and the database dump regularly; the photos and the database live on the VM's disk.

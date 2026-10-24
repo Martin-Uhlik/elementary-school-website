@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { LuCamera } from "react-icons/lu";
-import type { Gallery } from "@/data/types";
+import type { Gallery } from "@/lib/content/types";
 
 type Props = { gallery: Gallery; href: string; day?: string; previews: string[] };
 

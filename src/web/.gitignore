@@ -42,3 +42,6 @@ next-env.d.ts
 
 # tour videos are too big for git (GitHub rejects files over 100 MB); copy them to the server separately
 /public/data/videos/*.mp4
+
+# Prisma client, made by "prisma generate" (npm install runs it)
+/lib/generated/prisma

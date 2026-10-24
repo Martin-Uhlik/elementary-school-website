@@ -3,8 +3,8 @@
 import { useDeferredValue, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import PersonCard, { ContactCard } from "./PersonCard";
-import type { Person } from "@/data/types";
-import { isContact, personName } from "@/lib/content/people";
+import type { Person } from "@/lib/content/types";
+import { isContact, personName } from "@/lib/content/format";
 
 type Section = { label: string; people: Person[] };
 

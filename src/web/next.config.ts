@@ -15,6 +15,15 @@ const mysak: Record<string, string> = {
 const nextConfig: NextConfig = {
   // a self-contained server in .next/standalone, used by the Docker image
   output: "standalone",
+  // documents uploaded in /auth go through server actions (IIS lets 100 MB through, see deploy/iis/web.config)
+  experimental: { serverActions: { bodySizeLimit: "50mb" } },
+  // the admin area stays out of search engines even if someone links to it
+  async headers() {
+    return ["/admin", "/auth/:path*"].map((source) => ({
+      source,
+      headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+    }));
+  },
   // keep old links (bookmarks, search engines) working after dropping the .html suffix
   async redirects() {
     return [

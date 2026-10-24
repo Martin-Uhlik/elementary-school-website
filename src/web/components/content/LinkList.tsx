@@ -1,6 +1,6 @@
 import InfoTooltip from "./InfoTooltip";
 import LinkItem from "./LinkItem";
-import type { Link } from "@/data/types";
+import type { Link } from "@/lib/content/types";
 
 // Links as a grid of tiles, one column on phones
 const LinkList = ({ links, columns }: { links: Link[]; columns?: 1 }) => {

@@ -1,0 +1,197 @@
+// The site's content and the admin users. Prisma owns the tables: change this file, then
+// npx prisma migrate dev --name <what-changed>   (creates a migration in prisma/migrations)
+// sort_order is the display order.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Unit {
+  zs
+  ms
+  druzina
+
+  @@map("unit")
+}
+
+enum PhoneKind {
+  internal
+  landline
+  mobile
+
+  @@map("phone_kind")
+}
+
+// A heading with a list of links on a page, e.g. "Výroční zprávy" on /dokumenty
+model LinkGroup {
+  id        String  @id
+  // route of the page that shows the group
+  page      String
+  title     String?
+  sortOrder Int     @map("sort_order")
+  links     Link[]
+
+  @@map("link_groups")
+}
+
+// A document, a web page or a page of this site; the type shown next to it comes from href
+model Link {
+  id          String    @id @default(uuid())
+  groupId     String    @map("group_id")
+  title       String
+  // missing for a plain text item
+  href        String?
+  description String[]  @default([])
+  // longer note shown in a tooltip
+  details     String?
+  sortOrder   Int       @map("sort_order")
+  group       LinkGroup @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([groupId])
+  @@map("links")
+}
+
+// A photo gallery in galerie/<folder>/ of the media folder, or a link to a video
+model Gallery {
+  id        String  @id
+  // photo folder when it differs from id
+  folder    String?
+  unit      Unit
+  // the archive heading it is listed under
+  year      Int
+  title     String
+  // the date as written on the site, e.g. "31.5.-1.6.2023"
+  dateText  String? @map("date_text")
+  // a video or another address instead of a photo gallery
+  url       String?
+  sortOrder Int     @map("sort_order")
+
+  @@index([unit])
+  @@map("galleries")
+}
+
+// The three tiles on the Foto a video page
+model GallerySection {
+  unit      Unit   @id
+  title     String
+  href      String
+  cover     String
+  sortOrder Int    @map("sort_order")
+
+  @@map("gallery_sections")
+}
+
+// A member of staff, a board member, or a contact without a person (label "Kontakt", e.g. the kitchen phone)
+model Person {
+  id          String   @id @default(uuid())
+  titleBefore String?  @map("title_before")
+  firstName   String?  @map("first_name")
+  lastName    String?  @map("last_name")
+  titleAfter  String?  @map("title_after")
+  // what a contact without a person is, e.g. "Knihovna"
+  name        String?
+  // where the entry is shown, e.g. section headings on /kontakty
+  labels      String[] @default([])
+  // short job title, e.g. "ředitelka"
+  position    String?
+  email       String?
+  description String[] @default([])
+  sortOrder   Int      @map("sort_order")
+  phones      Phone[]
+
+  @@index([labels], type: Gin)
+  @@map("people")
+}
+
+model Phone {
+  personId  String    @map("person_id")
+  kind      PhoneKind
+  number    String
+  sortOrder Int       @map("sort_order")
+  person    Person    @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([personId, sortOrder])
+  @@map("phones")
+}
+
+// One line of "Průběh školního roku"; **text** is shown in bold
+model CalendarEvent {
+  id         String    @id @default(uuid())
+  // e.g. "2023/2024"
+  schoolYear String    @map("school_year")
+  // first day
+  date       DateTime  @db.Date
+  // last day of an event longer than one day
+  endDate    DateTime? @map("end_date") @db.Date
+  holiday    Boolean   @default(false)
+  text       String
+
+  @@index([schoolYear, date], map: "calendar_events_school_year_idx")
+  @@map("calendar_events")
+}
+
+model Sponsor {
+  id        String @id
+  name      String
+  logo      String
+  sortOrder Int    @map("sort_order")
+
+  @@map("sponsors")
+}
+
+// Photos of the school (home page carousel) and the Skládanka puzzle pictures; collection is 'school' or 'puzzle'
+model Photo {
+  id         String @id
+  collection String
+  src        String
+  alt        String
+  sortOrder  Int    @map("sort_order")
+
+  @@map("photos")
+}
+
+// A news item in "Aktuální informace" on the home page, newest first
+model News {
+  id        String   @id @default(uuid())
+  title     String
+  date      DateTime @db.Date
+  text      String   @default("")
+  // a document in dokument/ or another address, shown as a link under the text
+  href      String?
+  // hidden items stay in the admin but not on the site
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([date])
+  @@map("news")
+}
+
+// Someone who can sign in at /admin
+model User {
+  id                 Int       @id @default(autoincrement())
+  username           String    @unique
+  // scrypt, see lib/auth/password.ts
+  passwordHash       String    @map("password_hash")
+  // true for the seeded admin/zsmp until its password is changed
+  mustChangePassword Boolean   @default(false) @map("must_change_password")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  sessions           Session[]
+
+  @@map("users")
+}
+
+// A signed-in browser; the cookie holds a random token, the table only its SHA-256
+model Session {
+  id        String   @id
+  userId    Int      @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}

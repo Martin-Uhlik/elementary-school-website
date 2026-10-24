@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import type { IconType } from "react-icons";
 import { BsFiletypeDoc, BsFiletypePdf, BsFiletypePpt, BsFiletypeXls } from "react-icons/bs";
 import { LuArrowRight, LuBlocks, LuCirclePlay, LuExternalLink, LuFileArchive, LuMinus } from "react-icons/lu";
-import type { Link } from "@/data/types";
+import type { Link } from "@/lib/content/types";
 import { getLinkType, LINK_TYPE_LABELS, type LinkType } from "@/lib/content/linkType";
 
 // the icon in the coloured square for each type

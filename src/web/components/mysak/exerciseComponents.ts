@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { Photo } from "@/data/types";
+import type { Photo } from "@/lib/content/types";
 import JakRychlePises from "./JakRychlePises";
 import KlikADvojklik from "./KlikADvojklik";
 import PrehazeneLetopocty from "./PrehazeneLetopocty";

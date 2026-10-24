@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { yearAnchor } from "@/lib/content/galleries";
+import { yearAnchor } from "@/lib/content/format";
 
 // Sticky bar on an archive page: back to Galerie, the year in view, arrows to the neighbouring years and a year picker
 const YearNav = ({ years }: { years: number[] }) => {

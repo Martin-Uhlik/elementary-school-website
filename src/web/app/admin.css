@@ -1,0 +1,160 @@
+/* The sign-in page and the admin area (/admin, /auth) */
+.admin-card {
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-login {
+  flex-grow: 1;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.admin-login__card {
+  width: min(100%, 24rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-header {
+  background: var(--bg-primary);
+}
+
+.admin-header .nav-link,
+.admin-header .navbar-brand {
+  color: #fff;
+}
+
+.admin-header .nav-link[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+}
+
+.admin-main {
+  width: min(100% - 2rem, 70rem);
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-main h1 {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.admin-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-table td,
+.admin-table th {
+  vertical-align: middle;
+}
+
+.admin-table .actions {
+  white-space: nowrap;
+  text-align: end;
+}
+
+.admin-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.admin-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s;
+}
+
+.admin-tile:hover,
+.admin-tile:focus-visible {
+  box-shadow: var(--card-shadow-hover);
+}
+
+.admin-tile__icon {
+  font-size: 1.75rem;
+  color: var(--bs-primary);
+}
+
+.admin-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-photos li {
+  position: relative;
+}
+
+.admin-photos img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.admin-photos form {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+}
+
+.admin-dropzone {
+  border: 2px dashed var(--bs-border-color);
+  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.admin-dropzone--over {
+  border-color: var(--bs-primary);
+  background: var(--surface-muted);
+}
+
+/* Bootstrap's blue is too light for text on the tinted page background (WCAG AA); a darker blue in the light theme */
+[data-bs-theme="light"] .admin-main {
+  --bs-link-color-rgb: 10, 88, 202;
+  --bs-link-hover-color-rgb: 8, 66, 152;
+}
+
+[data-bs-theme="light"] .admin-main .btn-outline-primary {
+  --bs-btn-color: #0a58ca;
+  --bs-btn-border-color: #0a58ca;
+  --bs-btn-hover-bg: #0a58ca;
+  --bs-btn-hover-border-color: #0a58ca;
+  --bs-btn-active-bg: #084298;
+  --bs-btn-active-border-color: #084298;
+}
+
+[data-bs-theme="light"] .admin-main .btn-outline-secondary {
+  --bs-btn-color: #50575d;
+  --bs-btn-border-color: #50575d;
+}
+
+[data-bs-theme="light"] .admin-main .btn-outline-danger {
+  --bs-btn-color: #b02a37;
+  --bs-btn-border-color: #b02a37;
+}

@@ -8,13 +8,26 @@ services:
       # IIS forwards the public traffic here; WEB_BIND is 127.0.0.1 when IIS runs on the same machine
       - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-3000}:3000"
     volumes:
-      # photos, documents and videos stay on the host (MEDIA_DIR), so they survive rebuilds;
-      # after adding files run: docker compose restart web
-      - ${MEDIA_DIR:-./media}/galerie:/app/public/galerie:ro
-      - ${MEDIA_DIR:-./media}/dokument:/app/public/dokument:ro
+      # photos and documents stay on the host (MEDIA_DIR), so they survive rebuilds; the admin (/auth) uploads into
+      # galerie/ and dokument/, so the folder must be writable for the container's user (uid 1000)
+      - ${MEDIA_DIR:-./media}:/app/media
       - ${MEDIA_DIR:-./media}/videos:/app/public/data/videos:ro
     environment:
-      # not used yet; the web app reads src/web/data until the backend step
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      # set to false only to try the admin over plain http (without IIS and HTTPS)
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  # Runs once on every "up": applies new Prisma migrations, then fills an empty database
+  # (the site's content and the user admin / zsmp); existing data is left alone
+  migrate:
+    build:
+      context: ./src/web
+      target: build
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed"
+    environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     depends_on:
       db:

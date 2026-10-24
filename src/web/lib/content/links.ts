@@ -1,18 +1,33 @@
-import { linkGroups, links } from "@/data/links";
-import type { Link, LinkGroup } from "@/data/types";
+import { db } from "@/lib/db";
+import type { Link as LinkRow, LinkGroup as LinkGroupRow } from "@/lib/generated/prisma/client";
+import type { Link, LinkGroup } from "@/lib/content/types";
 
 export type LinkGroupWithLinks = LinkGroup & { links: Link[] };
 
-const withLinks = (group: LinkGroup): LinkGroupWithLinks => ({
-  ...group,
-  links: links.filter((link) => link.groupId === group.id),
+export const toLink = (row: LinkRow): Link => ({
+  id: row.id,
+  groupId: row.groupId,
+  title: row.title,
+  href: row.href ?? undefined,
+  description: row.description,
+  details: row.details ?? undefined,
 });
 
+const toGroup = (row: LinkGroupRow & { links: LinkRow[] }): LinkGroupWithLinks => ({
+  id: row.id,
+  page: row.page,
+  title: row.title ?? undefined,
+  links: row.links.map(toLink),
+});
+
+const include = { links: { orderBy: { sortOrder: "asc" } } } as const;
+
 // All link groups shown on a page, in display order
-export const getLinkGroups = async (page: string) => linkGroups.filter((g) => g.page === page).map(withLinks);
+export const getLinkGroups = async (page: string) =>
+  (await (await db()).linkGroup.findMany({ where: { page }, orderBy: { sortOrder: "asc" }, include })).map(toGroup);
 
 export const getLinkGroup = async (id: string) => {
-  const group = linkGroups.find((g) => g.id === id);
+  const group = await (await db()).linkGroup.findUnique({ where: { id }, include });
   if (!group) throw new Error(`Unknown link group: ${id}`);
-  return withLinks(group);
+  return toGroup(group);
 };

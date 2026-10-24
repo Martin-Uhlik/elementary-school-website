@@ -8,7 +8,7 @@ npm-debug.log*
 next-env.d.ts
 Dockerfile
 .dockerignore
+# made inside the image by prisma generate
+lib/generated
 # mounted from the host by docker-compose.yml, not baked into the image
-public/galerie
-public/dokument
 public/data/videos

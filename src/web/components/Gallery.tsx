@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
@@ -107,12 +106,10 @@ const Gallery = ({ title, images }: { title: string; images: GalleryImage[] }) =
                   data-pswp-height={image.height}
                   target="_blank"
                 >
-                  <Image
+                  <img
                     className="gallery__image"
-                    src={image.src}
-                    width={image.width}
-                    height={image.height}
-                    sizes="(min-width: 992px) 33vw, 100vw"
+                    src={image.thumb}
+                    loading="lazy"
                     alt={`Fotografie ${i + 1} z ${images.length}`}
                   />
                 </a>

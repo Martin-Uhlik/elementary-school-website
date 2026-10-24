@@ -1,35 +1,38 @@
-import { galleries } from "@/data/galleries";
-import { gallerySections } from "@/data/gallerySections";
-import type { Gallery, Unit } from "@/data/types";
+import { db } from "@/lib/db";
+import type { Gallery as GalleryRow } from "@/lib/generated/prisma/client";
+import { galleryLabel } from "@/lib/content/format";
+import type { Gallery, GallerySection, Unit } from "@/lib/content/types";
 
-export const galleryHref = (gallery: Gallery) => gallery.url ?? `/galerie/${gallery.folder ?? gallery.id}`;
+export const toGallery = (row: GalleryRow): Gallery => ({
+  id: row.id,
+  folder: row.folder ?? undefined,
+  unit: row.unit,
+  year: row.year,
+  title: row.title,
+  dateText: row.dateText ?? undefined,
+  url: row.url ?? undefined,
+});
 
-export const galleryLabel = (gallery: Gallery) =>
-  gallery.dateText ? `${gallery.title} ${gallery.dateText}` : gallery.title;
-
-// id of a year's section on an archive page, the target of the year bar
-export const yearAnchor = (year: number) => `rok-${year}`;
-
-// Day and month for the card placeholder: from dateText ("5.12.2023"), else from a YYYYMMDD id
-export const galleryDay = (gallery: Gallery) => {
-  const text = gallery.dateText?.match(/^(\d{1,2})\.\s?(\d{1,2})\./);
-  if (text) return `${text[1]}. ${text[2]}.`;
-  const id = (gallery.folder ?? gallery.id).match(/^\d{4}(\d{2})(\d{2})/);
-  return id ? `${Number(id[2])}. ${Number(id[1])}.` : undefined;
-};
+const getGalleries = async (unit?: Unit) =>
+  (await (await db()).gallery.findMany({ where: { unit }, orderBy: [{ year: "desc" }, { sortOrder: "asc" }] })).map(
+    toGallery,
+  );
 
 // The section tiles with how many galleries each has and which years they span
-export const getGallerySections = async () =>
-  gallerySections.map((section) => {
-    const items = galleries.filter((g) => g.unit === section.unit);
+export const getGallerySections = async () => {
+  const sections: GallerySection[] = await (await db()).gallerySection.findMany({ orderBy: { sortOrder: "asc" } });
+  const galleries = await getGalleries();
+  return sections.map(({ unit, title, href, cover }) => {
+    const items = galleries.filter((g) => g.unit === unit);
     const years = items.map((g) => g.year);
-    return { ...section, count: items.length, from: Math.min(...years), to: Math.max(...years) };
+    return { unit, title, href, cover, count: items.length, from: Math.min(...years), to: Math.max(...years) };
   });
+};
 
 // The whole archive of one unit grouped by year, newest year first
 export const getGalleryArchive = async (unit: Unit) => {
   const years = new Map<number, Gallery[]>();
-  for (const gallery of galleries.filter((g) => g.unit === unit)) {
+  for (const gallery of await getGalleries(unit)) {
     years.set(gallery.year, [...(years.get(gallery.year) ?? []), gallery]);
   }
   return [...years].map(([year, items]) => ({ year, galleries: items }));
@@ -37,6 +40,10 @@ export const getGalleryArchive = async (unit: Unit) => {
 
 // Title for a photo folder that has no meta.json
 export const getGalleryTitle = async (folder: string) => {
-  const gallery = galleries.find((g) => (g.folder ?? g.id) === folder && !g.url);
-  return gallery ? galleryLabel(gallery) : undefined;
+  const row = await (
+    await db()
+  ).gallery.findFirst({
+    where: { OR: [{ folder }, { id: folder, folder: null }], url: null },
+  });
+  return row ? galleryLabel(toGallery(row)) : undefined;
 };

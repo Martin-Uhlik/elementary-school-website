@@ -3,10 +3,6 @@ import { Montserrat } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import BootstrapClient from "@/components/BootstrapClient";
-import CookieBar from "@/components/CookieBar";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import PageBackground from "@/components/PageBackground";
 import { layoutScript } from "@/lib/layout";
 import { themeScript } from "@/lib/theme";
 
@@ -28,14 +24,7 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
         <script dangerouslySetInnerHTML={{ __html: themeScript + layoutScript }} />
       </head>
       <body>
-        <a className="visually-hidden-focusable skip-link" href="#obsah">
-          Přeskočit na obsah
-        </a>
-        <PageBackground />
-        <Header />
-        <CookieBar />
-        <main id="obsah">{children}</main>
-        <Footer />
+        {children}
         <BootstrapClient />
       </body>
     </html>

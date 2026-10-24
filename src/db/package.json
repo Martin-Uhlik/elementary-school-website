@@ -1,8 +1,0 @@
-{
-  "name": "db",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "seed": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-seed.ts"
-  }
-}
