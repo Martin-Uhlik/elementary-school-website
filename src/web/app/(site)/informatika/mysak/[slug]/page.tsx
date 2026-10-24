@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { LuKeyboard } from "react-icons/lu";
 import Collapsible from "@/components/content/Collapsible";
 import { exerciseComponents } from "@/components/mysak/exerciseComponents";
 import { getPuzzlePictures } from "@/lib/content/misc";
@@ -47,8 +48,20 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
           </h1>
           <p className="mysak__task">
             {exercise.task}
-            {exercise.hint && <span className="mysak__hint"> {exercise.hint}</span>}
+            {exercise.hint && (
+              <span className={`mysak__hint${exercise.touchHint ? " mysak__hint--mouse" : ""}`}> {exercise.hint}</span>
+            )}
+            {exercise.touchHint && <span className="mysak__hint mysak__hint--touch"> {exercise.touchHint}</span>}
           </p>
+          {exercise.keyboard && (
+            <p className="alert alert-info mysak__keyboard-note">
+              <LuKeyboard aria-hidden="true" />
+              <span>
+                Toto cvičení je určené pro počítač s klávesnicí. Na telefonu nebo tabletu nemusí fungovat dobře, zkus
+                raději cvičení s myší, která jdou ovládat i prstem.
+              </span>
+            </p>
+          )}
 
           <div className="mysak__stage">
             <Exercise photos={await getPuzzlePictures()} />
@@ -61,14 +74,14 @@ const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) 
           <nav aria-label="Další cvičení" className="mysak__pager">
             {prev ? (
               <Link href={`/informatika/mysak/${prev.slug}`} className="btn btn-outline-secondary">
-                ← {prev.title}
+                <span aria-hidden="true">←</span> {prev.title}
               </Link>
             ) : (
               <span />
             )}
             {next && (
               <Link href={`/informatika/mysak/${next.slug}`} className="btn btn-outline-secondary">
-                {next.title} →
+                {next.title} <span aria-hidden="true">→</span>
               </Link>
             )}
           </nav>

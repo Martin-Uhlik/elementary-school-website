@@ -12,6 +12,8 @@ const createTiles = (count: number): Tile[] => {
   return shuffle([...colors, ...colors]).map((color) => ({ color, found: false }));
 };
 
+const NARROW = "(max-width: 575.98px)";
+
 const RozhazeneBarvy = () => {
   // the number of columns stays even, so every colour has its pair
   const [cols, setCols] = useState(22);
@@ -23,8 +25,13 @@ const RozhazeneBarvy = () => {
   const stopwatch = useStopwatch();
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- random colours must not run during SSR
-    setTiles(createTiles(22 * 2));
+    // phones start with fewer, bigger tiles that can be tapped
+    const [startCols, startRows] = matchMedia(NARROW).matches ? [8, 4] : [22, 2];
+    /* eslint-disable react-hooks/set-state-in-effect -- random colours must not run during SSR */
+    setCols(startCols);
+    setRows(startRows);
+    setTiles(createTiles(startCols * startRows));
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const remaining = tiles ? tiles.filter((t) => !t.found).length / 2 : 0;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import ExerciseStatus from "./ExerciseStatus";
 import { randomItem, shuffleChanged } from "@/lib/mysak/random";
 import { usePointerDrag } from "@/lib/mysak/usePointerDrag";
@@ -170,7 +170,11 @@ const SkladaniSlov = () => {
         ]}
       />
 
-      <ol aria-label="Písmena" className={`slova__letters${solved ? " is-solved" : ""}`}>
+      <ol
+        aria-label="Písmena"
+        className={`slova__letters${solved ? " is-solved" : ""}`}
+        style={{ "--letters": letters.length } as CSSProperties}
+      >
         {letters.map((letter, i) => (
           <li key={letter.id}>
             <button

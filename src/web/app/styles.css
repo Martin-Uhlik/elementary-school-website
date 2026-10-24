@@ -1376,6 +1376,35 @@ img.background-elem-wide {
   color: var(--text-placeholder);
 }
 
+/* touch screens get their own hint (tap instead of click) and a note on keyboard-only exercises */
+.mysak__hint--touch,
+.mysak__keyboard-note {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .mysak__hint--mouse {
+    display: none;
+  }
+
+  .mysak__hint--touch {
+    display: inline;
+  }
+
+  .mysak__keyboard-note {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  .mysak__keyboard-note svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+    font-size: 1.25rem;
+  }
+}
+
 /* the exercise itself sits in the middle of the card */
 .mysak__stage {
   display: flex;
@@ -1491,9 +1520,38 @@ img.background-elem-wide {
   margin-top: 2rem;
 }
 
+/* on phones the exercise gets a bit more room, both pager buttons share the row and the arrow stays next to the title */
+@media (max-width: 575.98px) {
+  .article__section.mysak {
+    padding: 1rem;
+  }
+
+  .mysak__pager .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    max-width: 50%;
+    text-align: left;
+  }
+
+  .mysak__pager .btn:last-child:not(:first-child) {
+    text-align: right;
+  }
+
+  .mysak-stats {
+    width: 100%;
+  }
+
+  .mysak-stats__item {
+    flex: 1 1 6.5rem;
+  }
+}
+
 .skladanka__controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  width: min(100%, 40rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
   gap: 0 2rem;
   max-width: 40rem;
 }
@@ -1642,6 +1700,7 @@ img.background-elem-wide {
 .klik__cell {
   aspect-ratio: 1;
   padding: 0;
+  touch-action: manipulation;
   border: 0;
   border-radius: 3px;
 }
@@ -1684,6 +1743,7 @@ img.background-elem-wide {
   aspect-ratio: 1;
   min-width: 0;
   padding: 0;
+  touch-action: manipulation;
   border: 0;
   border-radius: 2px;
 }
@@ -1696,29 +1756,42 @@ img.background-elem-wide {
   z-index: 1;
 }
 
-/* 4. Skládání slov */
+/* 4. Skládání slov: on phones the letters shrink to keep the word on one line, long words wrap rather than get too small to tap (--letters = their count) */
+.slova {
+  container-type: inline-size;
+}
+
 .slova__letters {
+  --gap: 0.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: var(--gap);
   margin: 1.5rem 0;
   padding: 0;
   list-style: none;
 }
 
 .slova__letter {
-  width: 3.5rem;
-  height: 3.5rem;
+  --size: clamp(2.25rem, calc((100cqi - (var(--letters) - 1) * var(--gap)) / var(--letters)), 3.5rem);
+  width: var(--size);
+  height: var(--size);
   padding: 0;
   border: 0;
-  border-radius: 0.5rem;
+  border-radius: calc(var(--size) * 0.15);
   background: var(--mysak-surface);
   color: var(--mysak-text);
-  font-size: 1.75rem;
+  font-size: calc(var(--size) * 0.55);
   font-weight: 600;
   cursor: grab;
   touch-action: none;
   user-select: none;
+}
+
+@media (max-width: 575.98px) {
+  .slova__letters {
+    --gap: 0.25rem;
+  }
 }
 
 .slova__letter.is-hinted {
@@ -1745,7 +1818,8 @@ img.background-elem-wide {
 /* 12. Jak rychle píšeš */
 .rychlost__settings {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  width: min(100%, 50rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: 0 2rem;
   max-width: 50rem;
 }

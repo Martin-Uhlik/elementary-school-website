@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import ExerciseStatus from "./ExerciseStatus";
 import { shuffleChanged } from "@/lib/mysak/random";
 import { formatTime, useStopwatch } from "@/lib/mysak/useStopwatch";
@@ -89,8 +89,9 @@ const PrehazeneLetopocty = () => {
   };
 
   // the original exercise is for the keyboard only: using the mouse in the text shuffles it again
-  const handleMouseDown = () => {
-    if (!stopwatch.running) return;
+  // (a finger on a touch screen is let through, there is no other way to place the cursor there)
+  const handlePointerDown = (e: PointerEvent) => {
+    if (!stopwatch.running || e.pointerType !== "mouse") return;
     restart();
     setWarning(true);
   };
@@ -125,7 +126,7 @@ const PrehazeneLetopocty = () => {
         readOnly={done}
         spellCheck={false}
         onChange={(e) => handleChange(e.target.value)}
-        onMouseDown={handleMouseDown}
+        onPointerDown={handlePointerDown}
         onDrop={(e) => e.preventDefault()}
       />
 
