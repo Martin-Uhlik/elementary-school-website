@@ -57,6 +57,13 @@ const materskaSkola: Director[] = [
   ["Ladislava Cahová", "1992 - 2001"],
 ];
 
+// keeps each date in one piece, so on a phone the range may only wrap after the dash
+const formatYears = (years: string) =>
+  years
+    .split(/\s*-\s*/)
+    .map((part) => part.replaceAll(" ", "\u00a0"))
+    .join("\u00a0– ");
+
 const DirectorTable = ({ directors, caption }: { directors: Director[]; caption?: string }) => (
   <table className="data-table">
     {caption && <caption>{caption}</caption>}
@@ -70,7 +77,7 @@ const DirectorTable = ({ directors, caption }: { directors: Director[]; caption?
       {directors.map(([name, years], i) => (
         <tr key={i}>
           <td>{name}</td>
-          <td className="data-table__nowrap">{years}</td>
+          <td className="data-table__nowrap">{formatYears(years)}</td>
         </tr>
       ))}
     </tbody>

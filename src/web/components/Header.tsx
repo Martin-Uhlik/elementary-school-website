@@ -12,7 +12,7 @@ const Header = () => {
   const [sticky, setSticky] = useState(false);
   const collapseRef = useRef<HTMLDivElement>(null);
 
-  // if you are not on top of the page, header should be 100vw and stick to the top
+  // if you are not on top of the page, header should be full width and stick to the top
   useEffect(() => {
     const onScroll = () => {
       const padding = 3 * parseFloat(getComputedStyle(document.documentElement).fontSize);

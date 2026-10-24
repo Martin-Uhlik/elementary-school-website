@@ -5,6 +5,7 @@ import "./styles.css";
 import BootstrapClient from "@/components/BootstrapClient";
 import { layoutScript } from "@/lib/layout";
 import { themeScript } from "@/lib/theme";
+import { viewportScript } from "@/lib/viewport";
 
 const montserrat = Montserrat({
   weight: "500",
@@ -20,8 +21,8 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="cs" className={montserrat.variable} data-bs-theme="light" data-layout="grid" suppressHydrationWarning>
       <head>
-        {/* set data-bs-theme and data-layout before the first paint so the page never flashes */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript + layoutScript }} />
+        {/* set data-bs-theme, data-layout and the viewport size before the first paint so the page never flashes */}
+        <script dangerouslySetInnerHTML={{ __html: [themeScript, layoutScript, viewportScript].join(";") }} />
       </head>
       <body>
         {children}
