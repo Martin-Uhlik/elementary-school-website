@@ -40,6 +40,9 @@ html {
 
 /* the page is always as wide as the window and the scrollbar sits over its right edge,
    so it never shifts when a scrollbar appears */
+/* hover effects are wrapped in @media (hover: hover), so they don't stick after a tap on touch screens;
+   touch screens get the same look from :active only while the finger is down */
+
 body {
   font-family: var(--font-montserrat), "Montserrat", sans-serif;
   min-height: var(--VH);
@@ -311,8 +314,14 @@ a {
   text-decoration: none;
 }
 
-.person-card__contact:hover {
+.person-card__contact:active {
   text-decoration: underline;
+}
+
+@media (hover: hover) {
+  .person-card__contact:hover {
+    text-decoration: underline;
+  }
 }
 
 .person-card__icon {
@@ -428,8 +437,14 @@ a {
   filter: var(--icon-filter) drop-shadow(3px 5px 2px rgb(0 0 0 / 0.1));
 }
 
-.gallery-navigation__icon:hover {
+.gallery-navigation__icon:active {
   filter: var(--icon-filter-hover) drop-shadow(2px 2px 2px rgb(0 0 0 / 0.2));
+}
+
+@media (hover: hover) {
+  .gallery-navigation__icon:hover {
+    filter: var(--icon-filter-hover) drop-shadow(2px 2px 2px rgb(0 0 0 / 0.2));
+  }
 }
 
 .background-elem {
@@ -839,8 +854,14 @@ a {
   font-size: 0.9rem;
 }
 
-.video-quality__toggle:hover {
+.video-quality__toggle:active {
   background: rgba(0, 0, 0, 0.85);
+}
+
+@media (hover: hover) {
+  .video-quality__toggle:hover {
+    background: rgba(0, 0, 0, 0.85);
+  }
 }
 
 .video-quality__toggle:focus-visible {
@@ -939,27 +960,54 @@ a {
     transform 0.3s;
 }
 
-.gallery-section:hover,
-.gallery-section:focus-visible {
+.gallery-section:focus-visible,
+.gallery-section:active {
   color: white;
   transform: translateY(-0.25rem);
   box-shadow: var(--shadow-normal);
 }
 
-.gallery-section:hover::after,
-.gallery-section:focus-visible::after {
+@media (hover: hover) {
+  .gallery-section:hover {
+    color: white;
+    transform: translateY(-0.25rem);
+    box-shadow: var(--shadow-normal);
+  }
+}
+
+.gallery-section:focus-visible::after,
+.gallery-section:active::after {
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.gallery-section:hover .gallery-section__cover,
-.gallery-section:focus-visible .gallery-section__cover {
+@media (hover: hover) {
+  .gallery-section:hover::after {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
+.gallery-section:focus-visible .gallery-section__cover,
+.gallery-section:active .gallery-section__cover {
   transform: scale(1.06);
 }
 
-.gallery-section:hover .gallery-section__arrow,
-.gallery-section:focus-visible .gallery-section__arrow {
+@media (hover: hover) {
+  .gallery-section:hover .gallery-section__cover {
+    transform: scale(1.06);
+  }
+}
+
+.gallery-section:focus-visible .gallery-section__arrow,
+.gallery-section:active .gallery-section__arrow {
   opacity: 1;
   transform: none;
+}
+
+@media (hover: hover) {
+  .gallery-section:hover .gallery-section__arrow {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .gallery-section:focus-visible,
@@ -1014,8 +1062,14 @@ a {
   color: var(--link-on-row-alt);
 }
 
-.year-nav__step:hover {
+.year-nav__step:active {
   background: var(--bs-tertiary-bg);
+}
+
+@media (hover: hover) {
+  .year-nav__step:hover {
+    background: var(--bs-tertiary-bg);
+  }
 }
 
 .year-nav__current {
@@ -1073,16 +1127,31 @@ a {
     background-color 0.25s;
 }
 
-.gallery-card:hover,
-.gallery-card:focus-visible {
+.gallery-card:focus-visible,
+.gallery-card:active {
   color: var(--bs-body-color);
   background: var(--surface);
   transform: translateY(-0.25rem);
   box-shadow: var(--card-shadow-hover);
 }
 
-.gallery-card:hover .gallery-card__title {
+@media (hover: hover) {
+  .gallery-card:hover {
+    color: var(--bs-body-color);
+    background: var(--surface);
+    transform: translateY(-0.25rem);
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+.gallery-card:active .gallery-card__title {
   color: var(--bs-link-hover-color);
+}
+
+@media (hover: hover) {
+  .gallery-card:hover .gallery-card__title {
+    color: var(--bs-link-hover-color);
+  }
 }
 
 .gallery-card__preview {
@@ -1108,8 +1177,14 @@ a {
   opacity: 1;
 }
 
-.gallery-card:hover .gallery-card__preview img {
+.gallery-card:active .gallery-card__preview img {
   transform: scale(1.05);
+}
+
+@media (hover: hover) {
+  .gallery-card:hover .gallery-card__preview img {
+    transform: scale(1.05);
+  }
 }
 
 /* without photos the card shows the date, tinted by unit */
@@ -1228,11 +1303,17 @@ a {
   transition: color 0.15s;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:focus-visible,
 .navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:active {
   color: white;
+}
+
+@media (hover: hover) {
+  .navbar-dark .navbar-nav .nav-link:hover {
+    color: white;
+  }
 }
 
 /* icon buttons: look like the plain icons they replaced */
@@ -1863,8 +1944,14 @@ body {
   border-top: 1px solid var(--bs-border-color-translucent);
 }
 
-.data-table tbody tr:hover > * {
+.data-table tbody tr:active > * {
   background: var(--bs-tertiary-bg);
+}
+
+@media (hover: hover) {
+  .data-table tbody tr:hover > * {
+    background: var(--bs-tertiary-bg);
+  }
 }
 
 .data-table tbody th {
@@ -1924,16 +2011,31 @@ body {
     background-color 0.2s;
 }
 
-a.link-tile:hover,
-a.link-tile:focus-visible {
+a.link-tile:focus-visible,
+a.link-tile:active {
   color: var(--bs-body-color);
   background: var(--surface);
   box-shadow: var(--card-shadow-hover);
   transform: translateY(-2px);
 }
 
-a.link-tile:hover .link-tile__title {
+@media (hover: hover) {
+  a.link-tile:hover {
+    color: var(--bs-body-color);
+    background: var(--surface);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+  }
+}
+
+a.link-tile:active .link-tile__title {
   color: var(--bs-link-hover-color);
+}
+
+@media (hover: hover) {
+  a.link-tile:hover .link-tile__title {
+    color: var(--bs-link-hover-color);
+  }
 }
 
 a.link-tile:focus-visible {
@@ -2051,9 +2153,16 @@ a.link-tile:focus-visible {
     box-shadow 0.2s;
 }
 
-.quick-bar__link:hover {
+.quick-bar__link:active {
   transform: translateY(-2px);
   box-shadow: var(--card-shadow-hover);
+}
+
+@media (hover: hover) {
+  .quick-bar__link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+  }
 }
 
 .quick-bar__icon {
@@ -2146,8 +2255,14 @@ a.link-tile:focus-visible {
   transition: opacity 0.2s;
 }
 
-.sponsors__logos img:hover {
+.sponsors__logos img:active {
   opacity: 1;
+}
+
+@media (hover: hover) {
+  .sponsors__logos img:hover {
+    opacity: 1;
+  }
 }
 
 /* the logos have dark text, so in the dark theme each sits on a light chip */
@@ -2368,9 +2483,14 @@ a.link-tile:focus-visible {
   line-height: 1.5;
 }
 
-.info-tooltip.is-open .info-tooltip__text,
-.info-tooltip:hover:not(.is-dismissed) .info-tooltip__text {
+.info-tooltip.is-open .info-tooltip__text {
   display: block;
+}
+
+@media (hover: hover) {
+  .info-tooltip:hover:not(.is-dismissed) .info-tooltip__text {
+    display: block;
+  }
 }
 
 [data-bs-theme="dark"] .info-tooltip__text {
@@ -2566,12 +2686,21 @@ a.link-tile:focus-visible {
     background-color 0.2s;
 }
 
-.feature-link:hover,
-.feature-link:focus-visible {
+.feature-link:focus-visible,
+.feature-link:active {
   color: var(--bs-body-color);
   background: var(--surface);
   box-shadow: var(--card-shadow-hover);
   transform: translateY(-2px);
+}
+
+@media (hover: hover) {
+  .feature-link:hover {
+    color: var(--bs-body-color);
+    background: var(--surface);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+  }
 }
 
 .feature-link:focus-visible {
@@ -2605,8 +2734,14 @@ a.link-tile:focus-visible {
   line-height: 1.25;
 }
 
-.feature-link:hover .feature-link__title {
+.feature-link:active .feature-link__title {
   color: var(--bs-link-hover-color);
+}
+
+@media (hover: hover) {
+  .feature-link:hover .feature-link__title {
+    color: var(--bs-link-hover-color);
+  }
 }
 
 .feature-link__description {
