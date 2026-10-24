@@ -62,21 +62,6 @@ const HomeCarousel = ({ photos: slides }: { photos: Photo[] }) => {
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Další snímek</span>
       </button>
-      <div className="main-name">
-        <span className="desktop-only">
-          Základní škola a Mateřská škola,
-          <br />
-          Moravský Písek, příspěvková organizace
-        </span>
-        <span className="mobile-only main-name--mobile">
-          Základní škola a Mateřská škola,
-          <br />
-          Moravský Písek,
-          <br />
-          příspěvková organizace
-        </span>
-        <img className="aspect-ratio-1-1 main-name__logo" src="/data/images/logo.png" alt="logo školy" />
-      </div>
     </div>
   );
 };
