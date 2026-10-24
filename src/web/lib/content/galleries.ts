@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import type { Gallery as GalleryRow } from "@/lib/generated/prisma/client";
 import { galleryLabel, yearAnchor } from "@/lib/content/format";
+import { isoDate } from "@/lib/content/misc";
 import type { Gallery, GallerySection, Unit } from "@/lib/content/types";
 
 export const toGallery = (row: GalleryRow): Gallery => ({
@@ -9,14 +10,16 @@ export const toGallery = (row: GalleryRow): Gallery => ({
   unit: row.unit,
   year: row.year,
   title: row.title,
+  date: isoDate(row.date),
   dateText: row.dateText ?? undefined,
   url: row.url ?? undefined,
 });
 
+// newest first; galleries of the same day keep the order of their folder names
+export const galleryOrder = [{ year: "desc" }, { date: "desc" }, { id: "asc" }] as const;
+
 const getGalleries = async (unit?: Unit) =>
-  (await (await db()).gallery.findMany({ where: { unit }, orderBy: [{ year: "desc" }, { sortOrder: "asc" }] })).map(
-    toGallery,
-  );
+  (await (await db()).gallery.findMany({ where: { unit }, orderBy: [...galleryOrder] })).map(toGallery);
 
 // The section tiles with how many galleries each has and which years they span
 export const getGallerySections = async () => {

@@ -32,6 +32,8 @@ export type Gallery = {
   // the archive heading it is listed under
   year: number;
   title: string;
+  // the day of the event (YYYY-MM-DD); galleries are listed newest first by it
+  date: string;
   // the date as written on the site, e.g. "31.5.-1.6.2023"
   dateText?: string;
   // a video or another address instead of a photo gallery

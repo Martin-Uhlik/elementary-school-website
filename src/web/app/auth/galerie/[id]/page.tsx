@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LuTrash2 } from "react-icons/lu";
 import { deleteGallery, removePhoto, updateGallery } from "../actions";
@@ -10,22 +9,24 @@ import { galleryFolder, galleryHref } from "@/lib/content/format";
 import { toGallery } from "@/lib/content/galleries";
 import { prisma } from "@/lib/db";
 import { getGallery } from "@/lib/galleries";
+import PageTitle from "@/components/admin/PageTitle";
 
 // One gallery: its details, the photos with their previews, upload and delete
 const GalleryAdminPage = async ({ params }: PageProps<"/auth/galerie/[id]">) => {
-  await requireUser();
+  await requireUser({ section: "galerie" });
   const row = await prisma.gallery.findUnique({ where: { id: (await params).id } });
   if (!row) notFound();
   const gallery = toGallery(row);
   // a gallery whose folder is not on this server yet starts empty; the upload creates it
   const photos = gallery.url ? null : ((await getGallery(galleryFolder(gallery))) ?? { images: [] });
-  const back = `/auth/galerie?jednotka=${gallery.unit}&rok=${gallery.year}`;
+  const back = `/auth/galerie?jednotka=${gallery.unit}`;
 
   return (
     <>
-      <Link href={back}>← Galerie</Link>
       <div className="admin-title">
-        <h1>{gallery.title}</h1>
+        <PageTitle back={back} backLabel="Galerie">
+          {gallery.title}
+        </PageTitle>
         <div className="d-flex gap-2">
           <a href={galleryHref(gallery)} className="btn btn-outline-secondary" target="_blank" rel="noreferrer">
             Zobrazit na webu

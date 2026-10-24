@@ -3,56 +3,90 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { ActionState } from "@/components/admin/ActionForm";
-import { hashPassword, verifyPassword } from "@/lib/auth/password";
+import { optional, text } from "@/lib/admin/form";
+import { checkNewPassword, checkUsername, readPermissions } from "@/lib/auth/account";
+import { logActivity } from "@/lib/auth/log";
+import { hashPassword } from "@/lib/auth/password";
+import { PERMISSION_LABELS } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import type { Permission } from "@/lib/generated/prisma/client";
 
-const MIN_LENGTH = 8;
+const describe = (permissions: Permission[]) =>
+  permissions.length ? permissions.map((p) => PERMISSION_LABELS[p]).join(", ") : "bez přístupu";
 
-const checkNewPassword = (password: string, again: string, username: string) => {
-  if (password.length < MIN_LENGTH) return `Heslo musí mít aspoň ${MIN_LENGTH} znaků.`;
-  if (password !== again) return "Hesla se neshodují.";
-  if (password.toLowerCase() === username.toLowerCase() || password === "zsmp") return "Zvolte jiné heslo.";
-};
-
-export const changePassword = async (data: FormData): Promise<ActionState> => {
-  const user = await requireUser({ passwordPage: true });
-  const current = String(data.get("current") ?? "");
-  const password = String(data.get("password") ?? "");
-  const stored = await prisma.user.findUniqueOrThrow({ where: { id: user.id } });
-  if (!(await verifyPassword(current, stored.passwordHash))) return { error: "Současné heslo není správné." };
-  const problem = checkNewPassword(password, String(data.get("again") ?? ""), user.username);
-  if (problem) return { error: problem };
-
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { passwordHash: await hashPassword(password), mustChangePassword: false },
-  });
-  if (user.mustChangePassword) redirect("/auth");
-  return { message: "Heslo bylo změněno." };
-};
-
+// Only admins manage users. A new user picks their own password after the first sign-in.
 export const createUser = async (data: FormData): Promise<ActionState> => {
-  await requireUser();
-  const username = String(data.get("username") ?? "").trim();
+  const me = await requireUser({ section: "admin" });
+  const username = text(data, "username");
   const password = String(data.get("password") ?? "");
-  if (!/^[A-Za-z0-9._-]{3,40}$/.test(username))
-    return { error: "Jméno: 3–40 znaků, jen písmena bez diakritiky, číslice, tečka, pomlčka." };
-  const problem = checkNewPassword(password, String(data.get("again") ?? ""), username);
+  const permissions = readPermissions(data);
+  const problem =
+    (await checkUsername(username)) ?? checkNewPassword(password, String(data.get("again") ?? ""), username);
   if (problem) return { error: problem };
-  if (await prisma.user.findUnique({ where: { username } })) return { error: "Uživatel s tímto jménem už existuje." };
 
-  // a new user picks their own password after the first sign-in
   await prisma.user.create({
-    data: { username, passwordHash: await hashPassword(password), mustChangePassword: true },
+    data: {
+      username,
+      realName: optional(data, "realName"),
+      permissions,
+      passwordHash: await hashPassword(password),
+      mustChangePassword: true,
+    },
   });
+  await logActivity(me, "admin", `Přidán uživatel ${username} (${describe(permissions)})`);
   revalidatePath("/auth/uzivatele");
   return { message: `Uživatel ${username} byl přidán. Při prvním přihlášení si nastaví vlastní heslo.` };
 };
 
+// Name, real name, access and optionally a new temporary password. Nobody removes their own admin,
+// so there is always at least one admin left.
+export const updateUser = async (id: number, data: FormData): Promise<ActionState> => {
+  const me = await requireUser({ section: "admin" });
+  const user = await prisma.user.findUniqueOrThrow({ where: { id } });
+  const username = text(data, "username");
+  const permissions = readPermissions(data);
+  const password = String(data.get("password") ?? "");
+  const problem =
+    (await checkUsername(username, id)) ??
+    (password ? checkNewPassword(password, String(data.get("again") ?? ""), username) : undefined);
+  if (problem) return { error: problem };
+  if (id === me.id && !permissions.includes("admin")) return { error: "Sami sobě nemůžete odebrat správce." };
+
+  await prisma.user.update({
+    where: { id },
+    data: {
+      username,
+      realName: optional(data, "realName"),
+      permissions,
+      ...(password && { passwordHash: await hashPassword(password), mustChangePassword: true }),
+    },
+  });
+  // a new password or less access ends the user's open sessions
+  if (password || user.permissions.some((p) => !permissions.includes(p)))
+    await prisma.session.deleteMany({ where: { userId: id } });
+  const changes = [
+    username !== user.username && `jméno ${user.username} → ${username}`,
+    `přístup: ${describe(permissions)}`,
+    password && "nové dočasné heslo",
+  ].filter(Boolean);
+  await logActivity(me, "admin", `Upraven uživatel ${username} (${changes.join(", ")})`);
+  revalidatePath("/auth", "layout");
+  redirect("/auth/uzivatele");
+};
+
+// Lets a user locked after too many wrong passwords sign in again right away
+export const unlockUser = async (id: number) => {
+  const me = await requireUser({ section: "admin" });
+  const user = await prisma.user.update({ where: { id }, data: { failedLogins: 0, lockedUntil: null } });
+  await logActivity(me, "admin", `Odblokován uživatel ${user.username}`);
+  revalidatePath("/auth/uzivatele");
+};
+
 export const deleteUser = async (id: number) => {
-  const user = await requireUser();
-  if (id === user.id) return;
-  await prisma.user.delete({ where: { id } });
+  const me = await requireUser({ section: "admin" });
+  if (id === me.id) return;
+  const user = await prisma.user.delete({ where: { id } });
+  await logActivity(me, "admin", `Smazán uživatel ${user.username}`);
   revalidatePath("/auth/uzivatele");
 };

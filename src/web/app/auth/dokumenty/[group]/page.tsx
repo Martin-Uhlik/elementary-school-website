@@ -8,10 +8,11 @@ import MoveButtons from "@/components/admin/MoveButtons";
 import { pageName } from "@/lib/admin/pages";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import PageTitle from "@/components/admin/PageTitle";
 
 // One list of documents: its heading, its items in order, and buttons to add, edit, move and delete
 const GroupAdminPage = async ({ params }: PageProps<"/auth/dokumenty/[group]">) => {
-  await requireUser();
+  await requireUser({ section: "dokumenty" });
   const group = await prisma.linkGroup.findUnique({
     where: { id: (await params).group },
     include: { links: { orderBy: { sortOrder: "asc" } } },
@@ -19,12 +20,11 @@ const GroupAdminPage = async ({ params }: PageProps<"/auth/dokumenty/[group]">) 
   if (!group) notFound();
   return (
     <>
-      <Link href="/auth/dokumenty">← Dokumenty a odkazy</Link>
       <div className="admin-title">
-        <h1>
+        <PageTitle back="/auth/dokumenty" backLabel="Dokumenty a odkazy">
           {pageName(group.page)}
           {group.title && `: ${group.title}`}
-        </h1>
+        </PageTitle>
         <div className="d-flex gap-2">
           <a href={group.page} className="btn btn-outline-secondary" target="_blank" rel="noreferrer">
             Zobrazit stránku

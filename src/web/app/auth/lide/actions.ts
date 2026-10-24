@@ -5,7 +5,10 @@ import { redirect } from "next/navigation";
 import type { ActionState } from "@/components/admin/ActionForm";
 import { lines, optional } from "@/lib/admin/form";
 import { neighbour } from "@/lib/admin/order";
+import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
+import { personName } from "@/lib/content/format";
+import { personInclude, toPerson } from "@/lib/content/people";
 import { prisma } from "@/lib/db";
 import type { PhoneKind } from "@/lib/generated/prisma/client";
 
@@ -13,7 +16,7 @@ const KINDS: PhoneKind[] = ["internal", "landline", "mobile"];
 
 // Creates (id undefined) or updates a person with their phones and sections
 export const savePerson = async (id: string | undefined, data: FormData): Promise<ActionState> => {
-  await requireUser();
+  const user = await requireUser({ section: "lide" });
   const labels = [...new Set(data.getAll("labels").map(String))];
   const fields = {
     titleBefore: optional(data, "titleBefore"),
@@ -47,19 +50,22 @@ export const savePerson = async (id: string | undefined, data: FormData): Promis
       data: { ...fields, sortOrder: (last._max.sortOrder ?? 0) + 1, phones: { create: phones } },
     });
   }
+  const name = fields.lastName ? [fields.firstName, fields.lastName].filter(Boolean).join(" ") : fields.name;
+  await logActivity(user, "lide", `${id ? "Upravena" : "Přidána"} osoba „${name}“`);
   revalidatePath("/", "layout");
   redirect(`/auth/lide${labels.length === 1 ? `?sekce=${encodeURIComponent(labels[0])}` : ""}`);
 };
 
 export const deletePerson = async (id: string) => {
-  await requireUser();
-  await prisma.person.delete({ where: { id } });
+  const user = await requireUser({ section: "lide" });
+  const person = toPerson(await prisma.person.delete({ where: { id }, include: personInclude }));
+  await logActivity(user, "lide", `Smazána osoba „${personName(person)}“`);
   revalidatePath("/", "layout");
 };
 
 // Moves a person within the list shown (one section, or everyone)
 export const movePerson = async (id: string, label: string | undefined, direction: "up" | "down") => {
-  await requireUser();
+  const user = await requireUser({ section: "lide" });
   const rows = await prisma.person.findMany({
     where: label ? { labels: { has: label } } : undefined,
     orderBy: { sortOrder: "asc" },
@@ -72,5 +78,7 @@ export const movePerson = async (id: string, label: string | undefined, directio
     prisma.person.update({ where: { id: a.id }, data: { sortOrder: b.sortOrder } }),
     prisma.person.update({ where: { id: b.id }, data: { sortOrder: a.sortOrder } }),
   ]);
+  const person = toPerson(await prisma.person.findUniqueOrThrow({ where: { id }, include: personInclude }));
+  await logActivity(user, "lide", `Posunuta ${direction === "up" ? "nahoru" : "dolů"} osoba „${personName(person)}“`);
   revalidatePath("/", "layout");
 };

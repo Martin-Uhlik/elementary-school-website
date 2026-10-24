@@ -2,16 +2,18 @@ import Link from "next/link";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 import { deletePerson, movePerson } from "./actions";
 import ConfirmButton from "@/components/admin/ConfirmButton";
+import FilterForm from "@/components/admin/FilterForm";
 import MoveButtons from "@/components/admin/MoveButtons";
 import { getLabels } from "@/lib/admin/people";
 import { requireUser } from "@/lib/auth/session";
 import { personName } from "@/lib/content/format";
 import { personInclude, toPerson } from "@/lib/content/people";
 import { prisma } from "@/lib/db";
+import PageTitle from "@/components/admin/PageTitle";
 
 // Everyone, or one section (?sekce=Učitelé) in the order the site shows it
 const PeopleAdminPage = async ({ searchParams }: PageProps<"/auth/lide">) => {
-  await requireUser();
+  await requireUser({ section: "lide" });
   const section = (await searchParams).sekce;
   const label = typeof section === "string" && section ? section : undefined;
   const labels = await getLabels();
@@ -26,12 +28,14 @@ const PeopleAdminPage = async ({ searchParams }: PageProps<"/auth/lide">) => {
   return (
     <>
       <div className="admin-title">
-        <h1>Lidé a kontakty</h1>
+        <PageTitle back="/auth" backLabel="Přehled">
+          Lidé a kontakty
+        </PageTitle>
         <Link href={`/auth/lide/novy${label ? `?sekce=${encodeURIComponent(label)}` : ""}`} className="btn btn-primary">
           Přidat osobu
         </Link>
       </div>
-      <form className="d-flex gap-2 align-items-end flex-wrap">
+      <FilterForm action="/auth/lide">
         <div>
           <label htmlFor="sekce" className="form-label">
             Sekce
@@ -45,10 +49,7 @@ const PeopleAdminPage = async ({ searchParams }: PageProps<"/auth/lide">) => {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn btn-outline-primary">
-          Zobrazit
-        </button>
-      </form>
+      </FilterForm>
       <section className="admin-card">
         <p className="small text-body-secondary">
           Šipkami změníte pořadí{label ? ` v sekci „${label}“` : ""}. Pořadí platí na všech stránkách.

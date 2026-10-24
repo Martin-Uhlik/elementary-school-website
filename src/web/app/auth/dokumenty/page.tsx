@@ -2,10 +2,11 @@ import Link from "next/link";
 import { pageName } from "@/lib/admin/pages";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import PageTitle from "@/components/admin/PageTitle";
 
 // Every page of the site with its lists of documents and links
 const DocumentsAdminPage = async () => {
-  await requireUser();
+  await requireUser({ section: "dokumenty" });
   const groups = await prisma.linkGroup.findMany({
     orderBy: { sortOrder: "asc" },
     include: { _count: { select: { links: true } } },
@@ -13,7 +14,9 @@ const DocumentsAdminPage = async () => {
   const pages = [...new Set(groups.map((g) => g.page))];
   return (
     <>
-      <h1>Dokumenty a odkazy</h1>
+      <PageTitle back="/auth" backLabel="Přehled">
+        Dokumenty a odkazy
+      </PageTitle>
       <p className="mb-0">Vyberte seznam, ve kterém chcete přidat, upravit nebo nahradit dokument.</p>
       <div className="admin-tiles">
         {pages.map((page) => (

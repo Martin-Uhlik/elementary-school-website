@@ -6,14 +6,17 @@ import { formatDate } from "@/components/content/NewsList";
 import { isoDate } from "@/lib/content/misc";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
+import PageTitle from "@/components/admin/PageTitle";
 
 const NewsAdminPage = async () => {
-  await requireUser();
+  await requireUser({ section: "aktuality" });
   const news = await prisma.news.findMany({ orderBy: [{ date: "desc" }, { createdAt: "desc" }] });
   return (
     <>
       <div className="admin-title">
-        <h1>Aktuality</h1>
+        <PageTitle back="/auth" backLabel="Přehled">
+          Aktuality
+        </PageTitle>
         <Link href="/auth/aktuality/nova" className="btn btn-primary">
           Nová aktualita
         </Link>

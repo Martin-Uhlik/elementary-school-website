@@ -16,6 +16,11 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       # set to false only to try the admin over plain http (without IIS and HTTPS)
       COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      # admin time limits (src/web/lib/auth/config.ts), in minutes / attempts
+      AUTH_INACTIVITY_MINUTES: ${AUTH_INACTIVITY_MINUTES:-5}
+      AUTH_SESSION_MAX_MINUTES: ${AUTH_SESSION_MAX_MINUTES:-480}
+      AUTH_LOCKOUT_ATTEMPTS: ${AUTH_LOCKOUT_ATTEMPTS:-5}
+      AUTH_LOCKOUT_MINUTES: ${AUTH_LOCKOUT_MINUTES:-10}
     depends_on:
       migrate:
         condition: service_completed_successfully

@@ -1,16 +1,17 @@
-import Link from "next/link";
 import { savePerson } from "../actions";
 import PersonForm from "@/components/admin/PersonForm";
 import { getLabels } from "@/lib/admin/people";
 import { requireUser } from "@/lib/auth/session";
+import PageTitle from "@/components/admin/PageTitle";
 
 const NewPersonPage = async ({ searchParams }: PageProps<"/auth/lide/novy">) => {
-  await requireUser();
+  await requireUser({ section: "lide" });
   const section = (await searchParams).sekce;
   return (
     <>
-      <Link href="/auth/lide">← Lidé a kontakty</Link>
-      <h1>Nová osoba</h1>
+      <PageTitle back="/auth/lide" backLabel="Lidé a kontakty">
+        Nová osoba
+      </PageTitle>
       <section className="admin-card">
         <PersonForm
           action={savePerson.bind(null, undefined)}

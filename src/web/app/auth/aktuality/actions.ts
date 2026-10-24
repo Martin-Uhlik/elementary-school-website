@@ -5,12 +5,13 @@ import { redirect } from "next/navigation";
 import type { ActionState } from "@/components/admin/ActionForm";
 import { saveDocument } from "@/lib/admin/documents";
 import { errorMessage, optional, text } from "@/lib/admin/form";
+import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 
 // Creates (id undefined) or updates a news item; an uploaded file replaces the link
 export const saveNews = async (id: string | undefined, data: FormData): Promise<ActionState> => {
-  await requireUser();
+  const user = await requireUser({ section: "aktuality" });
   const title = text(data, "title");
   const date = text(data, "date");
   if (!title) return { error: "Vyplňte nadpis." };
@@ -31,12 +32,14 @@ export const saveNews = async (id: string | undefined, data: FormData): Promise<
   };
   if (id) await prisma.news.update({ where: { id }, data: fields });
   else await prisma.news.create({ data: fields });
+  await logActivity(user, "aktuality", `${id ? "Upravena" : "Přidána"} aktualita „${title}“`);
   revalidatePath("/", "layout");
   redirect("/auth/aktuality");
 };
 
 export const deleteNews = async (id: string) => {
-  await requireUser();
-  await prisma.news.delete({ where: { id } });
+  const user = await requireUser({ section: "aktuality" });
+  const news = await prisma.news.delete({ where: { id } });
+  await logActivity(user, "aktuality", `Smazána aktualita „${news.title}“`);
   revalidatePath("/", "layout");
 };

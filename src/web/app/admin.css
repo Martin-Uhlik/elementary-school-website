@@ -26,18 +26,40 @@
   gap: 1rem;
 }
 
+/* the admin header looks like the site's blue menu: the same darker blue, rounded bottom corners, stays on top */
 .admin-header {
-  background: var(--bg-primary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  /* body is a flex column: keep the header first even when Firefox inserts it after the page on navigation */
+  order: -1;
+  flex-shrink: 0;
 }
 
-.admin-header .nav-link,
+.admin-header .navbar {
+  --bs-primary-rgb: 10, 88, 202;
+  border-radius: 0 0 var(--card-radius) var(--card-radius);
+  box-shadow: var(--shadow-normal);
+}
+
 .admin-header .navbar-brand {
   color: #fff;
 }
 
-.admin-header .nav-link[aria-current="page"] {
+.admin-header .nav-link.active {
   text-decoration: underline;
   text-underline-offset: 0.35em;
+}
+
+/* the sign-out countdown; yellow in the last minute */
+.admin-timer {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.admin-timer--calm {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
 }
 
 .admin-main {
@@ -157,4 +179,51 @@
 [data-bs-theme="light"] .admin-main .btn-outline-danger {
   --bs-btn-color: #b02a37;
   --bs-btn-border-color: #b02a37;
+}
+
+/* filters that apply on change; the button is only there without JavaScript */
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: flex-end;
+}
+
+/* the user agent wraps inside its column; on phones the table scrolls sideways instead of squeezing it */
+.admin-table .agent {
+  min-width: 16rem;
+  max-width: 22rem;
+}
+
+.admin-permissions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+}
+
+/* page headings go one level up when clicked */
+.admin-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.admin-back__icon {
+  flex-shrink: 0;
+  margin-left: -0.35rem;
+  color: var(--bs-link-color);
+  transition: transform 0.15s;
+}
+
+@media (hover: hover) {
+  .admin-back:hover .admin-back__icon {
+    transform: translateX(-0.2rem);
+  }
+
+  .admin-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 }

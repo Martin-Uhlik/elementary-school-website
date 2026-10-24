@@ -20,6 +20,8 @@ const ActionForm = ({ action, submitLabel, children, className }: Props) => {
   return (
     <form
       className={`admin-form ${className ?? ""}`}
+      // the admin is used on shared school computers: browsers should not fill in or remember what is typed
+      autoComplete="off"
       onSubmit={(event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

@@ -6,12 +6,13 @@ import type { ActionState } from "@/components/admin/ActionForm";
 import { saveDocument } from "@/lib/admin/documents";
 import { errorMessage, lines, optional, text } from "@/lib/admin/form";
 import { neighbour } from "@/lib/admin/order";
+import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db";
 
 // Creates (id undefined) or updates a link in a group; an uploaded file replaces the address
 export const saveLink = async (groupId: string, id: string | undefined, data: FormData): Promise<ActionState> => {
-  await requireUser();
+  const user = await requireUser({ section: "dokumenty" });
   const title = text(data, "title");
   if (!title) return { error: "Vyplňte název." };
   let href = optional(data, "href");
@@ -34,22 +35,24 @@ export const saveLink = async (groupId: string, id: string | undefined, data: Fo
     const sortOrder = data.get("position") === "top" ? (edge._min.sortOrder ?? 0) - 1 : (edge._max.sortOrder ?? 0) + 1;
     await prisma.link.create({ data: { ...fields, groupId, sortOrder } });
   }
+  await logActivity(user, "dokumenty", `${id ? "Upravena" : "Přidána"} položka „${title}“ (${groupId})`);
   revalidatePath("/", "layout");
   redirect(`/auth/dokumenty/${groupId}`);
 };
 
 export const deleteLink = async (id: string) => {
-  await requireUser();
-  await prisma.link.delete({ where: { id } });
+  const user = await requireUser({ section: "dokumenty" });
+  const link = await prisma.link.delete({ where: { id } });
+  await logActivity(user, "dokumenty", `Smazána položka „${link.title}“ (${link.groupId})`);
   revalidatePath("/", "layout");
 };
 
 export const moveLink = async (groupId: string, id: string, direction: "up" | "down") => {
-  await requireUser();
+  const user = await requireUser({ section: "dokumenty" });
   const rows = await prisma.link.findMany({
     where: { groupId },
     orderBy: { sortOrder: "asc" },
-    select: { id: true, sortOrder: true },
+    select: { id: true, sortOrder: true, title: true },
   });
   const pair = neighbour(rows, id, direction);
   if (!pair) return;
@@ -58,12 +61,19 @@ export const moveLink = async (groupId: string, id: string, direction: "up" | "d
     prisma.link.update({ where: { id: a.id }, data: { sortOrder: b.sortOrder } }),
     prisma.link.update({ where: { id: b.id }, data: { sortOrder: a.sortOrder } }),
   ]);
+  await logActivity(
+    user,
+    "dokumenty",
+    `Posunuta ${direction === "up" ? "nahoru" : "dolů"} položka „${a.title}“ (${groupId})`,
+  );
   revalidatePath("/", "layout");
 };
 
 export const renameGroup = async (id: string, data: FormData): Promise<ActionState> => {
-  await requireUser();
-  await prisma.linkGroup.update({ where: { id }, data: { title: optional(data, "title") } });
+  const user = await requireUser({ section: "dokumenty" });
+  const title = optional(data, "title");
+  await prisma.linkGroup.update({ where: { id }, data: { title } });
+  await logActivity(user, "dokumenty", `Změněn nadpis skupiny ${id} na „${title ?? ""}“`);
   revalidatePath("/", "layout");
   return { message: "Nadpis byl uložen." };
 };

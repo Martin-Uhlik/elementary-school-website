@@ -58,20 +58,21 @@ model Link {
 
 // A photo gallery in galerie/<folder>/ of the media folder, or a link to a video
 model Gallery {
-  id        String  @id
+  id       String   @id
   // photo folder when it differs from id
-  folder    String?
-  unit      Unit
+  folder   String?
+  unit     Unit
   // the archive heading it is listed under
-  year      Int
-  title     String
+  year     Int
+  title    String
   // the date as written on the site, e.g. "31.5.-1.6.2023"
-  dateText  String? @map("date_text")
+  dateText String?  @map("date_text")
   // a video or another address instead of a photo gallery
-  url       String?
-  sortOrder Int     @map("sort_order")
+  url      String?
+  // the day of the event; galleries are listed newest first by it
+  date     DateTime @db.Date
 
-  @@index([unit])
+  @@index([unit, date])
   @@map("galleries")
 }
 
@@ -171,27 +172,95 @@ model News {
   @@map("news")
 }
 
+// The parts of /auth a user may open; admin also covers Uživatelé and Logy
+enum Permission {
+  aktuality
+  lide
+  dokumenty
+  galerie
+  // Průběh školního roku
+  kalendar
+  admin
+
+  @@map("permission")
+}
+
 // Someone who can sign in at /admin
 model User {
-  id                 Int       @id @default(autoincrement())
-  username           String    @unique
+  id                 Int          @id @default(autoincrement())
+  username           String       @unique
+  // only admins see and edit it
+  realName           String?      @map("real_name")
   // scrypt, see lib/auth/password.ts
-  passwordHash       String    @map("password_hash")
-  // true for the seeded admin/zsmp until its password is changed
-  mustChangePassword Boolean   @default(false) @map("must_change_password")
-  createdAt          DateTime  @default(now()) @map("created_at")
+  passwordHash       String       @map("password_hash")
+  // true for the seeded admin/zsmp and for new users until they pick their own password
+  mustChangePassword Boolean      @default(false) @map("must_change_password")
+  permissions        Permission[] @default([])
+  // wrong passwords in a row; at the limit in lib/auth/config.ts the account is locked until lockedUntil
+  failedLogins       Int          @default(0) @map("failed_logins")
+  lockedUntil        DateTime?    @map("locked_until")
+  createdAt          DateTime     @default(now()) @map("created_at")
   sessions           Session[]
+  loginEvents        LoginEvent[]
+  activities         Activity[]
 
   @@map("users")
 }
 
 // A signed-in browser; the cookie holds a random token, the table only its SHA-256
 model Session {
-  id        String   @id
-  userId    Int      @map("user_id")
-  expiresAt DateTime @map("expires_at")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id
+  userId     Int      @map("user_id")
+  // the latest request; after the inactivity limit the session ends
+  lastSeenAt DateTime @default(now()) @map("last_seen_at")
+  expiresAt  DateTime @map("expires_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("sessions")
+}
+
+enum LoginEventKind {
+  login
+  failed
+  locked
+  logout
+  timeout
+  password
+  username
+
+  @@map("login_event_kind")
+}
+
+// Sign-ins, sign-outs, wrong passwords and account changes, with the browser's address and user agent
+model LoginEvent {
+  id        Int            @id @default(autoincrement())
+  // null for an unknown name or a deleted user; username keeps what was typed or used
+  userId    Int?           @map("user_id")
+  username  String
+  kind      LoginEventKind
+  ip        String         @default("")
+  userAgent String         @default("") @map("user_agent")
+  createdAt DateTime       @default(now()) @map("created_at")
+  user      User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@map("login_events")
+}
+
+// What users changed in /auth, e.g. "Upravena aktualita Zápis do 1. třídy"
+model Activity {
+  id        Int        @id @default(autoincrement())
+  userId    Int?       @map("user_id")
+  username  String
+  section   Permission
+  text      String
+  ip        String     @default("")
+  createdAt DateTime   @default(now()) @map("created_at")
+  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@map("activities")
 }

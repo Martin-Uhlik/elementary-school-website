@@ -1,5 +1,5 @@
 import { LuSun } from "react-icons/lu";
-import type { CalendarEvent } from "@/lib/content/types";
+import { calendarDateLabel } from "@/lib/content/format";
 import { getSchoolYears } from "@/lib/content/misc";
 
 // **text** in the data is shown in bold
@@ -7,18 +7,6 @@ const withBold = (text: string) => text.split("**").map((part, i) => (i % 2 ? <b
 
 const toDate = (iso: string) => new Date(`${iso}T12:00:00`);
 const monthFormat = new Intl.DateTimeFormat("cs", { month: "short" });
-const dateFormat = new Intl.DateTimeFormat("cs", { day: "numeric", month: "long", year: "numeric" });
-const dayMonthFormat = new Intl.DateTimeFormat("cs", { day: "numeric", month: "long" });
-
-// e.g. "4. září 2023", "26.–27. října 2023" or "23. prosince 2023 – 2. ledna 2024"
-const dateLabel = ({ date, endDate }: CalendarEvent) => {
-  const start = toDate(date);
-  if (!endDate) return dateFormat.format(start);
-  const end = toDate(endDate);
-  if (start.getFullYear() !== end.getFullYear()) return `${dateFormat.format(start)} – ${dateFormat.format(end)}`;
-  if (start.getMonth() !== end.getMonth()) return `${dayMonthFormat.format(start)} – ${dateFormat.format(end)}`;
-  return `${start.getDate()}.–${dateFormat.format(end)}`;
-};
 
 const OrganizacePrubehSkolnihoRokuPage = async () => {
   const years = await getSchoolYears();
@@ -38,7 +26,7 @@ const OrganizacePrubehSkolnihoRokuPage = async () => {
                     </span>
                     <div className="timeline__card">
                       <p className="timeline__date">
-                        <time dateTime={event.date}>{dateLabel(event)}</time>
+                        <time dateTime={event.date}>{calendarDateLabel(event)}</time>
                         {event.holiday && (
                           <span className="timeline__badge">
                             <LuSun aria-hidden="true" focusable="false" /> Prázdniny

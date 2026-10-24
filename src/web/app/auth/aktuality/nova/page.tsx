@@ -1,14 +1,15 @@
-import Link from "next/link";
 import { saveNews } from "../actions";
 import NewsForm from "@/components/admin/NewsForm";
 import { requireUser } from "@/lib/auth/session";
+import PageTitle from "@/components/admin/PageTitle";
 
 const NewNewsPage = async () => {
-  await requireUser();
+  await requireUser({ section: "aktuality" });
   return (
     <>
-      <Link href="/auth/aktuality">← Aktuality</Link>
-      <h1>Nová aktualita</h1>
+      <PageTitle back="/auth/aktuality" backLabel="Aktuality">
+        Nová aktualita
+      </PageTitle>
       <section className="admin-card">
         <NewsForm action={saveNews.bind(null, undefined)} />
       </section>
