@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LuCalendarDays, LuImages, LuPhone, LuScrollText, LuUtensils } from "react-icons/lu";
 import HomeCarousel from "@/components/HomeCarousel";
+import InlineScript from "@/components/InlineScript";
 import VideoTour from "@/components/VideoTour";
 import HomeDecoration from "@/components/content/HomeDecoration";
 import LinkList from "@/components/content/LinkList";
@@ -31,7 +32,7 @@ const HomePage = async () => {
     <>
       <HomeCarousel photos={photos} />
       {/* shows a random photo from the first paint, see lib/carousel.ts */}
-      <script dangerouslySetInnerHTML={{ __html: carouselStartScript }} />
+      <InlineScript code={carouselStartScript} />
 
       <div className="body body--home">
         <nav className="quick-bar" aria-label="Rychlé odkazy">
