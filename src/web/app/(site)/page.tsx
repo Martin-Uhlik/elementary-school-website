@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import HomeCarousel from "@/components/HomeCarousel";
-import InlineScript from "@/components/InlineScript";
 import VideoTour from "@/components/VideoTour";
 import HomeTrail from "@/components/content/HomeTrail";
 import LinkList from "@/components/content/LinkList";
@@ -44,8 +43,10 @@ const HomePage = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schoolJsonLd).replace(/</g, "\\u003c") }}
       />
       <HomeCarousel photos={photos} />
-      {/* shows a random photo from the first paint, see lib/carousel.ts */}
-      <InlineScript code={carouselStartScript} />
+      {/* shows a random photo from the first paint, see lib/carousel.ts. The script sits in a hidden div's HTML:
+          the browser runs it while parsing the server HTML, and React does not warn when the page is rendered on the
+          client after a link click, where HomeCarousel picks the photo itself */}
+      <div hidden dangerouslySetInnerHTML={{ __html: `<script>${carouselStartScript}</script>` }} />
 
       <div className="page page--home">
         <HomeTrail />
