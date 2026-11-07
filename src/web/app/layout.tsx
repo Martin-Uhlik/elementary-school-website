@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
@@ -21,6 +21,14 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "Základní škola a Mateřská škola, Moravský písek",
+  // tells Dark Reader the site has its own dark mode, so it does not darken it a second time
+  other: { "darkreader-lock": "true" },
+};
+
+// <meta name="color-scheme" content="light dark">: the site supports both themes. The one actually shown
+// follows the manual switch, because Bootstrap sets the CSS color-scheme on [data-bs-theme], which wins over the meta.
+export const viewport: Viewport = {
+  colorScheme: "light dark",
 };
 
 const RootLayout = ({ children }: LayoutProps<"/">) => {
