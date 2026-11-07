@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getGallerySections } from "@/lib/content/galleries";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/foto-video",
+  "Galerie",
+  "Fotogalerie a videa ze života základní školy, mateřské školy a družiny v Moravském Písku.",
+);
 
 // 1–4 galerie, 5+ galerií
 const galleryCount = (count: number) => (count > 0 && count < 5 ? "galerie" : "galerií");

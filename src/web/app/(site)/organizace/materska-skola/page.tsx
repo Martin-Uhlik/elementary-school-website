@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { LuSun } from "react-icons/lu";
 import FeatureLink from "@/components/content/FeatureLink";
 import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/materska-skola",
+  "Mateřská škola",
+  "Mateřská škola v Moravském Písku: tři smíšené třídy uprostřed obce v prostorné zahradě, akce pro děti a rodiče, kontakty.",
+);
 
 // Ported from html/organizace/materska-skola.html
 const OrganizaceMaterskaSkolaPage = async () => {
@@ -30,7 +38,7 @@ const OrganizaceMaterskaSkolaPage = async () => {
         </div>
         <div className="article">
           <div className="article__section">
-            <h1 className="article__title">Kontakty</h1>
+            <h2 className="article__title">Kontakty</h2>
             <div className="persons">
               {staff.map((person) => (
                 <PersonCard key={person.id} person={person} variant="short" />

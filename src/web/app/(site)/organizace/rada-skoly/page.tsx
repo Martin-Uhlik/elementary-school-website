@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroup } from "@/lib/content/links";
 import { personName } from "@/lib/content/format";
 import { getPeople } from "@/lib/content/people";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/rada-skoly",
+  "Rada školy",
+  "Školská rada při ZŠ a MŠ Moravský Písek: členové za školu, rodiče a zřizovatele, zápisy a dokumenty.",
+);
 
 // Ported from html/organizace/rada-skoly.html
 const OrganizaceRadaSkolyPage = async () => {

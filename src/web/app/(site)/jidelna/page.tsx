@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { LuCarrot, LuUtensils } from "react-icons/lu";
 import FeatureLink from "@/components/content/FeatureLink";
 import LinkList from "@/components/content/LinkList";
@@ -5,6 +6,13 @@ import CanteenMenu from "@/components/content/CanteenMenu";
 import ZigZagPath from "@/components/content/ZigZagPath";
 import { CANTEEN_MENU_URL } from "@/lib/content/canteen";
 import { getLinkGroup } from "@/lib/content/links";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/jidelna",
+  "Školní jídelna",
+  "Školní jídelna ZŠ a MŠ Moravský Písek: jídelní lístek, přihlašování a odhlašování obědů a dokumenty jídelny.",
+);
 
 // Ported from html/jidelna.html
 const JidelnaPage = async () => {

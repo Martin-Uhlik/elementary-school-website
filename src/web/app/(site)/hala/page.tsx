@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import ZigZagPath from "@/components/content/ZigZagPath";
 import { getLinkGroup } from "@/lib/content/links";
 import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/hala",
+  "Pronájem haly",
+  "Pronájem tělocvičny a venkovního víceúčelového hřiště při ZŠ a MŠ Moravský Písek: žádost o pronájem, ceník a provozní řád.",
+);
 
 // Ported from html/hala.html
 const HalaPage = async () => {
@@ -40,9 +48,9 @@ const HalaPage = async () => {
         </div>
         <div className="article">
           <div className="article__section">
-            <h1 className="article__title">
+            <h2 className="article__title">
               Provozní řád sportovní haly - tělocvičny a venkovního víceúčelového hřiště při ZŠ a MŠ Moravský Písek
-            </h1>
+            </h2>
             <div className="article__body">
               <h2 className="article__heading">Základní ustanovení – vymezení účelu</h2>
               <p>

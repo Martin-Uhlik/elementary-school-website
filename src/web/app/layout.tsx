@@ -7,6 +7,7 @@ import InlineScript from "@/components/InlineScript";
 import { backgroundScript } from "@/lib/background";
 import { cookiesScript } from "@/lib/cookies";
 import { layoutScript } from "@/lib/layout";
+import { SHARE_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { themeScript } from "@/lib/theme";
 import { viewportScript } from "@/lib/viewport";
 
@@ -20,7 +21,20 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Základní škola a Mateřská škola, Moravský písek",
+  // relative URLs in metadata (canonical, og:image, ...) become https://zsmp.cz/...
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Základní škola a Mateřská škola, Moravský Písek",
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    locale: "cs_CZ",
+    siteName: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [SHARE_IMAGE],
+  },
   // tells Dark Reader the site has its own dark mode, so it does not darken it a second time
   other: { "darkreader-lock": "true" },
 };

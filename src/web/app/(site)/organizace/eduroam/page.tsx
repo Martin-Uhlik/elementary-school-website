@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/eduroam",
+  "Eduroam",
+  "Škola je připojena k síti eduroam: jak se připojit k bezdrátové síti s jedním účtem kdekoliv na světě.",
+);
 // Ported from html/organizace/eduroam.html
 const OrganizaceEduroamPage = () => {
   return (

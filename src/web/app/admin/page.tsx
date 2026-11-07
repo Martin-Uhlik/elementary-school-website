@@ -8,7 +8,7 @@ import "../admin.css";
 
 // The sign-in page: not linked from the site, hidden from search engines (also in robots.txt)
 export const metadata: Metadata = {
-  title: "Přihlášení | Správa webu",
+  title: { absolute: "Přihlášení | Správa webu" },
   robots: { index: false, follow: false },
 };
 

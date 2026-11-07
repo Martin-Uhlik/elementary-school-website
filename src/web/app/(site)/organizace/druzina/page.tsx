@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroup } from "@/lib/content/links";
 import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/druzina",
+  "Družina",
+  "Školní družina při ZŠ Moravský Písek: dokumenty, vychovatelky a výsledky dotazníku pro rodiče.",
+);
 
 // Ported from html/organizace/druzina.html
 const OrganizaceDruzinaPage = async () => {

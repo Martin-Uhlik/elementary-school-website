@@ -18,7 +18,7 @@ export const toGallery = (row: GalleryRow): Gallery => ({
 // newest first; galleries of the same day keep the order of their folder names
 export const galleryOrder = [{ year: "desc" }, { date: "desc" }, { id: "asc" }] as const;
 
-const getGalleries = async (unit?: Unit) =>
+export const getGalleries = async (unit?: Unit) =>
   (await (await db()).gallery.findMany({ where: { unit }, orderBy: [...galleryOrder] })).map(toGallery);
 
 // The section tiles with how many galleries each has and which years they span

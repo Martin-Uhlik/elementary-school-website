@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroup } from "@/lib/content/links";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/uredni-deska",
+  "Úřední deska",
+  "Úřední deska ZŠ a MŠ Moravský Písek: rozpočty, střednědobé výhledy rozpočtu a informace o ochraně osobních údajů (GDPR).",
+);
 
 // Ported from html/uredni-deska.html
 const UredniDeskaPage = async () => {

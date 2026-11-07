@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/historie",
+  "Historie",
+  "Historie školy a obce Moravský Písek.",
+);
 // Ported from html/organizace/historie.html
 
 // name, years in office

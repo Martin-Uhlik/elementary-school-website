@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/skola",
+  "Škola",
+  "Základní škola v Moravském Písku: plně organizovaná škola s tradicí od roku 1859, sloučená s mateřskou školou, družinou a jídelnou.",
+);
 // Ported from html/organizace/skola.html
 const OrganizaceSkolaPage = () => {
   return (

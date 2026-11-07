@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroups } from "@/lib/content/links";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/informatika",
+  "Informatika",
+  "Výukové materiály k informatice: cvičení pro myš a klávesnici, práce s daty, programování ve Scratchi a 3D modelování v Tinkercadu.",
+);
 
 const InformatikaPage = async () => {
   const groups = await getLinkGroups("/informatika");

@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroups } from "@/lib/content/links";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/dokumenty",
+  "Dokumenty",
+  "Dokumenty základní školy v Moravském Písku: školní vzdělávací program, školní řád, nabídka kroužků, výroční zprávy a projekty.",
+);
 
 const DokumentyPage = async () => {
   const groups = await getLinkGroups("/dokumenty");

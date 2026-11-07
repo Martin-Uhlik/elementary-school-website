@@ -9,7 +9,7 @@ import { requireUser } from "@/lib/auth/session";
 import "../admin.css";
 
 export const metadata: Metadata = {
-  title: "Správa webu",
+  title: { absolute: "Správa webu" },
   robots: { index: false, follow: false },
 };
 

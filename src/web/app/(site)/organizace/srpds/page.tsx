@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import PersonCard from "@/components/content/PersonCard";
 import { getPeople } from "@/lib/content/people";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/srpds",
+  "SRPDŠ",
+  "Sdružení rodičů a přátel dětí školy při ZŠ a MŠ Moravský Písek.",
+);
 
 // Ported from html/organizace/srpds.html
 const OrganizaceSrpdsPage = async () => {

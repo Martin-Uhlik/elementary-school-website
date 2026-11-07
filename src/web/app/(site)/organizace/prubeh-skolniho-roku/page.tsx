@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import { Fragment } from "react";
 import { LuSun } from "react-icons/lu";
 import { calendarDateLabel, dayLabel, schoolYearOf, todayIso } from "@/lib/content/format";
 import { getSchoolYears } from "@/lib/content/misc";
 import type { CalendarEvent } from "@/lib/content/types";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/organizace/prubeh-skolniho-roku",
+  "Průběh školního roku",
+  "Kalendář školního roku na ZŠ a MŠ Moravský Písek: prázdniny, ředitelská volna, akce školy a další důležitá data.",
+);
 
 // **text** in the data is shown in bold
 const withBold = (text: string) => text.split("**").map((part, i) => (i % 2 ? <b key={i}>{part}</b> : part));

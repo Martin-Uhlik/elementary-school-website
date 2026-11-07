@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import LinkList from "@/components/content/LinkList";
 import { getLinkGroups } from "@/lib/content/links";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/rodice/odkazy",
+  "Odkazy",
+  "Užitečné odkazy pro rodiče a žáky ZŠ a MŠ Moravský Písek.",
+);
 
 const RodiceOdkazyPage = async () => {
   const groups = await getLinkGroups("/rodice/odkazy");

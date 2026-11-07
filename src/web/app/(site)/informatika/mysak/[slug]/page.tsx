@@ -6,6 +6,7 @@ import Collapsible from "@/components/content/Collapsible";
 import { exerciseComponents } from "@/components/mysak/exerciseComponents";
 import { getPuzzlePictures } from "@/lib/content/misc";
 import { exercises, getExercise } from "@/lib/mysak/exercises";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -15,7 +16,8 @@ export const generateStaticParams = () => available.map((e) => ({ slug: e.slug }
 
 export const generateMetadata = async ({ params }: PageProps<"/informatika/mysak/[slug]">): Promise<Metadata> => {
   const exercise = getExercise((await params).slug);
-  return exercise ? { title: `${exercise.title} | Informatika | ZŠ a MŠ Moravský Písek` } : {};
+  if (!exercise) return {};
+  return pageMetadata(`/informatika/mysak/${exercise.slug}`, `${exercise.title} | Informatika`, exercise.task);
 };
 
 const ExercisePage = async ({ params }: PageProps<"/informatika/mysak/[slug]">) => {

@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import ContactDirectory from "@/components/content/ContactDirectory";
 import { getPeople } from "@/lib/content/people";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata(
+  "/kontakty",
+  "Kontakty",
+  "Kontakty na učitele, vychovatelky, asistentky, školní jídelnu, mateřskou školu a další zaměstnance ZŠ a MŠ Moravský Písek.",
+);
 
 // the page's sections, each one a label of people in the database
 const SECTIONS = [
