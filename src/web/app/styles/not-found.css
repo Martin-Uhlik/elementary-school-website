@@ -1,0 +1,64 @@
+/* The "page not found" card (components/content/NotFound.tsx): a bunny, a short text and a button home */
+.not-found {
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .not-found {
+    padding: 4rem 2.5rem;
+  }
+}
+
+.not-found__title {
+  margin: 0;
+  font-weight: 700;
+  font-size: calc(1.5rem + calc(var(--VW) * 0.009));
+}
+
+/* the same short blue line as under .article__title, centred */
+.not-found__title::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 0.3rem;
+  margin: 0.5rem auto 0;
+  border-radius: 1rem;
+  background: var(--bs-primary);
+}
+
+.not-found__text {
+  max-width: 34rem;
+  margin: 0.5rem 0 1rem;
+  color: var(--bs-secondary-color);
+}
+
+.not-found__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* the leaping bunny (NotFoundBunny.tsx): white with the site's blues, the same in both themes */
+.not-found-bunny {
+  width: min(100%, 17rem);
+  height: auto;
+}
+
+.not-found-bunny__outline {
+  fill: #0d6efd;
+}
+
+.not-found-bunny__fur {
+  fill: #ffffff;
+}
+
+.not-found-bunny__accent {
+  fill: #cfe2ff;
+}
+
+.not-found-bunny__face {
+  fill: #052c65;
+}

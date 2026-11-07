@@ -10,6 +10,7 @@
 @import "./styles/base.css";
 @import "./styles/header.css";
 @import "./styles/page.css";
+@import "./styles/not-found.css";
 @import "./styles/footer.css";
 @import "./styles/cookies-bar.css";
 @import "./styles/main-carousel.css";
