@@ -31,7 +31,7 @@ body:has(.page--home) {
   --page-bg: var(--surface);
 }
 
-/* seasonal picture behind the top of the page; only the one that matches data-background is downloaded */
+/* seasonal picture behind the top of the page; /pozadi redirects to today's theme (edited in /auth/pozadi) */
 .page-background {
   z-index: -1;
   filter: brightness(0.99);
@@ -44,17 +44,9 @@ body:has(.page--home) {
   z-index: -100;
   width: var(--VW);
   aspect-ratio: 1818 / 703;
-  background: url("/data/images/background_elements/boxes.svg") center / 100% 100% no-repeat;
+  background: url("/pozadi") center / 100% 100% no-repeat;
   opacity: var(--background-elem-opacity);
   transform: rotate(180deg);
-}
-
-[data-background="winter"] .page-background__picture {
-  background-image: url("/data/images/background_elements/winter.svg");
-}
-
-[data-background="easter"] .page-background__picture {
-  background-image: url("/data/images/background_elements/easter.svg");
 }
 
 @media (min-width: 992px) {

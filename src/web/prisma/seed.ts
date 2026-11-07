@@ -22,7 +22,7 @@ if ((await count("link_groups")) === 0) {
 if ((await count("users")) === 0) {
   await client.query(
     "INSERT INTO users (username, password_hash, must_change_password, permissions) VALUES ($1, $2, true, $3)",
-    ["admin", await hashPassword("zsmp"), "{aktuality,lide,dokumenty,galerie,kalendar,admin}"],
+    ["admin", await hashPassword("zsmp"), "{aktuality,lide,dokumenty,galerie,kalendar,pozadi,admin}"],
   );
   console.log("Created the user admin (password zsmp, must be changed at first sign-in).");
 }

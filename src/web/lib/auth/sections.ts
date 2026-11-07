@@ -7,6 +7,7 @@ export const PERMISSION_LABELS: Record<Permission, string> = {
   dokumenty: "Dokumenty",
   galerie: "Galerie",
   kalendar: "Průběh roku",
+  pozadi: "Pozadí",
   admin: "Správce (uživatelé a logy)",
 };
 
@@ -18,6 +19,7 @@ export const SECTIONS: { href: string; label: string; permission: Permission }[]
   { href: "/auth/dokumenty", label: "Dokumenty", permission: "dokumenty" },
   { href: "/auth/galerie", label: "Galerie", permission: "galerie" },
   { href: "/auth/prubeh-roku", label: "Průběh roku", permission: "kalendar" },
+  { href: "/auth/pozadi", label: "Pozadí", permission: "pozadi" },
   { href: "/auth/uzivatele", label: "Uživatelé", permission: "admin" },
   { href: "/auth/logy", label: "Logy", permission: "admin" },
 ];

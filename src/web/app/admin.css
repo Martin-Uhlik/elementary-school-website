@@ -246,3 +246,51 @@
     transform: translateX(-0.2rem);
   }
 }
+
+/* Pozadí: a card per seasonal background, its picture on top */
+.admin-backgrounds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.admin-backgrounds__item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-backgrounds__info {
+  flex-grow: 1;
+}
+
+.admin-backgrounds__actions {
+  text-align: end;
+}
+
+/* a background picture shown the way the site shows it: stretched to 1818 × 703 and upside down */
+.admin-background-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1818 / 703;
+  object-fit: fill;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.5rem;
+  background: var(--page-bg);
+  transform: rotate(180deg);
+}
+
+/* the current picture above the form, not as wide as the form */
+.admin-background-preview--form {
+  max-width: 32rem;
+}
+
+/* a day and a month side by side (the date range of a background) */
+.admin-date {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-date__day {
+  flex: 0 0 6rem;
+}

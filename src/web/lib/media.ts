@@ -3,13 +3,14 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { Readable } from "node:stream";
 
-// Photos (galerie/) and documents (dokument/) live outside the app in MEDIA_DIR, so uploads from /auth survive
+// Photos (galerie/), documents (dokument/) and background pictures (pozadi/) live outside the app in MEDIA_DIR, so uploads from /auth survive
 // rebuilds and are served right away. Docker mounts the host folder at /app/media; on a dev machine it is media/
 // in the repository root.
 const MEDIA_DIR = process.env.MEDIA_DIR ?? path.resolve(process.cwd(), "..", "..", "media");
 
 export const GALLERY_DIR = path.join(MEDIA_DIR, "galerie");
 export const DOCUMENT_DIR = path.join(MEDIA_DIR, "dokument");
+export const BACKGROUND_DIR = path.join(MEDIA_DIR, "pozadi");
 
 // previews made by the upload sit in this subfolder under the same name
 export const THUMBNAIL_FOLDER = "thumbnails";
@@ -78,6 +79,10 @@ export const serveFile = async (request: Request, root: string, segments: string
     "Last-Modified": lastModified.toUTCString(),
     "Cache-Control": "public, max-age=600",
     "X-Content-Type-Options": "nosniff",
+    // an SVG opened on its own could run scripts on this site's address; this keeps it a plain picture
+    ...(file.toLowerCase().endsWith(".svg") && {
+      "Content-Security-Policy": "default-src 'none'; img-src data:; style-src 'unsafe-inline'; sandbox",
+    }),
   };
   if (since && new Date(since) >= lastModified) return new Response(null, { status: 304, headers });
   const body = Readable.toWeb(createReadStream(file)) as ReadableStream;

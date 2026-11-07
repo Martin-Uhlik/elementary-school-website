@@ -52,11 +52,13 @@ The site is then on http://localhost:3000.
 | Dokumenty       | the lists of documents and links on every page: upload a file or enter a link, replace, reorder | `dokumenty`       |
 | Galerie         | galleries of the three archives (ZŠ, MŠ, družina) and their photos                              | `galerie`         |
 | Průběh roku     | the calendar on _Průběh školního roku_                                                          | `kalendar`        |
+| Pozadí          | seasonal pictures behind the top of the pages: name, SVG/PNG/WebP upload, date range each year  | `pozadi`          |
 | Uživatelé, Logy | user accounts and the logs                                                                      | `admin` (Správce) |
 
 - **Access (ACL):** an admin gives each user the sections they may edit. _Správce_ can do everything, including Uživatelé and Logy. A section a user has no access to is hidden from their menu, and opening it anyway sends them back to the start page. Real names of users are visible only to admins. Every user changes their own sign-in name and password under _Můj účet_ (`/auth/ucet`); both changes need the current password.
 - **Logs:** sign-ins, sign-outs, wrong passwords, locked accounts and account changes (with the IP address and browser), and every change made in the admin (who, when, what). Admins see them under _Logy_ (`/auth/logy`), filtered by user and date; every user sees their own last sign-ins on the start page, to notice one they didn't make. Entries are deleted after `LOG_RETENTION_DAYS` (180 by default), because IP addresses are personal data (GDPR).
 - **Time limits** (`src/web/lib/auth/config.ts`, each one can be changed in `.env` without a rebuild): sign-out after `AUTH_INACTIVITY_MINUTES` (30) without activity, counted down by the timer in the header; the server ends the session too, even with the tab closed. A sign-in lasts at most `AUTH_SESSION_MAX_MINUTES` (480). `AUTH_LOCKOUT_ATTEMPTS` (5) wrong passwords in a row lock the account for `AUTH_LOCKOUT_MINUTES` (10); an admin can unlock it under Uživatelé.
+- **Pozadí:** each background has a date range that repeats every year and may wrap past New Year (1. 12. – 31. 1.); one without dates is the default for all other days, and when ranges overlap the shorter one wins. Pages load `/pozadi`, a 5-minute redirect to today's picture, so pages stay static and a change shows up within minutes. Uploads go to `pozadi/` in the media folder; the original three pictures stay in `public/data/images/background_elements/`.
 - **Průběh roku:** events with a date (or a date range), the school year they belong to, a text (`**bold**` works) and a holiday flag; holidays are green on the site. A new school year starts empty or as a copy of an earlier one with every date moved by a year, and a whole year can be deleted.
 - **Galleries:** a gallery has a title, a unit (ZŠ, MŠ, družina), a date, optionally the date as shown on the site (e.g. "18.–23. 1. 2026") and a video link (e.g. YouTube) instead of photos. Archives are ordered by year and date, newest first. Photos are dragged onto the page and uploaded one by one with a progress bar; the server rotates them by their EXIF data and makes the previews (`thumbnails/`, short side 256 px). Single photos or whole galleries can be deleted.
 
@@ -74,10 +76,11 @@ They are not in git or in the image. They live in a folder on the server (`MEDIA
 media/
   galerie/<folder>/...   → /galerie/<folder>        (photos, thumbnails/ = previews)
   dokument/...           → /dokument/...
+  pozadi/...             → /pozadi/...              (background pictures uploaded in Pozadí)
   videos/zsmp.mp4, zsmp.cs.vtt → /data/videos/...
 ```
 
-The admin uploads into `galerie/` and `dokument/`, so the folder must be writable for the container's user (uid 1000): `sudo chown -R 1000:1000 media`. New files are served right away.
+The admin uploads into `galerie/`, `dokument/` and `pozadi/`, so the folder must be writable for the container's user (uid 1000): `sudo chown -R 1000:1000 media`. New files are served right away.
 
 ## Database
 

@@ -156,6 +156,25 @@ model Photo {
   @@map("photos")
 }
 
+// A seasonal picture behind the top of every page except the home page, e.g. snowflakes in winter.
+// The dates repeat every year and may wrap past New Year (1.12.-31.1.); a theme without dates is the default,
+// shown when no other one matches. When ranges overlap, the shorter one wins (see lib/background.ts).
+model BackgroundTheme {
+  id         String   @id @default(uuid())
+  name       String
+  // /pozadi/<file> for an upload in the media folder, or a picture in public/
+  src        String
+  startDay   Int?     @map("start_day") @db.SmallInt
+  startMonth Int?     @map("start_month") @db.SmallInt
+  endDay     Int?     @map("end_day") @db.SmallInt
+  endMonth   Int?     @map("end_month") @db.SmallInt
+  // switched off themes stay in the admin but are never shown
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("background_themes")
+}
+
 // A news item in "Aktuální informace" on the home page, newest first
 model News {
   id        String   @id @default(uuid())
@@ -180,6 +199,8 @@ enum Permission {
   galerie
   // Průběh školního roku
   kalendar
+  // seasonal background pictures
+  pozadi
   admin
 
   @@map("permission")

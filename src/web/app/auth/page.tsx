@@ -1,5 +1,14 @@
 import Link from "next/link";
-import { LuCalendarDays, LuFileText, LuImages, LuKeyRound, LuLogs, LuNewspaper, LuUsers } from "react-icons/lu";
+import {
+  LuCalendarDays,
+  LuFileText,
+  LuImages,
+  LuPaintbrush,
+  LuKeyRound,
+  LuLogs,
+  LuNewspaper,
+  LuUsers,
+} from "react-icons/lu";
 import LoginEventsTable from "@/components/admin/LoginEventsTable";
 import { can } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
@@ -9,12 +18,13 @@ import { prisma } from "@/lib/db";
 const DashboardPage = async ({ searchParams }: PageProps<"/auth">) => {
   const user = await requireUser();
   const denied = (await searchParams).pristup === "odepren";
-  const [news, people, links, galleries, calendarEvents, events] = await Promise.all([
+  const [news, people, links, galleries, calendarEvents, backgrounds, events] = await Promise.all([
     prisma.news.count({ where: { published: true } }),
     prisma.person.count(),
     prisma.link.count(),
     prisma.gallery.count(),
     prisma.calendarEvent.count(),
+    prisma.backgroundTheme.count(),
     prisma.loginEvent.findMany({ where: { userId: user.id }, orderBy: { createdAt: "desc" }, take: 10 }),
   ]);
   const tiles = [
@@ -46,6 +56,13 @@ const DashboardPage = async ({ searchParams }: PageProps<"/auth">) => {
       title: "Průběh školního roku",
       note: `${calendarEvents} událostí`,
       Icon: LuCalendarDays,
+    },
+    {
+      href: "/auth/pozadi",
+      permission: "pozadi",
+      title: "Pozadí stránek",
+      note: `${backgrounds} obrázků podle ročního období`,
+      Icon: LuPaintbrush,
     },
     { href: "/auth/uzivatele", permission: "admin", title: "Uživatelé", note: "přístupy do správy", Icon: LuKeyRound },
     { href: "/auth/logy", permission: "admin", title: "Logy", note: "přihlášení a změny", Icon: LuLogs },

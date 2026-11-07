@@ -4,7 +4,7 @@
    (.is-open, .is-selected ...). Every element that is styled gets its own class, so a rule is one class;
    longer selectors only combine a block's state, hover or modifier with one of its own elements
    (.gallery-card:hover .gallery-card__title), or a setting on <html> with a block
-   ([data-bs-theme="dark"], [data-layout="rows"], [data-background]).
+   ([data-bs-theme="dark"], [data-layout="rows"]).
    The exceptions are plain HTML written into the pages (the cells of .data-table and .admin-table) and Bootstrap's own parts,
    which are changed through Bootstrap's CSS variables where it has them, or with its own selectors. */
 @import "./styles/base.css";

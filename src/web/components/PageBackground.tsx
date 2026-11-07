@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
-// seasonal background; the picture is chosen in styles/page.css from data-background on <html> (see lib/background.ts)
+// seasonal background; /pozadi in styles/page.css redirects to today's picture (see app/(site)/pozadi/route.ts)
 const PageBackground = () => {
   const pathname = usePathname();
 
