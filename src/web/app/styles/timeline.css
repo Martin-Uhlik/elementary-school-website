@@ -1,5 +1,7 @@
 /* Průběh školního roku: a vertical timeline, a calendar leaf on the line and a card next to it;
-   from 768px the line is in the middle and the cards alternate left and right */
+   from 768px the line is in the middle and the cards alternate left and right.
+   In the running school year the "Dnes" marker sits between past and upcoming events,
+   past events are muted and an event that is on today is outlined */
 .timeline {
   position: relative;
   display: flex;
@@ -36,7 +38,7 @@
   align-items: center;
   overflow: hidden;
   border-radius: 0.75rem;
-  background: var(--surface);
+  background: var(--surface-muted);
   box-shadow: var(--card-shadow);
   line-height: 1;
   text-align: center;
@@ -100,6 +102,83 @@
   background: var(--bs-success-bg-subtle);
 }
 
+/* events that are over */
+.timeline__item--past .timeline__month {
+  background: var(--bs-secondary);
+}
+
+.timeline__item--past .timeline__day,
+.timeline__item--past .timeline__card {
+  color: var(--bs-secondary-color);
+}
+
+.timeline__item--past .timeline__card {
+  background: var(--surface-muted);
+}
+
+/* an event that is on today */
+.timeline__item--current .timeline__card {
+  box-shadow: 0 0 0 2px var(--bs-primary);
+}
+
+.timeline__item--current .timeline__leaf {
+  box-shadow:
+    0 0 0 2px var(--bs-primary),
+    var(--card-shadow);
+}
+
+.timeline__badge--now {
+  color: #fff;
+  background: var(--bs-primary);
+}
+
+/* "Dnes": a dot on the line, a dashed line across and a label over it */
+.timeline__now {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 4.5rem;
+  scroll-margin-top: 6rem;
+}
+
+.timeline__now::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1.75rem;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid var(--bs-body-bg);
+  border-radius: 50%;
+  background: var(--bs-primary);
+  transform: translate(-50%, -50%);
+}
+
+.timeline__now::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 1.75rem;
+  border-top: 2px dashed var(--bs-primary);
+}
+
+.timeline__now-label {
+  position: relative;
+  z-index: 1;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  color: #fff;
+  background: var(--bs-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.timeline__now-label time {
+  font-weight: 400;
+}
+
 @media (min-width: 768px) {
   .timeline {
     gap: 1.75rem;
@@ -125,12 +204,26 @@
     grid-column: 3;
   }
 
-  .timeline__item:nth-child(even) .timeline__card {
+  /* the "Dnes" marker is an item of the list too, so only events are counted */
+  .timeline__item:nth-child(even of .timeline__item) .timeline__card {
     grid-column: 1;
     text-align: right;
   }
 
-  .timeline__item:nth-child(even) .timeline__date {
+  .timeline__item:nth-child(even of .timeline__item) .timeline__date {
     justify-content: flex-end;
+  }
+
+  .timeline__now {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .timeline__now::before {
+    display: none;
+  }
+
+  .timeline__now::after {
+    left: 0;
   }
 }

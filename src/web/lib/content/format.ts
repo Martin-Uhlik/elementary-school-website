@@ -54,6 +54,12 @@ export const calendarDateLabel = ({ date, endDate }: Pick<CalendarEvent, "date" 
   return `${start.getDate()}.–${dateFormat.format(end)}`;
 };
 
+// Today in the school's time zone as YYYY-MM-DD (the server may run in UTC, so not new Date() alone)
+export const todayIso = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Prague" }).format(new Date());
+
+// "4. září 2023" for a YYYY-MM-DD day
+export const dayLabel = (iso: string) => dateFormat.format(toDate(iso));
+
 // The school year a day belongs to: from September on the year starts, e.g. 2026-10-29 → "2026/2027"
 export const schoolYearOf = (iso: string) => {
   const [year, month] = iso.split("-").map(Number);
