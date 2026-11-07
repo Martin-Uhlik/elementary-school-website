@@ -1,6 +1,7 @@
 import { LuCarrot, LuUtensils } from "react-icons/lu";
 import FeatureLink from "@/components/content/FeatureLink";
 import LinkList from "@/components/content/LinkList";
+import CanteenMenu from "@/components/content/CanteenMenu";
 import ZigZagPath from "@/components/content/ZigZagPath";
 import { getLinkGroup } from "@/lib/content/links";
 
@@ -47,6 +48,9 @@ const JidelnaPage = async () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="article">
+          <CanteenMenu />
         </div>
       </div>
     </>

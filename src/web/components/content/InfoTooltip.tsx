@@ -5,7 +5,16 @@ import { LuInfo } from "react-icons/lu";
 
 // An (i) button with a longer note. It shows on hover (CSS, so the pointer can move onto the note) and on focus or
 // click; Escape hides it until the pointer or focus comes back.
-const InfoTooltip = ({ label, text }: { label: string; text: string }) => {
+// tile: at the right edge of a link tile; inline: a small button in the line of text, the note opens to the right
+const InfoTooltip = ({
+  label,
+  text,
+  variant = "tile",
+}: {
+  label: string;
+  text: string;
+  variant?: "tile" | "inline";
+}) => {
   const id = useId();
   const [open, setOpen] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -26,7 +35,9 @@ const InfoTooltip = ({ label, text }: { label: string; text: string }) => {
   };
 
   return (
-    <span className={`info-tooltip${open ? " is-open" : ""}${dismissed ? " is-dismissed" : ""}`}>
+    <span
+      className={`info-tooltip${variant === "inline" ? " info-tooltip--inline" : ""}${open ? " is-open" : ""}${dismissed ? " is-dismissed" : ""}`}
+    >
       <button
         type="button"
         className="info-tooltip__button"
