@@ -858,8 +858,8 @@ INSERT INTO galleries (id, folder, unit, year, title, date_text, url, date) VALU
 
 INSERT INTO gallery_sections (unit, title, href, cover, sort_order) VALUES
   ('zs', 'Základní škola', '/archiv/zakladni-skola', '/data/images/carousel_1.jpg', 0),
-  ('ms', 'Mateřská škola', '/archiv/materska-skola', '/data/images/carousel_4.jpg', 1),
-  ('druzina', 'Družina', '/archiv/druzina', '/data/images/carousel_5.jpg', 2);
+  ('ms', 'Mateřská škola', '/archiv/materska-skola', '/data/images/materska-skola.webp', 1),
+  ('druzina', 'Družina', '/archiv/druzina', '/data/images/druzina.webp', 2);
 
 INSERT INTO people (id, title_before, first_name, last_name, title_after, name, labels, position, email, description, sort_order) VALUES
   ('uhlikova-ivana', 'Mgr.', 'Ivana', 'Uhlíková', NULL, NULL, ARRAY['Základní informace', 'Učitelé'], 'ředitelka', 'uhlikova@zsmp.cz', '{}', 0),
