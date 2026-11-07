@@ -6,7 +6,7 @@ import { authConfig } from "@/lib/auth/config";
 import { getCurrentUser } from "@/lib/auth/session";
 import "../admin.css";
 
-// The sign-in page: not linked from the site, hidden from search engines (also in robots.txt)
+// The sign-in page: not linked from the site, hidden from search engines, outside ADMIN_ALLOWED_IPS a 404 (proxy.ts)
 export const metadata: Metadata = {
   title: { absolute: "Přihlášení | Správa webu" },
   robots: { index: false, follow: false },

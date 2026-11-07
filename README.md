@@ -43,7 +43,7 @@ The site is then on http://localhost:3000.
 
 ## Admin (`/auth`)
 
-`/admin` is the sign-in page. It is not linked from the site and is hidden from search engines (`noindex`, `robots.txt`). The first user is **admin / zsmp** and has to choose its own password after signing in; until then _Můj účet_ is the only page it can open. Everything else lives under `/auth`, and every page and every change checks the session on the server.
+`/admin` is the sign-in page. It is not linked from the site and is hidden from search engines (`noindex`); outside the allowed networks it does not exist at all (see [Access by IP address](#access-by-ip-address)). The first user is **admin / zsmp** and has to choose its own password after signing in; until then _Můj účet_ is the only page it can open. Everything else lives under `/auth`, and every page and every change checks the session on the server.
 
 | Section         | What it edits                                                                                   | Permission        |
 | --------------- | ----------------------------------------------------------------------------------------------- | ----------------- |
@@ -62,7 +62,17 @@ The site is then on http://localhost:3000.
 - **Průběh roku:** events with a date (or a date range), the school year they belong to, a text (`**bold**` works) and a holiday flag; holidays are green on the site. A new school year starts empty or as a copy of an earlier one with every date moved by a year, and a whole year can be deleted.
 - **Galleries:** a gallery has a title, a unit (ZŠ, MŠ, družina), a date, optionally the date as shown on the site (e.g. "18.–23. 1. 2026") and a video link (e.g. YouTube) instead of photos. Archives are ordered by year and date, newest first. Photos are dragged onto the page and uploaded one by one with a progress bar; the server rotates them by their EXIF data and makes the previews (`thumbnails/`, short side 256 px). Single photos or whole galleries can be deleted.
 
-The sign-in cookie (`zsmp_session`, httpOnly) only travels over HTTPS (IIS). To try the admin over plain http, e.g. http://192.168.100.10:3000, set `COOKIE_SECURE=false` in `.env` for that time. The database keeps only a hash of the cookie's token.
+The sign-in cookie (`zsmp_session`, httpOnly) only travels over HTTPS (IIS). To try the admin over plain http, e.g. http://192.168.100.10:3000, set `COOKIE_SECURE=false` and `ADMIN_ALLOWED_IPS=*` in `.env` for that time. The database keeps only a hash of the cookie's token.
+
+### Access by IP address
+
+The admin answers only to the school network and the VPN. From any other address, `/admin`, everything under `/auth`, the admin's server actions and the photo upload return the site's ordinary 404 page, the same as a mistyped address, so nobody outside can tell there is an admin at all. It is an extra layer: the sign-in, lockout and permissions work as before.
+
+- **Setting:** `ADMIN_ALLOWED_IPS` in `.env`, IP addresses and CIDR ranges separated by commas, IPv4 or IPv6, e.g. `192.168.1.0/24,10.8.0.0/24` (school LAN and the VPN's address pool). Empty means nobody (the admin is locked until it is set), `*` means everyone. On a dev machine (`npm run dev`) an unset value means everyone. Change it and run `docker compose up -d` (no rebuild).
+- **Where it is checked:** `src/web/proxy.ts` (Next.js Proxy) with `lib/adminAccess.ts` and `lib/clientIp.ts`. Requests with a server action are checked on every address, because Next.js accepts an action posted to any page.
+- **The real address behind IIS:** the container sees only IIS, so the browser's address comes from the `X-Forwarded-For` header. A browser can send that header itself, so `web.config` overwrites it with `{REMOTE_ADDR}` (the address IIS saw), ARR may append the same address again, and the app trusts only the last entry. Faking it would mean reaching the container without IIS, and only the server itself can reach 192.168.100.10. The same address goes into the sign-in logs.
+- **Admins on the VPN** must reach the server through the tunnel, not over the internet, or IIS sees their home address. With a split-tunnel VPN, have `zsmp.cz` resolve to the server's LAN address inside the network (internal DNS, or a hosts entry); the HTTPS certificate still fits. The address IIS saw is in _Logy_ next to every sign-in, so after the first sign-in over the VPN, check that it is from the VPN range. Before you switch it on, find the address with a test page or the IIS log (`c-ip`), so you don't lock yourself out; if you do, set `ADMIN_ALLOWED_IPS=*` in the VM for a moment.
+- **Why not IIS's own IP restrictions:** they would give IIS's error page instead of the site's 404, would not catch server actions posted to public pages, and would split the setting between IIS and `.env`.
 
 ## Privacy (GDPR)
 
@@ -92,7 +102,7 @@ The admin uploads into `galerie/`, `dokument/` and `pozadi/`, so the folder must
 
 ## IIS
 
-IIS stays the public web server and forwards requests to the `web` container, so no nginx is needed. `deploy/iis/web.config` is the site's config: it needs the IIS modules [URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) and [Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) (in ARR's _Server Proxy Settings_, tick _Enable proxy_; in URL Rewrite's _View Server Variables_, add `HTTP_X_FORWARDED_PROTO` and `HTTP_X_FORWARDED_HOST`). HTTPS certificates stay in IIS.
+IIS stays the public web server and forwards requests to the `web` container, so no nginx is needed. `deploy/iis/web.config` is the site's config: it needs the IIS modules [URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) and [Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) (in ARR's _Server Proxy Settings_, tick _Enable proxy_; in URL Rewrite's _View Server Variables_, add `HTTP_X_FORWARDED_FOR`, `HTTP_X_FORWARDED_PROTO` and `HTTP_X_FORWARDED_HOST`). HTTPS certificates stay in IIS.
 
 ## Server setup (Windows Server 2019)
 

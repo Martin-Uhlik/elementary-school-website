@@ -16,6 +16,8 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       # set to false only to try the admin over plain http (without IIS and HTTPS)
       COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      # IP addresses / CIDR ranges that may open /admin and /auth (others get 404); empty = nobody
+      ADMIN_ALLOWED_IPS: ${ADMIN_ALLOWED_IPS:-}
       # admin time limits (src/web/lib/auth/config.ts), in minutes / attempts
       AUTH_INACTIVITY_MINUTES: ${AUTH_INACTIVITY_MINUTES:-30}
       AUTH_SESSION_MAX_MINUTES: ${AUTH_SESSION_MAX_MINUTES:-480}

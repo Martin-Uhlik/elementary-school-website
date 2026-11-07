@@ -21,7 +21,8 @@ Photos and documents are read from `media/` in the repository root (or `MEDIA_DI
 
 - `app/(site)/` the public pages, same URLs as the old site without `.html`; `app/(site)/layout.tsx` adds the header, cookie bar and footer.
 - `app/(site)/galerie/[id]/[...file]` and `app/(site)/dokument/[...file]` serve photos and documents from the media folder, so uploads show up at once.
-- `app/admin/` the sign-in page (not linked anywhere, `noindex`, disallowed in `robots.txt`).
+- `app/admin/` the sign-in page (not linked anywhere, `noindex`).
+- `proxy.ts` answers 404 to `/admin`, `/auth` and server actions unless the client IP is in `ADMIN_ALLOWED_IPS` (`lib/adminAccess.ts`, real IP from IIS in `lib/clientIp.ts`). Unset on a dev machine = everyone.
 - `app/auth/` the admin: news, people, documents, galleries, users. Every page and action checks the session (`lib/auth/session.ts`).
 - `lib/content/` what the pages read (one function per need); `lib/content/format.ts` holds the helpers without database access.
 - `lib/admin/` helpers of the admin: document and photo uploads, ordering.
