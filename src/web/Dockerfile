@@ -2,7 +2,7 @@
 # Photos and documents (galerie/, dokument/) are not in the image: docker-compose.yml mounts MEDIA_DIR at /app/media,
 # and the tour videos at public/data/videos.
 
-FROM node:24-alpine AS deps
+FROM node:26-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json prisma.config.ts ./
 COPY prisma ./prisma
@@ -10,14 +10,14 @@ COPY prisma ./prisma
 RUN npm ci
 
 # Also used by the "migrate" service in docker-compose.yml: it has the Prisma CLI and the migrations
-FROM node:24-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npx prisma generate && npm run build
 
-FROM node:24-alpine AS run
+FROM node:26-alpine AS run
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0 MEDIA_DIR=/app/media
 # the standalone server serves public/ and .next/static itself when they sit next to server.js
