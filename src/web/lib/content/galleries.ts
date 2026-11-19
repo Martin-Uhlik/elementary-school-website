@@ -1,5 +1,6 @@
+import { and, asc, desc, eq, isNull, or } from "drizzle-orm";
+import { galleries, gallerySections, type Gallery as GalleryRow } from "@zsmp/db/schema";
 import { db } from "@/lib/db";
-import type { Gallery as GalleryRow } from "@/lib/generated/prisma/client";
 import { galleryLabel, yearAnchor } from "@/lib/content/format";
 import { isoDate } from "@/lib/content/misc";
 import type { Gallery, GallerySection, Unit } from "@/lib/content/types";
@@ -16,14 +17,27 @@ export const toGallery = (row: GalleryRow): Gallery => ({
 });
 
 // newest first; galleries of the same day keep the order of their folder names
-export const galleryOrder = [{ year: "desc" }, { date: "desc" }, { id: "asc" }] as const;
+export const galleryOrder = [desc(galleries.year), desc(galleries.date), asc(galleries.id)];
 
 export const getGalleries = async (unit?: Unit) =>
-  (await (await db()).gallery.findMany({ where: { unit }, orderBy: [...galleryOrder] })).map(toGallery);
+  (
+    await (
+      await db()
+    )
+      .select()
+      .from(galleries)
+      .where(unit && eq(galleries.unit, unit))
+      .orderBy(...galleryOrder)
+  ).map(toGallery);
 
 // The section tiles with how many galleries each has and which years they span
 export const getGallerySections = async () => {
-  const sections: GallerySection[] = await (await db()).gallerySection.findMany({ orderBy: { sortOrder: "asc" } });
+  const sections: GallerySection[] = await (
+    await db()
+  )
+    .select()
+    .from(gallerySections)
+    .orderBy(asc(gallerySections.sortOrder));
   const galleries = await getGalleries();
   return sections.map(({ unit, title, href, cover }) => {
     const items = galleries.filter((g) => g.unit === unit);
@@ -44,11 +58,18 @@ export const getGalleryArchive = async (unit: Unit) => {
 // Title of a photo folder (when it has no meta.json) and the year of its archive page to go back to
 export const getGalleryEntry = async (folder: string) => {
   const client = await db();
-  const row = await client.gallery.findFirst({
-    where: { OR: [{ folder }, { id: folder, folder: null }], url: null },
-  });
+  const [row] = await client
+    .select()
+    .from(galleries)
+    .where(
+      and(
+        or(eq(galleries.folder, folder), and(eq(galleries.id, folder), isNull(galleries.folder))),
+        isNull(galleries.url),
+      ),
+    )
+    .limit(1);
   if (!row) return undefined;
-  const section = await client.gallerySection.findUnique({ where: { unit: row.unit } });
+  const [section] = await client.select().from(gallerySections).where(eq(gallerySections.unit, row.unit));
   return {
     title: galleryLabel(toGallery(row)),
     back: section ? `${section.href}#${yearAnchor(row.year)}` : undefined,

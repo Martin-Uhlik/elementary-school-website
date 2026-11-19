@@ -7,7 +7,9 @@ import { optional, text } from "@/lib/admin/form";
 import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
 import { calendarDateLabel } from "@/lib/content/format";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { calendarEvents } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -30,8 +32,8 @@ export const saveEvent = async (id: string | undefined, data: FormData): Promise
     holiday: data.get("holiday") === "on",
     text: eventText,
   };
-  if (id) await prisma.calendarEvent.update({ where: { id }, data: fields });
-  else await prisma.calendarEvent.create({ data: fields });
+  if (id) await database.update(calendarEvents).set(fields).where(eq(calendarEvents.id, id));
+  else await database.insert(calendarEvents).values(fields);
   const label = calendarDateLabel({ date, endDate: endDate ?? undefined });
   await logActivity(user, "kalendar", `${id ? "Upravena" : "Přidána"} událost ${label} (${schoolYear})`);
   revalidatePath("/", "layout");
@@ -40,7 +42,8 @@ export const saveEvent = async (id: string | undefined, data: FormData): Promise
 
 export const deleteEvent = async (id: string) => {
   const user = await requireUser({ section: "kalendar" });
-  const event = await prisma.calendarEvent.delete({ where: { id } });
+  const [event] = await database.delete(calendarEvents).where(eq(calendarEvents.id, id)).returning();
+  if (!event) return;
   const label = calendarDateLabel({
     date: event.date.toISOString().slice(0, 10),
     endDate: event.endDate?.toISOString().slice(0, 10),
@@ -63,25 +66,27 @@ export const createYear = async (data: FormData): Promise<ActionState> => {
   const [first, second] = schoolYear.split("/").map(Number);
   if (!/^\d{4}\/\d{4}$/.test(schoolYear) || second !== first + 1)
     return { error: "Školní rok zadejte jako 2026/2027." };
-  if (await prisma.calendarEvent.count({ where: { schoolYear } })) return { error: `Rok ${schoolYear} už existuje.` };
+  if (await database.$count(calendarEvents, eq(calendarEvents.schoolYear, schoolYear)))
+    return { error: `Rok ${schoolYear} už existuje.` };
   if (!copyFrom) redirect(`/auth/prubeh-roku/nova?rok=${encodeURIComponent(schoolYear)}`);
 
-  const events = await prisma.calendarEvent.findMany({ where: { schoolYear: copyFrom } });
+  const events = await database.select().from(calendarEvents).where(eq(calendarEvents.schoolYear, copyFrom));
   const shift = first - Number(copyFrom.slice(0, 4));
   const move = (date: Date) => {
     let moved = date;
     for (let i = 0; i < shift; i++) moved = nextYear(moved.toISOString().slice(0, 10));
     return moved;
   };
-  await prisma.calendarEvent.createMany({
-    data: events.map(({ date, endDate, holiday, text: eventText }) => ({
-      schoolYear,
-      date: move(date),
-      endDate: endDate ? move(endDate) : null,
-      holiday,
-      text: eventText,
-    })),
-  });
+  if (events.length > 0)
+    await database.insert(calendarEvents).values(
+      events.map(({ date, endDate, holiday, text: eventText }) => ({
+        schoolYear,
+        date: move(date),
+        endDate: endDate ? move(endDate) : null,
+        holiday,
+        text: eventText,
+      })),
+    );
   await logActivity(user, "kalendar", `Přidán školní rok ${schoolYear} (kopie ${copyFrom}, ${events.length} událostí)`);
   revalidatePath("/", "layout");
   redirect(`/auth/prubeh-roku?rok=${encodeURIComponent(schoolYear)}`);
@@ -89,8 +94,11 @@ export const createYear = async (data: FormData): Promise<ActionState> => {
 
 export const deleteYear = async (schoolYear: string) => {
   const user = await requireUser({ section: "kalendar" });
-  const { count } = await prisma.calendarEvent.deleteMany({ where: { schoolYear } });
-  await logActivity(user, "kalendar", `Smazán školní rok ${schoolYear} (${count} událostí)`);
+  const deleted = await database
+    .delete(calendarEvents)
+    .where(eq(calendarEvents.schoolYear, schoolYear))
+    .returning({ id: calendarEvents.id });
+  await logActivity(user, "kalendar", `Smazán školní rok ${schoolYear} (${deleted.length} událostí)`);
   revalidatePath("/", "layout");
   redirect("/auth/prubeh-roku");
 };

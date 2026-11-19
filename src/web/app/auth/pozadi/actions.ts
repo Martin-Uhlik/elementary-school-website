@@ -8,7 +8,9 @@ import { errorMessage, text } from "@/lib/admin/form";
 import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
 import { DAYS_IN_MONTH, formatThemeDates, hasDates, type ThemeDates } from "@/lib/background";
-import { prisma } from "@/lib/db";
+import { and, eq, ne } from "drizzle-orm";
+import { backgroundThemes } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const number = (data: FormData, name: string) => Number(text(data, name)) || null;
 
@@ -40,13 +42,16 @@ export const saveTheme = async (id: string | undefined, data: FormData): Promise
 
   if (!hasDates(dates) && active) {
     const otherDefault = (
-      await prisma.backgroundTheme.findMany({ where: { active: true, id: id ? { not: id } : undefined } })
+      await database
+        .select()
+        .from(backgroundThemes)
+        .where(and(eq(backgroundThemes.active, true), id ? ne(backgroundThemes.id, id) : undefined))
     ).find((theme) => !hasDates(theme));
     if (otherDefault)
       return { error: `Výchozí pozadí už je „${otherDefault.name}“. Vyplňte období, nebo to druhé nejdřív vypněte.` };
   }
 
-  const previous = id ? await prisma.backgroundTheme.findUnique({ where: { id } }) : null;
+  const [previous] = id ? await database.select().from(backgroundThemes).where(eq(backgroundThemes.id, id)) : [];
   let src: string | undefined;
   try {
     src = await saveBackground(data.get("file"));
@@ -56,8 +61,8 @@ export const saveTheme = async (id: string | undefined, data: FormData): Promise
   if (!src && !previous) return { error: "Nahrajte obrázek pozadí." };
 
   const fields = { name, ...dates, active, ...(src && { src }) };
-  if (id) await prisma.backgroundTheme.update({ where: { id }, data: fields });
-  else await prisma.backgroundTheme.create({ data: { ...fields, src: src! } });
+  if (id) await database.update(backgroundThemes).set(fields).where(eq(backgroundThemes.id, id));
+  else await database.insert(backgroundThemes).values({ ...fields, src: src! });
   if (previous && src) await deleteUnusedBackground(previous.src);
   await logActivity(
     user,
@@ -70,7 +75,8 @@ export const saveTheme = async (id: string | undefined, data: FormData): Promise
 
 export const deleteTheme = async (id: string) => {
   const user = await requireUser({ section: "pozadi" });
-  const theme = await prisma.backgroundTheme.delete({ where: { id } });
+  const [theme] = await database.delete(backgroundThemes).where(eq(backgroundThemes.id, id)).returning();
+  if (!theme) return;
   await deleteUnusedBackground(theme.src);
   await logActivity(user, "pozadi", `Smazáno pozadí „${theme.name}“`);
   revalidatePath("/auth/pozadi");

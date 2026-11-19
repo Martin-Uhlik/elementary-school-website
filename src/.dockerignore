@@ -1,0 +1,12 @@
+# The build context of both images is src/ (the npm workspace with web and db)
+**/node_modules
+**/.next
+**/out
+**/.env*
+**/npm-debug.log*
+**/*.tsbuildinfo
+**/next-env.d.ts
+**/Dockerfile
+.dockerignore
+# mounted from the host by docker-compose.yml, not baked into the image
+web/public/data/videos

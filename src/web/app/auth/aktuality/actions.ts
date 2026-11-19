@@ -7,7 +7,9 @@ import { saveDocument } from "@/lib/admin/documents";
 import { errorMessage, optional, text } from "@/lib/admin/form";
 import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { news } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 // Creates (id undefined) or updates a news item; an uploaded file replaces the link
 export const saveNews = async (id: string | undefined, data: FormData): Promise<ActionState> => {
@@ -30,8 +32,8 @@ export const saveNews = async (id: string | undefined, data: FormData): Promise<
     href,
     published: data.get("published") === "on",
   };
-  if (id) await prisma.news.update({ where: { id }, data: fields });
-  else await prisma.news.create({ data: fields });
+  if (id) await database.update(news).set(fields).where(eq(news.id, id));
+  else await database.insert(news).values(fields);
   await logActivity(user, "aktuality", `${id ? "Upravena" : "Přidána"} aktualita „${title}“`);
   revalidatePath("/", "layout");
   redirect("/auth/aktuality");
@@ -39,7 +41,8 @@ export const saveNews = async (id: string | undefined, data: FormData): Promise<
 
 export const deleteNews = async (id: string) => {
   const user = await requireUser({ section: "aktuality" });
-  const news = await prisma.news.delete({ where: { id } });
-  await logActivity(user, "aktuality", `Smazána aktualita „${news.title}“`);
+  const [item] = await database.delete(news).where(eq(news.id, id)).returning();
+  if (!item) return;
+  await logActivity(user, "aktuality", `Smazána aktualita „${item.title}“`);
   revalidatePath("/", "layout");
 };

@@ -23,7 +23,10 @@ services:
       - web
 
   web:
-    build: ./src/web
+    # built from src/ because the app imports the tables from src/db
+    build:
+      context: ./src
+      dockerfile: web/Dockerfile
     restart: unless-stopped
     ports:
       # only for this machine (curl, an SSH tunnel); the public traffic comes through caddy. Nothing else may reach
@@ -34,7 +37,7 @@ services:
       # galerie/, dokument/ and pozadi/, so the folder must be writable for the container's user (uid 1000).
       # Z: relabel for SELinux (AlmaLinux), no effect elsewhere
       - ${MEDIA_DIR:-./media}:/app/media:Z
-      - ${MEDIA_DIR:-./media}/videos:/app/public/data/videos:ro,Z
+      - ${MEDIA_DIR:-./media}/videos:/app/web/public/data/videos:ro,Z
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       # set to false only to try the admin over plain http (SITE_ADDRESS=:80, no HTTPS)
@@ -51,13 +54,12 @@ services:
       migrate:
         condition: service_completed_successfully
 
-  # Runs once on every "up": applies new Prisma migrations, then fills an empty database
-  # (the site's content and the user admin / zsmp); existing data is left alone
+  # Runs once on every "up": applies new migrations (src/db/migrations), then fills an empty database
+  # (the site's content and the user admin / zsmp); existing data is left alone. Only src/db, no Next.js.
   migrate:
     build:
-      context: ./src/web
-      target: build
-    command: sh -c "npx prisma migrate deploy && npx prisma db seed"
+      context: ./src
+      dockerfile: db/Dockerfile
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     depends_on:
@@ -65,9 +67,11 @@ services:
         condition: service_healthy
 
   db:
-    build: ./src/db
+    image: postgres:18-alpine
     restart: unless-stopped
     environment:
+      # Czech collation, so ORDER BY puts "Č" after "C" and "Ch" after "H" (applies when the volume is created)
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale-provider=icu --icu-locale=cs-CZ
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

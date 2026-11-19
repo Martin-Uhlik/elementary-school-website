@@ -3,11 +3,16 @@ import { saveTheme } from "../actions";
 import BackgroundForm from "@/components/admin/BackgroundForm";
 import PageTitle from "@/components/admin/PageTitle";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { backgroundThemes } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const EditBackgroundPage = async ({ params }: PageProps<"/auth/pozadi/[id]">) => {
   await requireUser({ section: "pozadi" });
-  const theme = await prisma.backgroundTheme.findUnique({ where: { id: (await params).id } });
+  const [theme] = await database
+    .select()
+    .from(backgroundThemes)
+    .where(eq(backgroundThemes.id, (await params).id));
   if (!theme) notFound();
   return (
     <>

@@ -7,15 +7,18 @@ import ConfirmButton from "@/components/admin/ConfirmButton";
 import MoveButtons from "@/components/admin/MoveButtons";
 import { pageName } from "@/lib/admin/pages";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { linkGroups } from "@zsmp/db/schema";
+import { withLinks } from "@/lib/content/links";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 // One list of documents: its heading, its items in order, and buttons to add, edit, move and delete
 const GroupAdminPage = async ({ params }: PageProps<"/auth/dokumenty/[group]">) => {
   await requireUser({ section: "dokumenty" });
-  const group = await prisma.linkGroup.findUnique({
-    where: { id: (await params).group },
-    include: { links: { orderBy: { sortOrder: "asc" } } },
+  const group = await database.query.linkGroups.findFirst({
+    where: eq(linkGroups.id, (await params).group),
+    with: withLinks,
   });
   if (!group) notFound();
   return (

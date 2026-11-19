@@ -1,6 +1,11 @@
-# PostgreSQL for the site. The tables and the first content come from the web app:
-# Prisma migrations + seed (src/web/prisma), run by the "migrate" service in docker-compose.yml.
-FROM postgres:18-alpine
-
-# Czech collation, so ORDER BY puts "Č" after "C" and "Ch" after "H"
-ENV POSTGRES_INITDB_ARGS="--encoding=UTF8 --locale-provider=icu --icu-locale=cs-CZ"
+# The "migrate" container: applies new migrations, then fills an empty database (seed), and exits.
+# Built from src/ (the npm workspace), see docker-compose.yml. No Next.js inside, only drizzle-orm and pg.
+FROM node:26-alpine
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY db/package.json db/
+COPY web/package.json web/
+RUN npm ci --workspace db --omit=dev
+COPY db db
+WORKDIR /app/db
+CMD ["sh", "-c", "npm run migrate && npm run seed"]

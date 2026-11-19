@@ -12,20 +12,35 @@ import {
 import LoginEventsTable from "@/components/admin/LoginEventsTable";
 import { can } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { desc, eq } from "drizzle-orm";
+import {
+  backgroundThemes,
+  calendarEvents as calendarEventsTable,
+  galleries as galleriesTable,
+  links as linksTable,
+  loginEvents,
+  news as newsTable,
+  people as peopleTable,
+} from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 // The start of the admin area: a tile per section the user may open, and their own recent sign-ins
 const DashboardPage = async ({ searchParams }: PageProps<"/auth">) => {
   const user = await requireUser();
   const denied = (await searchParams).pristup === "odepren";
   const [news, people, links, galleries, calendarEvents, backgrounds, events] = await Promise.all([
-    prisma.news.count({ where: { published: true } }),
-    prisma.person.count(),
-    prisma.link.count(),
-    prisma.gallery.count(),
-    prisma.calendarEvent.count(),
-    prisma.backgroundTheme.count(),
-    prisma.loginEvent.findMany({ where: { userId: user.id }, orderBy: { createdAt: "desc" }, take: 10 }),
+    database.$count(newsTable, eq(newsTable.published, true)),
+    database.$count(peopleTable),
+    database.$count(linksTable),
+    database.$count(galleriesTable),
+    database.$count(calendarEventsTable),
+    database.$count(backgroundThemes),
+    database
+      .select()
+      .from(loginEvents)
+      .where(eq(loginEvents.userId, user.id))
+      .orderBy(desc(loginEvents.createdAt))
+      .limit(10),
   ]);
   const tiles = [
     {

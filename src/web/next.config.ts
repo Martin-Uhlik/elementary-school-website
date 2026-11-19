@@ -1,3 +1,4 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 
 // old Myšák exercise numbers → the rewritten pages
@@ -15,6 +16,10 @@ const mysak: Record<string, string> = {
 const nextConfig: NextConfig = {
   // a self-contained server in .next/standalone, used by the Docker image
   output: "standalone",
+  // src/ is an npm workspace (web + db): packages are installed in src/node_modules and the tables come from ../db
+  outputFileTracingRoot: path.resolve(".."),
+  turbopack: { root: path.resolve("..") },
+  transpilePackages: ["@zsmp/db"],
   // documents uploaded in /auth go through server actions (Caddy in front sets no size limit)
   experimental: { serverActions: { bodySizeLimit: "50mb" } },
   // keep old links (bookmarks, search engines) working after dropping the .html suffix

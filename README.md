@@ -3,7 +3,7 @@
 The website of Základní škola a Mateřská škola, Moravský Písek, příspěvková organizace, rebuilt from a static site that was over 10 years old. It has a simple, clear layout for parents, teachers and pupils, works on phones, has a light and a dark theme, and comes with an admin where the school edits news, contacts, documents, galleries and the school year calendar itself.
 
 - **Web:** Next.js 16 (App Router, React 19, TypeScript) with Bootstrap 5 and plain CSS (BEM, one file per block in `src/web/app/styles/`), in `src/web`
-- **Data:** PostgreSQL 18 through Prisma 7; photos and documents in a media folder on the server
+- **Data:** PostgreSQL 18 through Drizzle ORM; photos and documents in a media folder on the server
 - **Running:** Docker Compose on an AlmaLinux VM, with Caddy in front for HTTPS (see [Server setup](#server-setup-almalinux-vm))
 - **Checked with:** ESLint (with the jsx-a11y accessibility rules), Prettier, and axe (WCAG 2.2 AA) on every page in both themes, on desktop and phone
 
@@ -32,7 +32,7 @@ The admin:
 
 ## Run with Docker
 
-The site runs as four containers: `caddy` (the public web server with HTTPS, `deploy/caddy/Caddyfile`), `web` (Next.js with the admin, `src/web`), `db` (PostgreSQL 18, `src/db`) and `migrate`, which runs once on every start: it applies new database migrations and fills an empty database.
+The site runs as four containers: `caddy` (the public web server with HTTPS, `deploy/caddy/Caddyfile`), `web` (Next.js with the admin, `src/web`), `db` (PostgreSQL 18) and `migrate` (`src/db`), which runs once on every start: it applies new database migrations and fills an empty database.
 
 ```bash
 cp .env.example .env    # then set a real POSTGRES_PASSWORD; on a dev machine also SITE_ADDRESS=:80
@@ -95,9 +95,9 @@ The admin uploads into `galerie/`, `dokument/` and `pozadi/`, so the folder must
 ## Database
 
 - The data lives in the Docker volume `db-data`, which survives restarts and rebuilds. Back it up with `docker compose exec db pg_dump -U zsmp zsmp > backup.sql`.
-- Prisma owns the tables: `src/web/prisma/schema.prisma` and the migrations in `src/web/prisma/migrations/`. The `migrate` service applies them on every `docker compose up`.
-- The first content (as it was in `src/web/data/*.ts`) is `src/web/prisma/seed/content.sql`; it is loaded only into an empty database. From then on the content is edited in the admin.
-- If you started the database before Prisma took over (its tables came from `src/db/init/`), either start from scratch with `docker compose down -v` (this deletes all data in it) or keep it with `docker compose run --rm migrate npx prisma migrate resolve --applied 0_init` and then `docker compose up -d`.
+- Drizzle owns the tables: `src/db/schema.ts` and the SQL migrations in `src/db/migrations/` ([`src/db/README.md`](src/db/README.md)). The `migrate` container (only `src/db`, no Next.js) applies them on every `docker compose up` (applied ones are listed in the table `drizzle.__drizzle_migrations`).
+- The first content (as it was in `src/web/data/*.ts`) is `src/db/seed/content.sql`; it is loaded only into an empty database. From then on the content is edited in the admin.
+- A database made while the site still used Prisma (it has the table `_prisma_migrations`) does not fit the Drizzle migrations: start it from scratch with `docker compose down -v` (this deletes all data in it) and `docker compose up -d --build`.
 - The database listens only on 127.0.0.1:5432 inside the VM. To open it in DBeaver or pgAdmin, use their SSH tunnel option to the VM.
 
 ## Web server (Caddy)

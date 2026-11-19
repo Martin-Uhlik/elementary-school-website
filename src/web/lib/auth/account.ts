@@ -1,6 +1,8 @@
 import "server-only";
 import { PERMISSIONS } from "@/lib/auth/sections";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { users } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const MIN_LENGTH = 8;
 
@@ -8,7 +10,7 @@ const MIN_LENGTH = 8;
 export const checkUsername = async (username: string, userId?: number) => {
   if (!/^[A-Za-z0-9._-]{3,40}$/.test(username))
     return "Jméno: 3–40 znaků, jen písmena bez diakritiky, číslice, tečka, pomlčka.";
-  const other = await prisma.user.findUnique({ where: { username } });
+  const [other] = await database.select({ id: users.id }).from(users).where(eq(users.username, username));
   if (other && other.id !== userId) return "Uživatel s tímto jménem už existuje.";
 };
 

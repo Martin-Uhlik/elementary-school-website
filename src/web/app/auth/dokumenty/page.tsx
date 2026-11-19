@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { pageName } from "@/lib/admin/pages";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { asc, count, eq, getTableColumns } from "drizzle-orm";
+import { linkGroups, links } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 // Every page of the site with its lists of documents and links
 const DocumentsAdminPage = async () => {
   await requireUser({ section: "dokumenty" });
-  const groups = await prisma.linkGroup.findMany({
-    orderBy: { sortOrder: "asc" },
-    include: { _count: { select: { links: true } } },
-  });
+  const groups = await database
+    .select({ ...getTableColumns(linkGroups), links: count(links.id) })
+    .from(linkGroups)
+    .leftJoin(links, eq(links.groupId, linkGroups.id))
+    .groupBy(linkGroups.id)
+    .orderBy(asc(linkGroups.sortOrder));
   const pages = [...new Set(groups.map((g) => g.page))];
   return (
     <>
@@ -30,7 +34,7 @@ const DocumentsAdminPage = async () => {
                 .map((group) => (
                   <li key={group.id}>
                     <Link href={`/auth/dokumenty/${group.id}`}>{group.title ?? pageName(page)}</Link>{" "}
-                    <span className="text-body-secondary small">({group._count.links})</span>
+                    <span className="text-body-secondary small">({group.links})</span>
                   </li>
                 ))}
             </ul>

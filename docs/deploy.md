@@ -27,15 +27,15 @@ No IIS: Caddy in Docker is the web server and handles HTTPS by itself. The old s
 ## 1. Commit, tag and push (on the Mac)
 
 1. Check what is not committed: `git status`. The untracked `src/web/public/informatika/programovani*/*.sb3` files with accents in their names are macOS duplicates of files that are already committed; do **not** add them.
-2. Run the checks in `src/web`:
+2. Run the checks in `src` (the npm workspace with `web` and `db`):
    ```bash
-   cd src/web
+   cd src
    npm ci
-   npm run lint && npm run format:check && npm run build
+   npm run lint && npm run format:check -w web && npm run build
    ```
 3. Commit the changed files, tag the release and push:
    ```bash
-   git add .env.example README.md docker-compose.yml deploy docs src/web
+   git add .env.example README.md docker-compose.yml deploy docs src
    git commit -m "feat: deploy on AlmaLinux with Caddy"
    git tag -a v2.0.0 -m "Next.js site"
    git push origin main --tags
@@ -156,7 +156,7 @@ docker compose up -d --build web
 What happens:
 
 1. `db` starts (Postgres 18, Czech collation) and waits until healthy.
-2. `migrate` runs `npx prisma migrate deploy` (all migrations in `src/web/prisma/migrations/`), then `npx prisma db seed`, which loads `seed/content.sql` **only into an empty database** and creates the user **admin / zsmp** only when there are no users. Then it exits.
+2. `migrate` (a small image with only `src/db`) runs `npm run migrate` (the migrations in `src/db/migrations/` the database does not have yet), then `npm run seed`, which loads `seed/content.sql` **only into an empty database** and creates the user **admin / zsmp** only when there are no users. Then it exits.
 3. `web` starts when `migrate` finished successfully.
 
 Check:
@@ -284,7 +284,7 @@ Run it from outside (a phone on mobile data), from the school network and over t
 ### Server and containers
 
 - [ ] `docker compose ps -a`: `caddy`, `db` and `web` Up, `migrate` Exited (0)
-- [ ] `docker compose logs migrate` ends without errors; `docker compose exec db psql -U zsmp -c "select count(*) from _prisma_migrations"` = the number of folders in `src/web/prisma/migrations/`
+- [ ] `docker compose logs migrate` ends without errors; `docker compose exec db psql -U zsmp -c "select count(*) from drizzle.__drizzle_migrations"` = the number of `.sql` files in `src/db/migrations/`
 - [ ] After `sudo reboot` of the VM the site comes back by itself, and the Synology is mounted again (`df -h /mnt/nas`)
 - [ ] `getenforce` still says `Enforcing`, and uploads in the admin work (an SELinux problem would show up here)
 

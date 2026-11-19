@@ -1,4 +1,4 @@
-// Shapes of the site content as the pages use them; lib/content/* reads them from the database (prisma/schema.prisma).
+// Shapes of the site content as the pages use them; lib/content/* reads them from the database (db/schema.ts).
 
 // A heading with a list of links on a page, e.g. "Výroční zprávy" on /dokumenty
 export type LinkGroup = {

@@ -1,5 +1,6 @@
+import { asc, eq } from "drizzle-orm";
+import { linkGroups, links, type Link as LinkRow, type LinkGroup as LinkGroupRow } from "@zsmp/db/schema";
 import { db } from "@/lib/db";
-import type { Link as LinkRow, LinkGroup as LinkGroupRow } from "@/lib/generated/prisma/client";
 import type { Link, LinkGroup } from "@/lib/content/types";
 
 export type LinkGroupWithLinks = LinkGroup & { links: Link[] };
@@ -20,14 +21,22 @@ const toGroup = (row: LinkGroupRow & { links: LinkRow[] }): LinkGroupWithLinks =
   links: row.links.map(toLink),
 });
 
-const include = { links: { orderBy: { sortOrder: "asc" } } } as const;
+export const withLinks = { links: { orderBy: asc(links.sortOrder) } };
 
 // All link groups shown on a page, in display order
 export const getLinkGroups = async (page: string) =>
-  (await (await db()).linkGroup.findMany({ where: { page }, orderBy: { sortOrder: "asc" }, include })).map(toGroup);
+  (
+    await (
+      await db()
+    ).query.linkGroups.findMany({
+      where: eq(linkGroups.page, page),
+      orderBy: [asc(linkGroups.sortOrder)],
+      with: withLinks,
+    })
+  ).map(toGroup);
 
 export const getLinkGroup = async (id: string) => {
-  const group = await (await db()).linkGroup.findUnique({ where: { id }, include });
+  const group = await (await db()).query.linkGroups.findFirst({ where: eq(linkGroups.id, id), with: withLinks });
   if (!group) throw new Error(`Unknown link group: ${id}`);
   return toGroup(group);
 };

@@ -1,5 +1,6 @@
+import { arrayContains, asc } from "drizzle-orm";
+import { people, phones, type Person as PersonRow, type Phone as PhoneRow } from "@zsmp/db/schema";
 import { db } from "@/lib/db";
-import type { Person as PersonRow, Phone as PhoneRow } from "@/lib/generated/prisma/client";
 import type { Person } from "@/lib/content/types";
 
 export const toPerson = (row: PersonRow & { phones: PhoneRow[] }): Person => ({
@@ -16,16 +17,16 @@ export const toPerson = (row: PersonRow & { phones: PhoneRow[] }): Person => ({
   description: row.description,
 });
 
-export const personInclude = { phones: { orderBy: { sortOrder: "asc" } } } as const;
+export const withPhones = { phones: { orderBy: asc(phones.sortOrder) } };
 
 // Everyone with a label, in display order
 export const getPeople = async (label: string) =>
   (
     await (
       await db()
-    ).person.findMany({
-      where: { labels: { has: label } },
-      orderBy: { sortOrder: "asc" },
-      include: personInclude,
+    ).query.people.findMany({
+      where: arrayContains(people.labels, [label]),
+      orderBy: [asc(people.sortOrder)],
+      with: withPhones,
     })
   ).map(toPerson);

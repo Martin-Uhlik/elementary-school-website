@@ -5,9 +5,10 @@ import { UNIT_LABELS } from "@/components/admin/GalleryForm";
 import { requireUser } from "@/lib/auth/session";
 import { galleryFolder } from "@/lib/content/format";
 import { galleryOrder, toGallery } from "@/lib/content/galleries";
-import { prisma } from "@/lib/db";
+import { and, desc, eq } from "drizzle-orm";
+import { galleries as galleriesTable, type Unit } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import { listPhotos } from "@/lib/galleries";
-import type { Unit } from "@/lib/generated/prisma/client";
 import PageTitle from "@/components/admin/PageTitle";
 
 // Galleries of one unit (?jednotka=zs), all years or one (&rok=2026), newest first by their date
@@ -16,17 +17,20 @@ const GalleriesAdminPage = async ({ searchParams }: PageProps<"/auth/galerie">) 
   const query = await searchParams;
   const unit: Unit = (Object.keys(UNIT_LABELS).find((u) => u === query.jednotka) as Unit | undefined) ?? "zs";
   const years = (
-    await prisma.gallery.findMany({
-      where: { unit },
-      distinct: ["year"],
-      select: { year: true },
-      orderBy: { year: "desc" },
-    })
+    await database
+      .selectDistinct({ year: galleriesTable.year })
+      .from(galleriesTable)
+      .where(eq(galleriesTable.unit, unit))
+      .orderBy(desc(galleriesTable.year))
   ).map((g) => g.year);
   const year = years.find((y) => String(y) === query.rok);
-  const galleries = (await prisma.gallery.findMany({ where: { unit, year }, orderBy: [...galleryOrder] })).map(
-    toGallery,
-  );
+  const galleries = (
+    await database
+      .select()
+      .from(galleriesTable)
+      .where(and(eq(galleriesTable.unit, unit), year === undefined ? undefined : eq(galleriesTable.year, year)))
+      .orderBy(...galleryOrder)
+  ).map(toGallery);
   const counts = await Promise.all(
     galleries.map(async (g) => (g.url ? null : (await listPhotos(galleryFolder(g))).length)),
   );

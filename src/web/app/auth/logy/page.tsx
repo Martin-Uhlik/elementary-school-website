@@ -5,7 +5,9 @@ import { formatDateTime, startOfPragueDay } from "@/lib/admin/time";
 import { authConfig } from "@/lib/auth/config";
 import { PERMISSION_LABELS } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { and, asc, desc, eq, gte, lt } from "drizzle-orm";
+import { activities, loginEvents, users } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 const PAGE_SIZE = 100;
@@ -25,19 +27,42 @@ const LogsPage = async ({ searchParams }: PageProps<"/auth/logy">) => {
   const to = DAY.test(param(query.do)) ? param(query.do) : "";
   const page = Math.max(1, Number(param(query.strana)) || 1);
 
-  const createdAt = {
-    ...(from && { gte: startOfPragueDay(from) }),
-    // "do" includes the whole day
-    ...(to && { lt: startOfPragueDay(new Date(Date.parse(to) + 86400000).toISOString().slice(0, 10)) }),
-  };
-  const where = { userId, createdAt };
-  const paging = { orderBy: { createdAt: "desc" as const }, skip: (page - 1) * PAGE_SIZE, take: PAGE_SIZE + 1 };
-  const [users, events, activities] = await Promise.all([
-    prisma.user.findMany({ orderBy: { username: "asc" }, select: { id: true, username: true, realName: true } }),
-    kind === "prihlaseni" ? prisma.loginEvent.findMany({ where, ...paging }) : [],
-    kind === "cinnost" ? prisma.activity.findMany({ where, ...paging }) : [],
+  // the same filter for both tables
+  const filter = (table: typeof loginEvents | typeof activities) =>
+    and(
+      userId === undefined ? undefined : eq(table.userId, userId),
+      from ? gte(table.createdAt, startOfPragueDay(from)) : undefined,
+      // "do" includes the whole day
+      to
+        ? lt(table.createdAt, startOfPragueDay(new Date(Date.parse(to) + 86400000).toISOString().slice(0, 10)))
+        : undefined,
+    );
+  const offset = (page - 1) * PAGE_SIZE;
+  const [userList, events, changes] = await Promise.all([
+    database
+      .select({ id: users.id, username: users.username, realName: users.realName })
+      .from(users)
+      .orderBy(asc(users.username)),
+    kind === "prihlaseni"
+      ? database
+          .select()
+          .from(loginEvents)
+          .where(filter(loginEvents))
+          .orderBy(desc(loginEvents.createdAt))
+          .offset(offset)
+          .limit(PAGE_SIZE + 1)
+      : [],
+    kind === "cinnost"
+      ? database
+          .select()
+          .from(activities)
+          .where(filter(activities))
+          .orderBy(desc(activities.createdAt))
+          .offset(offset)
+          .limit(PAGE_SIZE + 1)
+      : [],
   ]);
-  const rows = kind === "prihlaseni" ? events.length : activities.length;
+  const rows = kind === "prihlaseni" ? events.length : changes.length;
   const more = rows > PAGE_SIZE;
 
   const href = (changes: Record<string, string | number>) => {
@@ -76,7 +101,7 @@ const LogsPage = async ({ searchParams }: PageProps<"/auth/logy">) => {
           </label>
           <select id="uzivatel" name="uzivatel" className="form-select" defaultValue={userId ?? ""}>
             <option value="">Všichni</option>
-            {users.map((user) => (
+            {userList.map((user) => (
               <option key={user.id} value={user.id}>
                 {user.username}
                 {user.realName ? ` (${user.realName})` : ""}
@@ -121,7 +146,7 @@ const LogsPage = async ({ searchParams }: PageProps<"/auth/logy">) => {
                 </tr>
               </thead>
               <tbody>
-                {activities.slice(0, PAGE_SIZE).map((activity) => (
+                {changes.slice(0, PAGE_SIZE).map((activity) => (
                   <tr key={activity.id}>
                     <td className="text-nowrap">{formatDateTime(activity.createdAt)}</td>
                     <td>{activity.username}</td>

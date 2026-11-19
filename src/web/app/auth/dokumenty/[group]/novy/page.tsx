@@ -2,12 +2,17 @@ import { notFound } from "next/navigation";
 import { saveLink } from "../../actions";
 import LinkForm from "@/components/admin/LinkForm";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { linkGroups } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 const NewLinkPage = async ({ params }: PageProps<"/auth/dokumenty/[group]/novy">) => {
   await requireUser({ section: "dokumenty" });
-  const group = await prisma.linkGroup.findUnique({ where: { id: (await params).group } });
+  const [group] = await database
+    .select()
+    .from(linkGroups)
+    .where(eq(linkGroups.id, (await params).group));
   if (!group) notFound();
   return (
     <>

@@ -30,8 +30,6 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // legacy static files from the old html site
     "public/**",
-    // made by prisma generate
-    "lib/generated/**",
   ]),
 ]);
 

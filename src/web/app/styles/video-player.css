@@ -11,7 +11,7 @@
   height: auto;
   aspect-ratio: 16 / 9;
   background-color: black;
-  border-radius: .75rem;
+  border-radius: 0.75rem;
 }
 
 .video-player__quality {

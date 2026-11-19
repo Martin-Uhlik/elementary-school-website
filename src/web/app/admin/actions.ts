@@ -7,7 +7,9 @@ import { authConfig } from "@/lib/auth/config";
 import { deleteOldLogs, logLogin } from "@/lib/auth/log";
 import { verifyPassword } from "@/lib/auth/password";
 import { createSession, deleteSession, getCurrentUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { users } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const WRONG = "Nesprávné jméno nebo heslo.";
 
@@ -22,7 +24,7 @@ export const login = async (data: FormData): Promise<ActionState> => {
     .trim()
     .slice(0, 100);
   const password = String(data.get("password") ?? "");
-  const user = username ? await prisma.user.findUnique({ where: { username } }) : null;
+  const [user] = username ? await database.select().from(users).where(eq(users.username, username)) : [];
 
   if (user?.lockedUntil && user.lockedUntil > new Date()) {
     await logLogin(user, "locked");
@@ -37,12 +39,15 @@ export const login = async (data: FormData): Promise<ActionState> => {
     const lockedUntil =
       failed >= authConfig.lockoutAttempts ? new Date(Date.now() + authConfig.lockoutMinutes * 60000) : null;
     // after a lockout the count starts again from zero
-    await prisma.user.update({ where: { id: user.id }, data: { failedLogins: lockedUntil ? 0 : failed, lockedUntil } });
+    await database
+      .update(users)
+      .set({ failedLogins: lockedUntil ? 0 : failed, lockedUntil })
+      .where(eq(users.id, user.id));
     await logLogin(user, "failed");
     return { error: lockedUntil ? lockedMessage(lockedUntil) : WRONG };
   }
 
-  await prisma.user.update({ where: { id: user.id }, data: { failedLogins: 0, lockedUntil: null } });
+  await database.update(users).set({ failedLogins: 0, lockedUntil: null }).where(eq(users.id, user.id));
   await createSession(user.id);
   await logLogin(user, "login");
   await deleteOldLogs();

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { can, SECTIONS } from "@/lib/auth/sections";
-import type { Permission } from "@/lib/generated/prisma/enums";
+import type { Permission } from "@zsmp/db/schema";
 
 // Menu of the admin area: only the sections the user may open; the current one is highlighted
 const AdminNav = ({ permissions }: { permissions: Permission[] }) => {

@@ -1,4 +1,4 @@
-import type { Permission } from "@/lib/generated/prisma/enums";
+import type { Permission } from "@zsmp/db/schema";
 
 // The parts of the admin area and who may open them. Admin can open everything, Uživatelé and Logy only admin.
 export const PERMISSION_LABELS: Record<Permission, string> = {

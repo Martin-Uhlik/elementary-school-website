@@ -2,7 +2,9 @@ import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { BACKGROUND_DIR, freeFileName, resolveInside, safeFileName } from "@/lib/media";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { backgroundThemes } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const ALLOWED = /\.(svg|png|webp)$/i;
 
@@ -23,7 +25,8 @@ export const saveBackground = async (file: FormDataEntryValue | null) => {
 
 // Deletes an uploaded picture that no theme uses any more; pictures in public/ (the original three) stay
 export const deleteUnusedBackground = async (src: string) => {
-  if (!src.startsWith("/pozadi/") || (await prisma.backgroundTheme.count({ where: { src } })) > 0) return;
+  if (!src.startsWith("/pozadi/") || (await database.$count(backgroundThemes, eq(backgroundThemes.src, src))) > 0)
+    return;
   const file = resolveInside(BACKGROUND_DIR, [src.slice("/pozadi/".length)]);
   if (file) await fs.rm(file, { force: true });
 };

@@ -1,5 +1,5 @@
 -- The site's content as it was when the database was introduced (from the former src/web/data/*.ts).
--- prisma/seed.ts runs it once, on an empty database. Edit content in /auth, not here.
+-- seed.ts runs it once, on an empty database. Edit content in /auth, not here.
 
 BEGIN;
 
@@ -1013,5 +1013,13 @@ INSERT INTO photos (id, collection, src, alt, sort_order) VALUES
   ('puzzle-vesmir', 'puzzle', '/data/images/puzzle/vesmir.svg', 'Obrázek: vesmír s raketou, planetami a létajícím talířem', 9),
   ('puzzle-statek', 'puzzle', '/data/images/puzzle/statek.svg', 'Obrázek: statek s kravičkou, slepičkou a prasátkem', 10),
   ('puzzle-zima', 'puzzle', '/data/images/puzzle/zima.svg', 'Obrázek: zimní krajina se sněhulákem a chaloupkou', 11);
+
+-- the seasonal backgrounds; the newer ones (Léto, Halloween) a moment later, as their order is by created_at
+INSERT INTO background_themes (id, name, src, start_day, start_month, end_day, end_month, created_at) VALUES
+  (gen_random_uuid()::text, 'Zima', '/data/images/background_elements/winter.svg', 1, 12, 31, 1, now()),
+  (gen_random_uuid()::text, 'Velikonoce', '/data/images/background_elements/easter.svg', 1, 3, 31, 3, now()),
+  (gen_random_uuid()::text, 'Krabičky', '/data/images/background_elements/boxes.svg', NULL, NULL, NULL, NULL, now()),
+  (gen_random_uuid()::text, 'Léto', '/data/images/background_elements/summer.svg', 1, 7, 31, 8, now() + interval '1 millisecond'),
+  (gen_random_uuid()::text, 'Halloween', '/data/images/background_elements/halloween.svg', 25, 10, 1, 11, now() + interval '1 millisecond');
 
 COMMIT;

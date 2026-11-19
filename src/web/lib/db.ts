@@ -1,18 +1,20 @@
 import "server-only";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { connection } from "next/server";
-import { PrismaClient } from "@/lib/generated/prisma/client";
+import { Pool } from "pg";
+import * as schema from "@zsmp/db/schema";
 
-// One client for the whole server; in development it survives hot reloads on globalThis
-const globalForPrisma = globalThis as unknown as { prisma?: InstanceType<typeof PrismaClient> };
+// One connection pool for the whole server; in development it survives hot reloads on globalThis
+const globalForDb = globalThis as unknown as { pool?: Pool };
 
-export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
+const pool = globalForDb.pool ?? new Pool({ connectionString: process.env.DATABASE_URL });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") globalForDb.pool = pool;
+
+export const database = drizzle({ client: pool, schema });
 
 // The database is read on every request (never at build time), so changes from /auth show up right away
 export const db = async () => {
   await connection();
-  return prisma;
+  return database;
 };

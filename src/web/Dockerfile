@@ -1,29 +1,32 @@
-# Next.js production image (standalone output).
+# Next.js production image (standalone output). Built from src/ (the npm workspace), because the tables
+# come from the db package next to it, see docker-compose.yml.
 # Photos and documents (galerie/, dokument/) are not in the image: docker-compose.yml mounts MEDIA_DIR at /app/media,
 # and the tour videos at public/data/videos.
 
 FROM node:26-alpine AS deps
 WORKDIR /app
-COPY package.json package-lock.json prisma.config.ts ./
-COPY prisma ./prisma
-# npm ci runs "prisma generate" (postinstall), which needs the schema
-RUN npm ci
+COPY package.json package-lock.json ./
+COPY db/package.json db/
+COPY web/package.json web/
+RUN npm ci --workspace web
 
-# Also used by the "migrate" service in docker-compose.yml: it has the Prisma CLI and the migrations
 FROM node:26-alpine AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY package.json ./
+COPY db db
+COPY web web
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npx prisma generate && npm run build
+RUN npm run build --workspace web
 
 FROM node:26-alpine AS run
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0 MEDIA_DIR=/app/media
-# the standalone server serves public/ and .next/static itself when they sit next to server.js
-COPY --from=build --chown=node:node /app/.next/standalone ./
-COPY --from=build --chown=node:node /app/.next/static ./.next/static
-COPY --from=build --chown=node:node /app/public ./public
+# the standalone output mirrors src/ (server in web/); it serves public/ and .next/static when they sit next to server.js
+COPY --from=build --chown=node:node /app/web/.next/standalone ./
+COPY --from=build --chown=node:node /app/web/.next/static ./web/.next/static
+COPY --from=build --chown=node:node /app/web/public ./web/public
 USER node
+WORKDIR /app/web
 EXPOSE 3000
 CMD ["node", "server.js"]

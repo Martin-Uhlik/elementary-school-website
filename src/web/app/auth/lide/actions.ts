@@ -8,9 +8,10 @@ import { neighbour } from "@/lib/admin/order";
 import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
 import { personName } from "@/lib/content/format";
-import { personInclude, toPerson } from "@/lib/content/people";
-import { prisma } from "@/lib/db";
-import type { PhoneKind } from "@/lib/generated/prisma/client";
+import { asc, arrayContains, eq, max } from "drizzle-orm";
+import { people, phones as phonesTable, type PhoneKind } from "@zsmp/db/schema";
+import { toPerson, withPhones } from "@/lib/content/people";
+import { database } from "@/lib/db";
 
 const KINDS: PhoneKind[] = ["internal", "landline", "mobile"];
 
@@ -39,17 +40,20 @@ export const savePerson = async (id: string | undefined, data: FormData): Promis
     .filter((p) => p.number)
     .map((p, sortOrder) => ({ ...p, sortOrder }));
 
-  if (id) {
-    await prisma.$transaction([
-      prisma.phone.deleteMany({ where: { personId: id } }),
-      prisma.person.update({ where: { id }, data: { ...fields, phones: { create: phones } } }),
-    ]);
-  } else {
-    const last = await prisma.person.aggregate({ _max: { sortOrder: true } });
-    await prisma.person.create({
-      data: { ...fields, sortOrder: (last._max.sortOrder ?? 0) + 1, phones: { create: phones } },
-    });
-  }
+  await database.transaction(async (tx) => {
+    let personId = id;
+    if (personId) {
+      await tx.update(people).set(fields).where(eq(people.id, personId));
+      await tx.delete(phonesTable).where(eq(phonesTable.personId, personId));
+    } else {
+      const [last] = await tx.select({ sortOrder: max(people.sortOrder) }).from(people);
+      [{ id: personId }] = await tx
+        .insert(people)
+        .values({ ...fields, sortOrder: (last.sortOrder ?? 0) + 1 })
+        .returning({ id: people.id });
+    }
+    if (phones.length > 0) await tx.insert(phonesTable).values(phones.map((p) => ({ ...p, personId: personId! })));
+  });
   const name = fields.lastName ? [fields.firstName, fields.lastName].filter(Boolean).join(" ") : fields.name;
   await logActivity(user, "lide", `${id ? "Upravena" : "Přidána"} osoba „${name}“`);
   revalidatePath("/", "layout");
@@ -58,7 +62,10 @@ export const savePerson = async (id: string | undefined, data: FormData): Promis
 
 export const deletePerson = async (id: string) => {
   const user = await requireUser({ section: "lide" });
-  const person = toPerson(await prisma.person.delete({ where: { id }, include: personInclude }));
+  const row = await database.query.people.findFirst({ where: eq(people.id, id), with: withPhones });
+  if (!row) return;
+  await database.delete(people).where(eq(people.id, id));
+  const person = toPerson(row);
   await logActivity(user, "lide", `Smazána osoba „${personName(person)}“`);
   revalidatePath("/", "layout");
 };
@@ -66,19 +73,21 @@ export const deletePerson = async (id: string) => {
 // Moves a person within the list shown (one section, or everyone)
 export const movePerson = async (id: string, label: string | undefined, direction: "up" | "down") => {
   const user = await requireUser({ section: "lide" });
-  const rows = await prisma.person.findMany({
-    where: label ? { labels: { has: label } } : undefined,
-    orderBy: { sortOrder: "asc" },
-    select: { id: true, sortOrder: true },
-  });
+  const rows = await database
+    .select({ id: people.id, sortOrder: people.sortOrder })
+    .from(people)
+    .where(label ? arrayContains(people.labels, [label]) : undefined)
+    .orderBy(asc(people.sortOrder));
   const pair = neighbour(rows, id, direction);
   if (!pair) return;
   const [a, b] = pair;
-  await prisma.$transaction([
-    prisma.person.update({ where: { id: a.id }, data: { sortOrder: b.sortOrder } }),
-    prisma.person.update({ where: { id: b.id }, data: { sortOrder: a.sortOrder } }),
-  ]);
-  const person = toPerson(await prisma.person.findUniqueOrThrow({ where: { id }, include: personInclude }));
+  await database.transaction(async (tx) => {
+    await tx.update(people).set({ sortOrder: b.sortOrder }).where(eq(people.id, a.id));
+    await tx.update(people).set({ sortOrder: a.sortOrder }).where(eq(people.id, b.id));
+  });
+  const row = await database.query.people.findFirst({ where: eq(people.id, id), with: withPhones });
+  if (!row) return;
+  const person = toPerson(row);
   await logActivity(user, "lide", `Posunuta ${direction === "up" ? "nahoru" : "dolů"} osoba „${personName(person)}“`);
   revalidatePath("/", "layout");
 };

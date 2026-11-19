@@ -1,18 +1,19 @@
 # ZŠMP web (Next.js)
 
-The school website and its admin. Content comes from PostgreSQL through Prisma; photos and documents from a media folder.
+The school website and its admin. Content comes from PostgreSQL through Drizzle ORM; photos and documents from a media folder.
 
 ## Run on a dev machine
 
 ```bash
 # a database: e.g. "docker compose up -d db" in the repository root (port 5432)
-echo 'DATABASE_URL=postgres://zsmp:change-me@127.0.0.1:5432/zsmp' > .env
-npm install            # also runs prisma generate
-npm run db:deploy      # creates the tables (prisma migrate deploy)
+echo 'DATABASE_URL=postgres://zsmp:change-me@127.0.0.1:5432/zsmp' > web/.env
+# in src/: one npm workspace with web (this app) and db (../db, the tables)
+npm install
+npm run db:migrate     # creates the tables / applies new migrations (../db/migrations)
 npm run db:seed        # fills an empty database: the content + user admin / zsmp
 npm run dev            # http://localhost:3000, admin on http://localhost:3000/admin
 npm run lint
-npm run format         # Prettier; format:check only checks
+npm run format         # Prettier; "npm run format:check -w web" only checks
 ```
 
 Photos and documents are read from `media/` in the repository root (or `MEDIA_DIR`): `media/galerie/<folder>/`, `media/dokument/`.
@@ -26,13 +27,13 @@ Photos and documents are read from `media/` in the repository root (or `MEDIA_DI
 - `app/auth/` the admin: news, people, documents, galleries, users. Every page and action checks the session (`lib/auth/session.ts`).
 - `lib/content/` what the pages read (one function per need); `lib/content/format.ts` holds the helpers without database access.
 - `lib/admin/` helpers of the admin: document and photo uploads, ordering.
-- `prisma/schema.prisma` the tables; `prisma/migrations/` their history; `prisma/seed.ts` + `seed/content.sql` the first content.
+- The tables come from `../db` (package `@zsmp/db`, see [its README](../db/README.md)): `import { news } from "@zsmp/db/schema"`. `lib/db.ts` is the connection the app uses.
 - `app/styles.css` imports the styles, one file per block in `app/styles/` (BEM: `.block__element--modifier`; the rules are at the top of `styles.css`); `app/admin.css` is the admin's.
 - `public/` static files: `data/images`, `informatika/` (Scratch projects, PDFs).
 
 ## Changing the database
 
-Edit `prisma/schema.prisma`, then `npx prisma migrate dev --name <what-changed>`. This writes a migration into `prisma/migrations/`, which Docker applies on the next `docker compose up` (the `migrate` service).
+See [`../db/README.md`](../db/README.md): edit `../db/schema.ts`, then `npm run db:generate -- --name <what-changed>` in `src/`.
 
 ## Galleries
 

@@ -8,13 +8,15 @@ import UserFields from "@/components/admin/UserFields";
 import { formatTime } from "@/lib/admin/time";
 import { PERMISSION_LABELS } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { asc } from "drizzle-orm";
+import { users as usersTable } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 // Only for admins: who can sign in, their real names and what they may edit
 const UsersPage = async () => {
   const me = await requireUser({ section: "admin" });
-  const users = await prisma.user.findMany({ orderBy: { username: "asc" } });
+  const users = await database.select().from(usersTable).orderBy(asc(usersTable.username));
   const now = new Date();
   return (
     <>

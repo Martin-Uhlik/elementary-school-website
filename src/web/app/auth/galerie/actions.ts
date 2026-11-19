@@ -10,8 +10,9 @@ import { logActivity } from "@/lib/auth/log";
 import { requireUser } from "@/lib/auth/session";
 import { galleryFolder } from "@/lib/content/format";
 import { toGallery } from "@/lib/content/galleries";
-import { prisma } from "@/lib/db";
-import type { Unit } from "@/lib/generated/prisma/client";
+import { and, eq, isNull, like, or } from "drizzle-orm";
+import { galleries, type Unit } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const UNITS: Unit[] = ["zs", "ms", "druzina"];
 
@@ -46,7 +47,10 @@ export const createGallery = async (data: FormData): Promise<ActionState> => {
   const base = text(data, "date").replaceAll("-", "");
   const taken = new Set(
     (
-      await prisma.gallery.findMany({ where: { id: { startsWith: base } }, select: { id: true, folder: true } })
+      await database
+        .select({ id: galleries.id, folder: galleries.folder })
+        .from(galleries)
+        .where(like(galleries.id, `${base}%`))
     ).flatMap((g) => [g.id, g.folder]),
   );
   let id = base;
@@ -55,7 +59,7 @@ export const createGallery = async (data: FormData): Promise<ActionState> => {
   // without a date text the site shows the date itself
   const [year, month, day] = text(data, "date").split("-").map(Number);
   const dateText = fields.dateText ?? `${day}. ${month}. ${year}`;
-  await prisma.gallery.create({ data: { ...fields, unit: fields.unit, date: fields.date, dateText, id } });
+  await database.insert(galleries).values({ ...fields, unit: fields.unit, date: fields.date, dateText, id });
   if (!fields.url) await fs.mkdir(galleryDir(id), { recursive: true });
   await logActivity(user, "galerie", `Vytvořena galerie „${fields.title}“ (${dateText})`);
   revalidatePath("/", "layout");
@@ -67,7 +71,10 @@ export const updateGallery = async (id: string, data: FormData): Promise<ActionS
   const fields = readFields(data);
   const problem = check(fields);
   if (problem || !fields.unit || !fields.date) return { error: problem };
-  await prisma.gallery.update({ where: { id }, data: { ...fields, unit: fields.unit, date: fields.date } });
+  await database
+    .update(galleries)
+    .set({ ...fields, unit: fields.unit, date: fields.date })
+    .where(eq(galleries.id, id));
   await logActivity(user, "galerie", `Upravena galerie „${fields.title}“`);
   revalidatePath("/", "layout");
   return { message: "Uloženo." };
@@ -76,12 +83,15 @@ export const updateGallery = async (id: string, data: FormData): Promise<ActionS
 // Deletes the gallery and its photos (unless another gallery shows the same folder)
 export const deleteGallery = async (id: string) => {
   const user = await requireUser({ section: "galerie" });
-  const row = await prisma.gallery.findUnique({ where: { id } });
+  const [row] = await database.select().from(galleries).where(eq(galleries.id, id));
   if (!row) return;
   const gallery = toGallery(row);
   const folder = galleryFolder(gallery);
-  await prisma.gallery.delete({ where: { id } });
-  const shared = await prisma.gallery.count({ where: { OR: [{ folder }, { id: folder, folder: null }] } });
+  await database.delete(galleries).where(eq(galleries.id, id));
+  const shared = await database.$count(
+    galleries,
+    or(eq(galleries.folder, folder), and(eq(galleries.id, folder), isNull(galleries.folder))),
+  );
   if (!gallery.url && shared === 0) await fs.rm(galleryDir(folder), { recursive: true, force: true });
   await logActivity(user, "galerie", `Smazána galerie „${gallery.title}“ (${gallery.dateText ?? gallery.year})`);
   revalidatePath("/", "layout");
@@ -90,7 +100,7 @@ export const deleteGallery = async (id: string) => {
 
 export const removePhoto = async (id: string, file: string) => {
   const user = await requireUser({ section: "galerie" });
-  const row = await prisma.gallery.findUnique({ where: { id } });
+  const [row] = await database.select().from(galleries).where(eq(galleries.id, id));
   if (!row) return;
   await deletePhoto(galleryFolder(toGallery(row)), file);
   await logActivity(user, "galerie", `Smazána fotka ${file} z galerie „${row.title}“`);

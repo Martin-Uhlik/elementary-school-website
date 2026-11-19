@@ -1,7 +1,7 @@
 import { LOGIN_EVENT_LABELS } from "@/lib/admin/logs";
 import { formatDateTime } from "@/lib/admin/time";
 import { describeAgent } from "@/lib/admin/userAgent";
-import type { LoginEvent } from "@/lib/generated/prisma/client";
+import type { LoginEvent } from "@zsmp/db/schema";
 
 type Props = { events: LoginEvent[]; caption: string; showUser?: boolean };
 

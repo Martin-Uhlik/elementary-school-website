@@ -4,12 +4,17 @@ import ActionForm from "@/components/admin/ActionForm";
 import PasswordFields from "@/components/admin/PasswordFields";
 import UserFields from "@/components/admin/UserFields";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { users } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 const UserPage = async ({ params }: PageProps<"/auth/uzivatele/[id]">) => {
   await requireUser({ section: "admin" });
-  const user = await prisma.user.findUnique({ where: { id: Number((await params).id) || 0 } });
+  const [user] = await database
+    .select()
+    .from(users)
+    .where(eq(users.id, Number((await params).id) || 0));
   if (!user) notFound();
   return (
     <>

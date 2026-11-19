@@ -5,12 +5,14 @@ import ConfirmButton from "@/components/admin/ConfirmButton";
 import { formatDate } from "@/components/content/NewsList";
 import { isoDate } from "@/lib/content/misc";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { desc } from "drizzle-orm";
+import { news as newsTable } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 const NewsAdminPage = async () => {
   await requireUser({ section: "aktuality" });
-  const news = await prisma.news.findMany({ orderBy: [{ date: "desc" }, { createdAt: "desc" }] });
+  const news = await database.select().from(newsTable).orderBy(desc(newsTable.date), desc(newsTable.createdAt));
   return (
     <>
       <div className="admin-title">

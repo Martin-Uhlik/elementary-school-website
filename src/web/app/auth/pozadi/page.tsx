@@ -5,12 +5,14 @@ import ConfirmButton from "@/components/admin/ConfirmButton";
 import PageTitle from "@/components/admin/PageTitle";
 import { requireUser } from "@/lib/auth/session";
 import { formatThemeDates, hasDates, pickTheme, pragueToday } from "@/lib/background";
-import { prisma } from "@/lib/db";
+import { asc } from "drizzle-orm";
+import { backgroundThemes } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 // The seasonal backgrounds: dated ones in calendar order from January, the default last
 const BackgroundsAdminPage = async () => {
   await requireUser({ section: "pozadi" });
-  const themes = (await prisma.backgroundTheme.findMany({ orderBy: { createdAt: "asc" } })).sort(
+  const themes = (await database.select().from(backgroundThemes).orderBy(asc(backgroundThemes.createdAt))).sort(
     (a, b) =>
       (hasDates(a) ? a.startMonth! * 100 + a.startDay! : 9999) -
       (hasDates(b) ? b.startMonth! * 100 + b.startDay! : 9999),

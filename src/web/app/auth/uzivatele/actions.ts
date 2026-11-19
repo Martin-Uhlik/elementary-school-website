@@ -9,8 +9,9 @@ import { logActivity } from "@/lib/auth/log";
 import { hashPassword } from "@/lib/auth/password";
 import { PERMISSION_LABELS } from "@/lib/auth/sections";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
-import type { Permission } from "@/lib/generated/prisma/client";
+import { eq } from "drizzle-orm";
+import { sessions, users, type Permission } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 const describe = (permissions: Permission[]) =>
   permissions.length ? permissions.map((p) => PERMISSION_LABELS[p]).join(", ") : "bez přístupu";
@@ -25,14 +26,12 @@ export const createUser = async (data: FormData): Promise<ActionState> => {
     (await checkUsername(username)) ?? checkNewPassword(password, String(data.get("again") ?? ""), username);
   if (problem) return { error: problem };
 
-  await prisma.user.create({
-    data: {
-      username,
-      realName: optional(data, "realName"),
-      permissions,
-      passwordHash: await hashPassword(password),
-      mustChangePassword: true,
-    },
+  await database.insert(users).values({
+    username,
+    realName: optional(data, "realName"),
+    permissions,
+    passwordHash: await hashPassword(password),
+    mustChangePassword: true,
   });
   await logActivity(me, "admin", `Přidán uživatel ${username} (${describe(permissions)})`);
   revalidatePath("/auth/uzivatele");
@@ -43,7 +42,8 @@ export const createUser = async (data: FormData): Promise<ActionState> => {
 // so there is always at least one admin left.
 export const updateUser = async (id: number, data: FormData): Promise<ActionState> => {
   const me = await requireUser({ section: "admin" });
-  const user = await prisma.user.findUniqueOrThrow({ where: { id } });
+  const [user] = await database.select().from(users).where(eq(users.id, id));
+  if (!user) return { error: "Uživatel už neexistuje." };
   const username = text(data, "username");
   const permissions = readPermissions(data);
   const password = String(data.get("password") ?? "");
@@ -53,18 +53,18 @@ export const updateUser = async (id: number, data: FormData): Promise<ActionStat
   if (problem) return { error: problem };
   if (id === me.id && !permissions.includes("admin")) return { error: "Sami sobě nemůžete odebrat správce." };
 
-  await prisma.user.update({
-    where: { id },
-    data: {
+  await database
+    .update(users)
+    .set({
       username,
       realName: optional(data, "realName"),
       permissions,
       ...(password && { passwordHash: await hashPassword(password), mustChangePassword: true }),
-    },
-  });
+    })
+    .where(eq(users.id, id));
   // a new password or less access ends the user's open sessions
   if (password || user.permissions.some((p) => !permissions.includes(p)))
-    await prisma.session.deleteMany({ where: { userId: id } });
+    await database.delete(sessions).where(eq(sessions.userId, id));
   const changes = [
     username !== user.username && `jméno ${user.username} → ${username}`,
     `přístup: ${describe(permissions)}`,
@@ -78,7 +78,12 @@ export const updateUser = async (id: number, data: FormData): Promise<ActionStat
 // Lets a user locked after too many wrong passwords sign in again right away
 export const unlockUser = async (id: number) => {
   const me = await requireUser({ section: "admin" });
-  const user = await prisma.user.update({ where: { id }, data: { failedLogins: 0, lockedUntil: null } });
+  const [user] = await database
+    .update(users)
+    .set({ failedLogins: 0, lockedUntil: null })
+    .where(eq(users.id, id))
+    .returning();
+  if (!user) return;
   await logActivity(me, "admin", `Odblokován uživatel ${user.username}`);
   revalidatePath("/auth/uzivatele");
 };
@@ -86,7 +91,8 @@ export const unlockUser = async (id: number) => {
 export const deleteUser = async (id: number) => {
   const me = await requireUser({ section: "admin" });
   if (id === me.id) return;
-  const user = await prisma.user.delete({ where: { id } });
+  const [user] = await database.delete(users).where(eq(users.id, id)).returning();
+  if (!user) return;
   await logActivity(me, "admin", `Smazán uživatel ${user.username}`);
   revalidatePath("/auth/uzivatele");
 };

@@ -8,12 +8,14 @@ import { checkNewPassword, checkUsername } from "@/lib/auth/account";
 import { logLogin } from "@/lib/auth/log";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { users } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 
 // Both changes need the current password, so a browser left signed in cannot take over the account
 const checkCurrent = async (userId: number, data: FormData) => {
-  const stored = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
-  return verifyPassword(String(data.get("current") ?? ""), stored.passwordHash);
+  const [stored] = await database.select().from(users).where(eq(users.id, userId));
+  return stored ? verifyPassword(String(data.get("current") ?? ""), stored.passwordHash) : false;
 };
 
 export const changePassword = async (data: FormData): Promise<ActionState> => {
@@ -23,10 +25,10 @@ export const changePassword = async (data: FormData): Promise<ActionState> => {
   const problem = checkNewPassword(password, String(data.get("again") ?? ""), user.username);
   if (problem) return { error: problem };
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { passwordHash: await hashPassword(password), mustChangePassword: false },
-  });
+  await database
+    .update(users)
+    .set({ passwordHash: await hashPassword(password), mustChangePassword: false })
+    .where(eq(users.id, user.id));
   await logLogin(user, "password");
   // the header shows the full menu again
   revalidatePath("/auth", "layout");
@@ -42,7 +44,7 @@ export const changeUsername = async (data: FormData): Promise<ActionState> => {
   const problem = await checkUsername(username, user.id);
   if (problem) return { error: problem };
 
-  await prisma.user.update({ where: { id: user.id }, data: { username } });
+  await database.update(users).set({ username }).where(eq(users.id, user.id));
   await logLogin({ id: user.id, username: `${user.username} → ${username}` }, "username");
   revalidatePath("/auth", "layout");
   return { message: `Přihlašovací jméno je teď ${username}.` };

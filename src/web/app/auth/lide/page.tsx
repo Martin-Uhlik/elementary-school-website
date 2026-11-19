@@ -7,8 +7,10 @@ import MoveButtons from "@/components/admin/MoveButtons";
 import { getLabels } from "@/lib/admin/people";
 import { requireUser } from "@/lib/auth/session";
 import { personName } from "@/lib/content/format";
-import { personInclude, toPerson } from "@/lib/content/people";
-import { prisma } from "@/lib/db";
+import { arrayContains, asc } from "drizzle-orm";
+import { people as peopleTable } from "@zsmp/db/schema";
+import { toPerson, withPhones } from "@/lib/content/people";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 // Everyone, or one section (?sekce=Učitelé) in the order the site shows it
@@ -18,10 +20,10 @@ const PeopleAdminPage = async ({ searchParams }: PageProps<"/auth/lide">) => {
   const label = typeof section === "string" && section ? section : undefined;
   const labels = await getLabels();
   const people = (
-    await prisma.person.findMany({
-      where: label ? { labels: { has: label } } : undefined,
-      orderBy: { sortOrder: "asc" },
-      include: personInclude,
+    await database.query.people.findMany({
+      where: label ? arrayContains(peopleTable.labels, [label]) : undefined,
+      orderBy: [asc(peopleTable.sortOrder)],
+      with: withPhones,
     })
   ).map(toPerson);
 

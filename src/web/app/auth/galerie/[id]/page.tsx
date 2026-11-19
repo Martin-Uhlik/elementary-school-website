@@ -7,14 +7,19 @@ import PhotoUploader from "@/components/admin/PhotoUploader";
 import { requireUser } from "@/lib/auth/session";
 import { galleryFolder, galleryHref } from "@/lib/content/format";
 import { toGallery } from "@/lib/content/galleries";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { galleries } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import { getGallery } from "@/lib/galleries";
 import PageTitle from "@/components/admin/PageTitle";
 
 // One gallery: its details, the photos with their previews, upload and delete
 const GalleryAdminPage = async ({ params }: PageProps<"/auth/galerie/[id]">) => {
   await requireUser({ section: "galerie" });
-  const row = await prisma.gallery.findUnique({ where: { id: (await params).id } });
+  const [row] = await database
+    .select()
+    .from(galleries)
+    .where(eq(galleries.id, (await params).id));
   if (!row) notFound();
   const gallery = toGallery(row);
   // a gallery whose folder is not on this server yet starts empty; the upload creates it

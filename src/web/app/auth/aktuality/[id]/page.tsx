@@ -3,12 +3,17 @@ import { saveNews } from "../actions";
 import NewsForm from "@/components/admin/NewsForm";
 import { isoDate } from "@/lib/content/misc";
 import { requireUser } from "@/lib/auth/session";
-import { prisma } from "@/lib/db";
+import { eq } from "drizzle-orm";
+import { news as newsTable } from "@zsmp/db/schema";
+import { database } from "@/lib/db";
 import PageTitle from "@/components/admin/PageTitle";
 
 const EditNewsPage = async ({ params }: PageProps<"/auth/aktuality/[id]">) => {
   await requireUser({ section: "aktuality" });
-  const news = await prisma.news.findUnique({ where: { id: (await params).id } });
+  const [news] = await database
+    .select()
+    .from(newsTable)
+    .where(eq(newsTable.id, (await params).id));
   if (!news) notFound();
   return (
     <>

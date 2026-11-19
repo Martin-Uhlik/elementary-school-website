@@ -4,5 +4,4 @@ public/
 node_modules/
 package-lock.json
 next-env.d.ts
-lib/generated/
-prisma/migrations/
+db/migrations/

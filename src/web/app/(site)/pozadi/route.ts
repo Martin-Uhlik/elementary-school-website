@@ -1,4 +1,6 @@
 import { pickTheme, pragueToday } from "@/lib/background";
+import { asc, eq } from "drizzle-orm";
+import { backgroundThemes } from "@zsmp/db/schema";
 import { db } from "@/lib/db";
 
 // /pozadi is today's background picture (see .page-background__picture): a short-lived redirect to the theme's
@@ -6,7 +8,11 @@ import { db } from "@/lib/db";
 export const GET = async () => {
   const themes = await (
     await db()
-  ).backgroundTheme.findMany({ where: { active: true }, orderBy: { createdAt: "asc" } });
+  )
+    .select()
+    .from(backgroundThemes)
+    .where(eq(backgroundThemes.active, true))
+    .orderBy(asc(backgroundThemes.createdAt));
   const { day, month } = pragueToday();
   const theme = pickTheme(themes, day, month);
   const cache = { "Cache-Control": "public, max-age=300" };

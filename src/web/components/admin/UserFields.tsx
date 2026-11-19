@@ -1,5 +1,5 @@
 import { PERMISSION_LABELS, PERMISSIONS } from "@/lib/auth/sections";
-import type { Permission } from "@/lib/generated/prisma/enums";
+import type { Permission } from "@zsmp/db/schema";
 
 type Props = { user?: { username: string; realName: string | null; permissions: Permission[] } };
 

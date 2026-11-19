@@ -1,4 +1,4 @@
-import type { LoginEventKind } from "@/lib/generated/prisma/enums";
+import type { LoginEventKind } from "@zsmp/db/schema";
 
 export const LOGIN_EVENT_LABELS: Record<LoginEventKind, string> = {
   login: "Přihlášení",

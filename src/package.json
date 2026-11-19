@@ -1,0 +1,28 @@
+{
+  "name": "zsmp",
+  "private": true,
+  "workspaces": [
+    "db",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "lint": "npm run lint -w web",
+    "format": "npm run format -w web",
+    "db:generate": "npm run generate -w db --",
+    "db:migrate": "npm run migrate -w db",
+    "db:seed": "npm run seed -w db"
+  },
+  "overrides": {
+    "eslint-plugin-react": {
+      "eslint": "^10"
+    },
+    "eslint-plugin-jsx-a11y": {
+      "eslint": "^10"
+    },
+    "eslint-plugin-import": {
+      "eslint": "^10"
+    }
+  }
+}
