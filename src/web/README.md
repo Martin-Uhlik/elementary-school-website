@@ -4,6 +4,8 @@ The school website and its admin. Content comes from PostgreSQL through Drizzle 
 
 ## Run on a dev machine
 
+The easiest way needs only Docker: `docker compose -f docker-compose.dev.yml up` in the repository root runs this app with hot reload, the database and the migrations (see [Develop with Docker](../../README.md#develop-with-docker)). Without Docker, with Node.js installed:
+
 ```bash
 # a database: e.g. "docker compose up -d db" in the repository root (port 5432)
 echo 'DATABASE_URL=postgres://zsmp:change-me@127.0.0.1:5432/zsmp' > web/.env

@@ -41,6 +41,35 @@ docker compose up -d --build
 
 The site is then on http://localhost (through Caddy) and http://localhost:3000 (directly).
 
+For working on the code, use the dev setup below instead.
+
+## Develop with Docker
+
+For working on the code there is `docker-compose.dev.yml`: the Next.js dev server with hot reload, the database and the migrations, all in containers, so the machine needs only Docker (no Node.js or npm). It is started the same way as production, with one command:
+
+```bash
+cp .env.example .env    # once; the POSTGRES_* values are enough
+docker compose -f docker-compose.dev.yml up
+```
+
+The site is then on http://localhost:3000 and the admin on http://localhost:3000/admin (**admin / zsmp**; on the dev server anyone may open it and the cookie works over plain http). `Ctrl+C` stops it; add `-d` to run it in the background.
+
+- `src/` is mounted into the containers, so a saved file shows up in the browser right away. If it doesn't (Docker Desktop normally passes file changes through), uncomment `WATCHPACK_POLLING` in `docker-compose.dev.yml`.
+- The packages are installed inside the containers (Linux builds of Next.js and sharp) into Docker volumes, never into `src/node_modules`. The first start runs `npm ci` and takes a few minutes; later starts skip it unless `src/package-lock.json` changed.
+- The `migrate` container runs from the mounted `src/` too, so a new migration only needs a restart (`docker compose -f docker-compose.dev.yml restart migrate`), no rebuild.
+- The dev setup is its own Compose project (`zsmp-dev`) with its own database volume, so it never touches the data of a production run on the same machine. `docker compose -f docker-compose.dev.yml down -v` throws the dev database and the installed packages away (the next start seeds a fresh one).
+- Photos and documents come from `MEDIA_DIR` as in production.
+- Commands for the code run in the containers:
+
+```bash
+docker compose -f docker-compose.dev.yml exec web npm run lint
+docker compose -f docker-compose.dev.yml exec web npm run format
+docker compose -f docker-compose.dev.yml run --rm migrate npm run db:generate -- --name <what-changed>
+docker compose -f docker-compose.dev.yml run --rm migrate npm install <package> -w web    # then restart
+```
+
+To skip typing `-f docker-compose.dev.yml`, run `export COMPOSE_FILE=docker-compose.dev.yml` in the terminal first.
+
 ## Admin (`/auth`)
 
 `/admin` is the sign-in page. It is not linked from the site and is hidden from search engines (`noindex`); outside the allowed networks it does not exist at all (see [Access by IP address](#access-by-ip-address)). The first user is **admin / zsmp** and has to choose its own password after signing in; until then _Můj účet_ is the only page it can open. Everything else lives under `/auth`, and every page and every change checks the session on the server.
