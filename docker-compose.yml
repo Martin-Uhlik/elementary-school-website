@@ -1,20 +1,43 @@
 # The whole site: docker compose up -d --build
 # Settings come from .env next to this file (copy .env.example).
 services:
+  # The public web server: HTTPS (automatic Let's Encrypt certificate), http → https, www → zsmp.cz,
+  # and the visitor's real address for the admin's IP check (deploy/caddy/Caddyfile)
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      # zsmp.cz in production; ":80" for plain http on a dev machine
+      SITE_ADDRESS: ${SITE_ADDRESS:-zsmp.cz, www.zsmp.cz}
+    volumes:
+      # Z: relabel for SELinux (AlmaLinux), no effect elsewhere
+      - ./deploy/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,Z
+      # the certificates; keep this volume, or Caddy has to ask Let's Encrypt again
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+
   web:
     build: ./src/web
     restart: unless-stopped
     ports:
-      # IIS forwards the public traffic here; WEB_BIND is 127.0.0.1 when IIS runs on the same machine
-      - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-3000}:3000"
+      # only for this machine (curl, an SSH tunnel); the public traffic comes through caddy. Nothing else may reach
+      # the site directly, because the admin's IP check trusts the X-Forwarded-For header that caddy sets
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
     volumes:
       # photos and documents stay on the host (MEDIA_DIR), so they survive rebuilds; the admin (/auth) uploads into
-      # galerie/ and dokument/, so the folder must be writable for the container's user (uid 1000)
-      - ${MEDIA_DIR:-./media}:/app/media
-      - ${MEDIA_DIR:-./media}/videos:/app/public/data/videos:ro
+      # galerie/, dokument/ and pozadi/, so the folder must be writable for the container's user (uid 1000).
+      # Z: relabel for SELinux (AlmaLinux), no effect elsewhere
+      - ${MEDIA_DIR:-./media}:/app/media:Z
+      - ${MEDIA_DIR:-./media}/videos:/app/public/data/videos:ro,Z
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
-      # set to false only to try the admin over plain http (without IIS and HTTPS)
+      # set to false only to try the admin over plain http (SITE_ADDRESS=:80, no HTTPS)
       COOKIE_SECURE: ${COOKIE_SECURE:-true}
       # IP addresses / CIDR ranges that may open /admin and /auth (others get 404); empty = nobody
       ADMIN_ALLOWED_IPS: ${ADMIN_ALLOWED_IPS:-}
@@ -63,3 +86,5 @@ services:
 
 volumes:
   db-data:
+  caddy-data:
+  caddy-config:

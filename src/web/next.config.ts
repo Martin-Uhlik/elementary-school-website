@@ -15,7 +15,7 @@ const mysak: Record<string, string> = {
 const nextConfig: NextConfig = {
   // a self-contained server in .next/standalone, used by the Docker image
   output: "standalone",
-  // documents uploaded in /auth go through server actions (IIS lets 100 MB through, see deploy/iis/web.config)
+  // documents uploaded in /auth go through server actions (Caddy in front sets no size limit)
   experimental: { serverActions: { bodySizeLimit: "50mb" } },
   // keep old links (bookmarks, search engines) working after dropping the .html suffix
   async redirects() {

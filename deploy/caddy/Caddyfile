@@ -1,0 +1,14 @@
+# The public web server in front of the site (the "caddy" service in docker-compose.yml):
+# - HTTPS with a Let's Encrypt certificate that Caddy gets and renews by itself (ports 80 and 443 must reach the VM)
+# - http → https, and www.zsmp.cz → zsmp.cz (sitemap and canonical URLs use https://zsmp.cz)
+# - the visitor's address in X-Forwarded-For: Caddy ignores the header when a browser sends it and sets it to the
+#   address it saw, which is what the admin's IP check (src/web/lib/clientIp.ts) reads
+# SITE_ADDRESS comes from .env; ":80" serves plain http without a certificate, for trying it on a dev machine.
+# No access log: the site keeps no record of visitors (see "Privacy" in the README).
+
+{$SITE_ADDRESS} {
+	@www host www.zsmp.cz
+	redir @www https://zsmp.cz{uri} permanent
+
+	reverse_proxy web:3000
+}

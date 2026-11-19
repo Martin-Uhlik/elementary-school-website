@@ -18,7 +18,7 @@ const GRACE = MINUTE;
 
 const hashToken = (token: string) => createHash("sha256").update(token).digest("hex");
 
-// Behind IIS with HTTPS the cookie is https-only; COOKIE_SECURE=false allows testing over plain http
+// Behind Caddy with HTTPS the cookie is https-only; COOKIE_SECURE=false allows testing over plain http
 const secure = process.env.NODE_ENV === "production" && process.env.COOKIE_SECURE !== "false";
 
 const isExpired = (session: { expiresAt: Date; lastSeenAt: Date }, now = Date.now()) =>

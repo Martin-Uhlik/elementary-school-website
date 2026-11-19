@@ -4,7 +4,7 @@ The website of Základní škola a Mateřská škola, Moravský Písek, přísp�
 
 - **Web:** Next.js 16 (App Router, React 19, TypeScript) with Bootstrap 5 and plain CSS (BEM, one file per block in `src/web/app/styles/`), in `src/web`
 - **Data:** PostgreSQL 18 through Prisma 7; photos and documents in a media folder on the server
-- **Running:** Docker Compose in an Ubuntu VM, IIS in front of it (see [Server setup](#server-setup-windows-server-2019))
+- **Running:** Docker Compose on an AlmaLinux VM, with Caddy in front for HTTPS (see [Server setup](#server-setup-almalinux-vm))
 - **Checked with:** ESLint (with the jsx-a11y accessibility rules), Prettier, and axe (WCAG 2.2 AA) on every page in both themes, on desktop and phone
 
 Developers start in [`src/web/README.md`](src/web/README.md).
@@ -32,14 +32,14 @@ The admin:
 
 ## Run with Docker
 
-The site runs as three containers: `web` (Next.js with the admin, `src/web`), `db` (PostgreSQL 18, `src/db`) and `migrate`, which runs once on every start: it applies new database migrations and fills an empty database.
+The site runs as four containers: `caddy` (the public web server with HTTPS, `deploy/caddy/Caddyfile`), `web` (Next.js with the admin, `src/web`), `db` (PostgreSQL 18, `src/db`) and `migrate`, which runs once on every start: it applies new database migrations and fills an empty database.
 
 ```bash
-cp .env.example .env    # then set a real POSTGRES_PASSWORD
+cp .env.example .env    # then set a real POSTGRES_PASSWORD; on a dev machine also SITE_ADDRESS=:80
 docker compose up -d --build
 ```
 
-The site is then on http://localhost:3000.
+The site is then on http://localhost (through Caddy) and http://localhost:3000 (directly).
 
 ## Admin (`/auth`)
 
@@ -62,17 +62,17 @@ The site is then on http://localhost:3000.
 - **Průběh roku:** events with a date (or a date range), the school year they belong to, a text (`**bold**` works) and a holiday flag; holidays are green on the site. A new school year starts empty or as a copy of an earlier one with every date moved by a year, and a whole year can be deleted.
 - **Galleries:** a gallery has a title, a unit (ZŠ, MŠ, družina), a date, optionally the date as shown on the site (e.g. "18.–23. 1. 2026") and a video link (e.g. YouTube) instead of photos. Archives are ordered by year and date, newest first. Photos are dragged onto the page and uploaded one by one with a progress bar; the server rotates them by their EXIF data and makes the previews (`thumbnails/`, short side 256 px). Single photos or whole galleries can be deleted.
 
-The sign-in cookie (`zsmp_session`, httpOnly) only travels over HTTPS (IIS). To try the admin over plain http, e.g. http://192.168.100.10:3000, set `COOKIE_SECURE=false` and `ADMIN_ALLOWED_IPS=*` in `.env` for that time. The database keeps only a hash of the cookie's token.
+The sign-in cookie (`zsmp_session`, httpOnly) only travels over HTTPS (Caddy). To try the admin over plain http, set `SITE_ADDRESS=:80`, `COOKIE_SECURE=false` and `ADMIN_ALLOWED_IPS=*` in `.env` for that time. The database keeps only a hash of the cookie's token.
 
 ### Access by IP address
 
 The admin answers only to the school network and the VPN. From any other address, `/admin`, everything under `/auth`, the admin's server actions and the photo upload return the site's ordinary 404 page, the same as a mistyped address, so nobody outside can tell there is an admin at all. It is an extra layer: the sign-in, lockout and permissions work as before.
 
-- **Setting:** `ADMIN_ALLOWED_IPS` in `.env`, IP addresses and CIDR ranges separated by commas, IPv4 or IPv6, e.g. `192.168.1.0/24,10.8.0.0/24` (school LAN and the VPN's address pool). Empty means nobody (the admin is locked until it is set), `*` means everyone. On a dev machine (`npm run dev`) an unset value means everyone. Change it and run `docker compose up -d` (no rebuild).
+- **Setting:** `ADMIN_ALLOWED_IPS` in `.env`, IP addresses and CIDR ranges separated by commas, IPv4 or IPv6, on the school server `10.0.193.0/24,10.212.134.0/24` (school LAN and the VPN's address pool). Empty means nobody (the admin is locked until it is set), `*` means everyone. On a dev machine (`npm run dev`) an unset value means everyone. Change it and run `docker compose up -d` (no rebuild).
 - **Where it is checked:** `src/web/proxy.ts` (Next.js Proxy) with `lib/adminAccess.ts` and `lib/clientIp.ts`. Requests with a server action are checked on every address, because Next.js accepts an action posted to any page.
-- **The real address behind IIS:** the container sees only IIS, so the browser's address comes from the `X-Forwarded-For` header. A browser can send that header itself, so `web.config` overwrites it with `{REMOTE_ADDR}` (the address IIS saw), ARR may append the same address again, and the app trusts only the last entry. Faking it would mean reaching the container without IIS, and only the server itself can reach 192.168.100.10. The same address goes into the sign-in logs.
-- **Admins on the VPN** must reach the server through the tunnel, not over the internet, or IIS sees their home address. With a split-tunnel VPN, have `zsmp.cz` resolve to the server's LAN address inside the network (internal DNS, or a hosts entry); the HTTPS certificate still fits. The address IIS saw is in _Logy_ next to every sign-in, so after the first sign-in over the VPN, check that it is from the VPN range. Before you switch it on, find the address with a test page or the IIS log (`c-ip`), so you don't lock yourself out; if you do, set `ADMIN_ALLOWED_IPS=*` in the VM for a moment.
-- **Why not IIS's own IP restrictions:** they would give IIS's error page instead of the site's 404, would not catch server actions posted to public pages, and would split the setting between IIS and `.env`.
+- **The real address behind Caddy:** the container sees only Caddy, so the browser's address comes from the `X-Forwarded-For` header. A browser can send that header itself, but Caddy ignores it and sets the address it saw; the app trusts only the last entry. Faking it would mean reaching the `web` container without Caddy, and it is published only on 127.0.0.1. The FortiGate's port forward must keep the visitor's address (no source NAT on that policy). The same address goes into the sign-in logs.
+- **Admins at school and on the VPN** must reach the VM directly, not through the public address, or the FortiGate may replace their address with its own. Have `zsmp.cz` resolve to the VM's LAN address inside the school network and the VPN (internal DNS on the domain controller, or a hosts entry); the HTTPS certificate still fits. The address Caddy saw is in _Logy_ next to every sign-in, so after the first sign-in over the VPN, check that it is from the VPN range. If you lock yourself out, set `ADMIN_ALLOWED_IPS=*` in the VM for a moment.
+- **Why not in Caddy:** Caddy would give its own error page instead of the site's 404, would not catch server actions posted to public pages, and would split the setting between the Caddyfile and `.env`.
 
 ## Privacy (GDPR)
 
@@ -100,27 +100,22 @@ The admin uploads into `galerie/`, `dokument/` and `pozadi/`, so the folder must
 - If you started the database before Prisma took over (its tables came from `src/db/init/`), either start from scratch with `docker compose down -v` (this deletes all data in it) or keep it with `docker compose run --rm migrate npx prisma migrate resolve --applied 0_init` and then `docker compose up -d`.
 - The database listens only on 127.0.0.1:5432 inside the VM. To open it in DBeaver or pgAdmin, use their SSH tunnel option to the VM.
 
-## IIS
+## Web server (Caddy)
 
-IIS stays the public web server and forwards requests to the `web` container, so no nginx is needed. `deploy/iis/web.config` is the site's config: it needs the IIS modules [URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) and [Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) (in ARR's _Server Proxy Settings_, tick _Enable proxy_; in URL Rewrite's _View Server Variables_, add `HTTP_X_FORWARDED_FOR`, `HTTP_X_FORWARDED_PROTO` and `HTTP_X_FORWARDED_HOST`). HTTPS certificates stay in IIS.
+The `caddy` container is the public web server, so no IIS or nginx is needed. `deploy/caddy/Caddyfile` is its whole config: it gets and renews the Let's Encrypt certificate for `zsmp.cz` and `www.zsmp.cz` by itself (ports 80 and 443 must reach the VM from the internet), redirects http to https and `www.zsmp.cz` to `zsmp.cz`, and passes the visitor's address to the site. The certificates live in the `caddy-data` volume. It keeps no access log.
 
-## Server setup (Windows Server 2019)
+## Server setup (AlmaLinux VM)
 
-Windows Server 2019 cannot run Linux containers, so Docker runs in a small Ubuntu VM in Hyper-V and IIS forwards to it:
+Everything runs on one AlmaLinux VM on the school network; the FortiGate forwards ports 80 and 443 from the public address to it. The full step-by-step guide and the test checklist are in [docs/deploy.md](docs/deploy.md).
 
 ```
-internet → IIS (HTTPS, port 443) → VM 192.168.100.10:3000 → web container → db container
+internet → FortiGate (ports 80, 443) → AlmaLinux VM → caddy (HTTPS) → web container → db container
+school PCs, VPN → internal DNS zsmp.cz = the VM's address ↗
 ```
 
-1. Add the Hyper-V role. In PowerShell (as admin), create a private switch that only the server can reach, with internet access through NAT:
-   ```powershell
-   New-VMSwitch -Name zsmp -SwitchType Internal
-   New-NetIPAddress -IPAddress 192.168.100.1 -PrefixLength 24 -InterfaceAlias "vEthernet (zsmp)"
-   New-NetNat -Name zsmp -InternalIPInterfaceAddressPrefix 192.168.100.0/24
-   ```
-2. Create a Generation 2 VM on the `zsmp` switch (2 CPUs, 4 GB RAM, a disk with room for the photos) and install Ubuntu Server 24.04 LTS with OpenSSH. Give it the static address 192.168.100.10/24, gateway 192.168.100.1, DNS e.g. 1.1.1.1. In the VM settings, set _Automatic Start Action_ to always start.
-3. In the VM, install Docker Engine (https://docs.docker.com/engine/install/ubuntu/), clone this repo, create `.env` with `WEB_BIND=192.168.100.10`, and run `docker compose up -d --build`. The containers start again by themselves after a reboot.
-4. Put the existing photos, documents and videos into `media/` in the VM (e.g. with WinSCP over SSH) and run `sudo chown -R 1000:1000 media`.
-5. In IIS, point the site at a folder holding `deploy/iis/web.config` and set up the modules as described in the IIS section above.
+1. Install AlmaLinux (minimal) with a static address on the school network, then Docker Engine from Docker's RHEL repository, `git`, `rsync` and `nfs-utils`. Keep SELinux enforcing: the media and Caddyfile mounts have `:Z`.
+2. firewalld: open http, https and 443/udp; SSH only from the school network and the VPN.
+3. Clone this repo to `/srv/zsmp`, create `.env` from `.env.example`, put the photos, documents and videos into `media/` (`sudo chown -R 1000:1000 media`) and run `docker compose up -d --build`. The containers start again by themselves after a reboot.
+4. On the FortiGate, point the port forward for 80 and 443 at the VM (without source NAT); on the domain controller, point `zsmp.cz` and `www.zsmp.cz` at the VM.
 
-Back up the VM (Hyper-V checkpoint or Windows Server Backup) and the database dump regularly; the photos and the database live on the VM's disk.
+Back up the database dump and `media/` regularly (docs/deploy.md section 9 copies them to the Synology every night); they live on the VM's disk.

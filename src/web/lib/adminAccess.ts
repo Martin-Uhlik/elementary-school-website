@@ -1,7 +1,7 @@
 import { BlockList, isIP } from "node:net";
 
 // ADMIN_ALLOWED_IPS: who can see /admin and /auth, as addresses and CIDR ranges separated by commas
-// ("192.168.1.0/24, 10.8.0.0/24"), or * for everyone. Unset in production means nobody;
+// ("10.0.193.0/24, 10.212.134.0/24"), or * for everyone. Unset in production means nobody;
 // on a dev machine (npm run dev) it means everyone.
 const setting = (process.env.ADMIN_ALLOWED_IPS ?? "").trim();
 const everyone = setting === "*" || (setting === "" && process.env.NODE_ENV !== "production");
