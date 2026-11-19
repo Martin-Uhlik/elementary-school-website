@@ -9,3 +9,7 @@ documents/
 
 # photos, documents and videos for docker compose; they live only on the server
 media/
+
+# on the server: database dumps (backup.sh, deploy/update/zsmp-update.sh) and what the update last deployed
+backups/
+.deployed

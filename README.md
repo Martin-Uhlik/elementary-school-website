@@ -4,7 +4,7 @@ The website of Základní škola a Mateřská škola, Moravský Písek, přísp�
 
 - **Web:** Next.js 16 (App Router, React 19, TypeScript) with Bootstrap 5 and plain CSS (BEM, one file per block in `src/web/app/styles/`), in `src/web`
 - **Data:** PostgreSQL 18 through Drizzle ORM; photos and documents in a media folder on the server
-- **Running:** Docker Compose on an AlmaLinux VM, with Caddy in front for HTTPS (see [Server setup](#server-setup-almalinux-vm))
+- **Running:** Docker Compose on an AlmaLinux VM, with Caddy in front for HTTPS (see [Server setup](#server-setup-almalinux-vm)); a push to `main` builds the images on GitHub Actions and the VM deploys them by itself ([Deploying changes](#deploying-changes))
 - **Checked with:** ESLint (with the jsx-a11y accessibility rules), Prettier, and axe (WCAG 2.2 AA) on every page in both themes, on desktop and phone
 
 Developers start in [`src/web/README.md`](src/web/README.md).
@@ -40,6 +40,8 @@ docker compose up -d --build
 ```
 
 The site is then on http://localhost (through Caddy) and http://localhost:3000 (directly).
+
+`--build` builds the `web` and `migrate` images here from `src/`. The server doesn't build: it runs the images GitHub Actions pushes to Docker Hub (see [Deploying changes](#deploying-changes)); `docker compose up -d` without `--build` downloads them too, once `DOCKERHUB_NAMESPACE` is set in `.env`.
 
 For working on the code, use the dev setup below instead.
 
@@ -144,7 +146,19 @@ school PCs, VPN → internal DNS zsmp.cz = the VM's address ↗
 
 1. Install AlmaLinux (minimal) with a static address on the school network, then Docker Engine from Docker's RHEL repository, `git`, `rsync` and `nfs-utils`. Keep SELinux enforcing: the media and Caddyfile mounts have `:Z`.
 2. firewalld: open http, https and 443/udp; SSH only from the school network and the VPN.
-3. Clone this repo to `/srv/zsmp`, create `.env` from `.env.example`, put the photos, documents and videos into `media/` (`sudo chown -R 1000:1000 media`) and run `docker compose up -d --build`. The containers start again by themselves after a reboot.
+3. Clone this repo to `/srv/zsmp`, `docker login` with a read-only Docker Hub token, create `.env` from `.env.example` (with `DOCKERHUB_NAMESPACE`), put the photos, documents and videos into `media/` (`sudo chown -R 1000:1000 media`) and run `docker compose up -d`. The containers start again by themselves after a reboot.
 4. On the FortiGate, point the port forward for 80 and 443 at the VM (without source NAT); on the domain controller, point `zsmp.cz` and `www.zsmp.cz` at the VM.
+5. Install the update timer from `deploy/update/` (below).
 
-Back up the database dump and `media/` regularly (docs/deploy.md section 9 copies them to the Synology every night); they live on the VM's disk.
+Back up the database dump and `media/` regularly (docs/deploy.md section 10 copies them to the Synology every night); they live on the VM's disk.
+
+## Deploying changes
+
+Push to `main`, nothing else. Then:
+
+1. **GitHub Actions** (`.github/workflows/docker.yml`, on pushes that change `src/`) builds the `web` and `migrate` images and pushes them to Docker Hub as `<namespace>/zsmp-web` and `<namespace>/zsmp-migrate`, tagged `latest` and `sha-<commit>`. It needs the repository variable `DOCKERHUB_USERNAME` and the secret `DOCKERHUB_TOKEN` (a Docker Hub access token with Read & Write).
+2. **On the VM**, the systemd timer `zsmp-update.timer` runs `deploy/update/zsmp-update.sh` every 10 minutes: `git pull`, `docker compose pull web migrate`, and only when something is new a database dump into `backups/` and `docker compose up -d` (migrations first, then the new `web`).
+
+Both images are multi-stage builds on `node:26-alpine` without npm: `web` holds only Next's standalone server and the static files (~400 MB on disk, ~115 MB to download), `migrate` only `src/db` with `drizzle-orm` and `pg` (~275 MB, ~65 MB). Most of each is the Node.js base image, which they share.
+
+To roll back, `git revert` and push, or pin a build with `IMAGE_TAG=sha-<commit>` in the VM's `.env`. Setup, logs and rollback in detail: [docs/deploy.md](docs/deploy.md) sections 1 and 11.

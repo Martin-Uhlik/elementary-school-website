@@ -19,6 +19,6 @@ In `src/` (the npm workspace):
 npm run db:generate -- --name <what-changed>
 # a data change (UPDATE, INSERT) instead: an empty migration to write the SQL into
 npm run db:generate -- --custom --name <what>
-# 2. apply it on the dev machine; Docker applies it on the next "docker compose up --build"
+# 2. apply it on the dev machine; the server applies it by itself after the push to main (the migrate image)
 npm run db:migrate
 ```

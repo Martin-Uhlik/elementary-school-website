@@ -1,0 +1,14 @@
+# Deploys new commits and images from main: deploy/update/zsmp-update.sh, started by zsmp-update.timer.
+# Installed by docs/deploy.md section 11 (which also sets User= to the VM user that owns /srv/zsmp).
+[Unit]
+Description=zsmp.cz: deploy what is new on main
+Wants=network-online.target
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+# the VM user: in the docker group, owns /srv/zsmp and has the GitHub deploy key
+User=CHANGE-ME
+ExecStart=/bin/sh /srv/zsmp/deploy/update/zsmp-update.sh
+# a slow download or a long migration must not hang it forever
+TimeoutStartSec=20min

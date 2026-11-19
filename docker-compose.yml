@@ -1,5 +1,8 @@
-# The whole site: docker compose up -d --build
+# The whole site: docker compose up -d
 # Settings come from .env next to this file (copy .env.example).
+# web and migrate are the images GitHub Actions builds on every push to main and pushes to Docker Hub
+# (.github/workflows/docker.yml); the server pulls them (deploy/update/zsmp-update.sh). "docker compose up -d --build"
+# builds the same images here from src/ instead, e.g. to try a change before pushing it.
 services:
   # The public web server: HTTPS (automatic Let's Encrypt certificate), http → https, www → zsmp.cz,
   # and the visitor's real address for the admin's IP check (deploy/caddy/Caddyfile)
@@ -23,6 +26,8 @@ services:
       - web
 
   web:
+    # IMAGE_TAG: latest = the newest build of main, or sha-<commit> to stay on (roll back to) one build
+    image: ${DOCKERHUB_NAMESPACE:-missing-dockerhub-namespace}/zsmp-web:${IMAGE_TAG:-latest}
     # built from src/ because the app imports the tables from src/db
     build:
       context: ./src
@@ -57,6 +62,7 @@ services:
   # Runs once on every "up": applies new migrations (src/db/migrations), then fills an empty database
   # (the site's content and the user admin / zsmp); existing data is left alone. Only src/db, no Next.js.
   migrate:
+    image: ${DOCKERHUB_NAMESPACE:-missing-dockerhub-namespace}/zsmp-migrate:${IMAGE_TAG:-latest}
     build:
       context: ./src
       dockerfile: db/Dockerfile

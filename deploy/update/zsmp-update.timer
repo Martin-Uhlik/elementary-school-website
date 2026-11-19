@@ -1,0 +1,10 @@
+# Runs zsmp-update.service every 10 minutes (and 5 minutes after boot). See docs/deploy.md section 11.
+[Unit]
+Description=zsmp.cz: look for new commits and images every 10 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=10min
+
+[Install]
+WantedBy=timers.target
